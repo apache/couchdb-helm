@@ -14,7 +14,8 @@ storage volumes to each Pod in the Deployment.
 ## TL;DR
 
 ```bash
-$ helm install stable/couchdb --set allowAdminParty=true
+$ helm repo add couchdb https://apache.github.io/couchdb-helm
+$ helm install couchdb/couchdb --set allowAdminParty=true
 ```
 
 ## Prerequisites
@@ -25,8 +26,15 @@ $ helm install stable/couchdb --set allowAdminParty=true
 
 To install the chart with the release name `my-release`:
 
+Add the CouchDB Helm repository:
+
 ```bash
-$ helm install --name my-release stable/couchdb
+$ helm repo add couchdb https://apache.github.io/couchdb-helm
+```
+
+
+```bash
+$ helm install --name my-release couchdb/couchdb
 ```
 
 This will create a Secret containing the admin credentials for the cluster.
@@ -46,7 +54,7 @@ $  kubectl create secret generic my-release-couchdb --from-literal=adminUsername
 and then install the chart while overriding the `createAdminSecret` setting:
 
 ```bash
-$ helm install --name my-release --set createAdminSecret=false stable/couchdb
+$ helm install --name my-release --set createAdminSecret=false couchdb/couchdb
 ```
 
 This Helm chart deploys CouchDB on the Kubernetes cluster in a default
@@ -71,16 +79,14 @@ deletes the release.
 A major chart version change (like v0.2.3 -> v1.0.0) indicates that there is an
 incompatible breaking change needing manual actions.
 
-### 1.0.0
+## Migrating from stable/couchdb
 
-This version removes the `chart` and `heritage` labels from the
-`volumeClaimTemplates` which is immutable and prevents chart from being upgraded
-(see https://github.com/helm/charts/issues/7803 for details).
-
-In order to upgrade, delete the CouchDB StatefulSet before upgrading:
+This chart replaces the `stable/couchdb` chart previously hosted by Helm and continues the
+version semantics. You can upgrade directly from `stable/couchdb` to this chart using:
 
 ```bash
-$ kubectl delete statefulsets --cascade=false my-release-couchdb
+$ helm repo add couchdb https://apache.github.io/couchdb-helm
+$ helm upgrade my-release couchdb/couchdb
 ```
 
 ## Configuration
@@ -131,3 +137,31 @@ A variety of other parameters are also configurable. See the comments in the
 | `service.type`                  | ClusterIP                              |
 | `service.externalPort`          | 5984                                   |
 | `dns.clusterDomainSuffix`       | cluster.local                          |
+
+
+## Feedback, Issues, Contributing
+
+General feedback is welcome at our [user][1] or [developer][2] mailing lists.
+
+Apache CouchDB has a [CONTRIBUTING][3] file with details on how to get started
+with issue reporting or contributing to the upkeep of this project. In short,
+use GitHub Issues, do not report anything on Docker's website.
+
+## Non-Apache CouchDB Development Team Contributors
+
+- [@natarajaya](https://github.com/natarajaya)
+- [@satchpx](https://github.com/satchpx)
+- [@spanato](https://github.com/spanato)
+- [@jpds](https://github.com/jpds)
+- [@sebastien-prudhomme](https://github.com/sebastien-prudhomme)
+- [@stepanstipl](https://github.com/sebastien-stepanstipl)
+- [@amatas](https://github.com/amatas)
+- [@Chimney42](https://github.com/Chimney42)
+- [@mattjmcnaughton](https://github.com/mattjmcnaughton)
+- [@mainephd](https://github.com/mainephd)
+- [@AdamDang](https://github.com/AdamDang)
+- [@mrtyler](https://github.com/mrtyler)
+
+[1]: http://mail-archives.apache.org/mod_mbox/couchdb-user/
+[2]: http://mail-archives.apache.org/mod_mbox/couchdb-dev/
+[3]: https://github.com/apache/couchdb/blob/master/CONTRIBUTING.md

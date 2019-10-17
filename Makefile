@@ -12,16 +12,24 @@
 
 SHELL=/bin/bash
 
-.PHONY: test
-test:
+.PHONY: lint
+lint:
 	@helm lint couchdb
 
-package: test
+.PHONY: package
+package: lint
 	@helm package couchdb
 
-.PHONY: package
-publish: test
+.PHONY: publish
+publish:
 	@git checkout gh-pages
+	@git checkout -b gh-pages-update
 	@helm repo index docs --url https://apache.github.io/couchdb-helm
 	@git add -i
-	@echo "To complete the publish step, commit and push the chart tgz and updated index to gh-pages"
+	@git commit
+	@echo "To complete the publish step, push the branch to your GitHub remote and create a PR against gh-pages"
+
+# Run end to end tests using KinD
+.PHONY: test
+test:
+	./test/e2e-kind.sh

@@ -168,6 +168,9 @@ use GitHub Issues, do not report anything on Docker's website.
 - [@mainephd](https://github.com/mainephd)
 - [@AdamDang](https://github.com/AdamDang)
 - [@mrtyler](https://github.com/mrtyler)
+- [@kevinwlau](https://github.com/kevinwlau)
+- [@jeyenzo](https://github.com/jeyenzo)
+- [@Pinpin31.](https://github.com/Pinpin31)
 
 [1]: http://mail-archives.apache.org/mod_mbox/couchdb-user/
 [2]: http://mail-archives.apache.org/mod_mbox/couchdb-dev/

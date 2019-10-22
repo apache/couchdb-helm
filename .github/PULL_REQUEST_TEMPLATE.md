@@ -33,3 +33,4 @@ Please make sure you test your changes before you push them.
 - [ ] Chart Version bumped
 - [ ] e2e tests pass
 - [ ] Variables are documented in the README.md
+- [ ] Chart tgz added to /docs and index updated

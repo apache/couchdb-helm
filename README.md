@@ -14,17 +14,8 @@ deploy using the default options and Helm.
 
 ## Releasing
 
-The Helm chart is published to a Helm epository hosted by GitHub pages. This is maintained in the `gh-pages` branch of this repository.
-
-To publish a new release, perform the following steps:
-
- 1. Create a Helm bundle (*.tgz) for the current couchdb chart
- 2. Switch to the `gh-pages` branch
- 3. Run `helm repo index docs --url https://apache.github.io/couchdb-helm` to generate the Helm repository index
- 4. `git add` the tgz bundle and the `index.yaml` files. Do not delete the old chart bundles!
- 5. Commit the changes and create a PR to `gh-pages`.
-
-`make publish` automates these steps for you.
+Chart versions are immutable. On every version change, `make publish` should be
+run to create a new chart bundle and update the repostory metadata.
 
 ## Feedback / Issues / Contributing
 

@@ -16,18 +16,10 @@ SHELL=/bin/bash
 lint:
 	@helm lint couchdb
 
-.PHONY: package
-package: lint
-	@helm package couchdb
-
 .PHONY: publish
-publish:
-	@git checkout gh-pages
-	@git checkout -b gh-pages-update
+publish: lint
+	@helm package couchdb -d docs
 	@helm repo index docs --url https://apache.github.io/couchdb-helm
-	@git add -i
-	@git commit
-	@echo "To complete the publish step, push the branch to your GitHub remote and create a PR against gh-pages"
 
 # Run end to end tests using KinD
 .PHONY: test

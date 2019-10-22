@@ -80,7 +80,7 @@ install_local-path-provisioner() {
 }
 
 install_charts() {
-    docker_exec ct lint-and-install --chart-repos couchdb=https://apache.github.io/couchdb-helm --chart-dirs .
+    docker_exec ct lint-and-install --charts couchdb --upgrade --chart-dirs .
     echo
 }
 

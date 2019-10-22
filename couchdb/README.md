@@ -20,7 +20,8 @@ $ helm install couchdb/couchdb --set allowAdminParty=true
 
 ## Prerequisites
 
-- Kubernetes 1.8+ with Beta APIs enabled
+- Kubernetes 1.9+ with Beta APIs enabled
+- Ingress requires Kubernetes 1.14+
 
 ## Installing the Chart
 

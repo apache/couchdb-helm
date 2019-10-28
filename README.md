@@ -9,8 +9,7 @@ This repository contains assets related to the CouchDB Helm chart.
 
 ## Testing
 
-`make test` will run an integration test using [Kind][5]. This stands up a Kubernetes cluster locally and ensures the chart will
-deploy using the default options and Helm.
+`make test` will run an integration test using [Kind][5]. This stands up a Kubernetes cluster locally and ensures the chart will deploy using the default options and Helm.
 
 ## Releasing
 

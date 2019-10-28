@@ -15,4 +15,6 @@ sources:
 maintainers:
   - name: kocolosk
     email: kocolosk@apache.org
+  - name: willholley
+    email: willholley@apache.org
 icon: http://couchdb.apache.org/CouchDB-visual-identity/logo/CouchDB-couch-symbol.svg

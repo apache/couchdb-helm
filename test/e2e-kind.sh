@@ -35,11 +35,8 @@ docker_exec() {
 
 create_kind_cluster() {
     if ! [ -x "$(command -v kind)" ]; then
-        echo 'Installing kind...'
-
-        curl -sSLo kind "https://github.com/kubernetes-sigs/kind/releases/download/$KIND_VERSION/kind-linux-amd64"
-        chmod +x kind
-        sudo mv kind /usr/local/bin/kind
+        echo 'kind not found. See https://kind.sigs.k8s.io/ for installation instructions.'
+        exit
     fi
 
     kind delete cluster --name "$CLUSTER_NAME" || true

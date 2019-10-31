@@ -125,6 +125,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `initImage.pullPolicy`          | Always                                 |
 | `ingress.enabled`               | false                                  |
 | `ingress.hosts`                 | chart-example.local                    |
+| `ingress.path`                  | /                                      |
 | `ingress.annotations`           |                                        |
 | `ingress.tls`                   |                                        |
 | `persistentVolume.accessModes`  | ReadWriteOnce                          |

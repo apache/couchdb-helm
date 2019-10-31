@@ -20,7 +20,8 @@ $ helm install couchdb/couchdb --set allowAdminParty=true
 
 ## Prerequisites
 
-- Kubernetes 1.8+ with Beta APIs enabled
+- Kubernetes 1.9+ with Beta APIs enabled
+- Ingress requires Kubernetes 1.14+
 
 ## Installing the Chart
 
@@ -109,36 +110,41 @@ CouchDB chart and their default values:
 A variety of other parameters are also configurable. See the comments in the
 `values.yaml` file for further details:
 
-|           Parameter             |                Default                 |
-|---------------------------------|----------------------------------------|
-| `adminUsername`                 | admin                                  |
-| `adminPassword`                 | auto-generated                         |
-| `cookieAuthSecret`              | auto-generated                         |
-| `image.repository`              | couchdb                                |
-| `image.tag`                     | 2.3.1                                  |
-| `image.pullPolicy`              | IfNotPresent                           |
-| `searchImage.repository`        | kocolosk/couchdb-search                |
-| `searchImage.tag`               | 0.1.0                                  |
-| `searchImage.pullPolicy`        | IfNotPresent                           |
-| `initImage.repository`          | busybox                                |
-| `initImage.tag`                 | latest                                 |
-| `initImage.pullPolicy`          | Always                                 |
-| `ingress.enabled`               | false                                  |
-| `ingress.hosts`                 | chart-example.local                    |
-| `ingress.path`                  | /                                      |
-| `ingress.annotations`           |                                        |
-| `ingress.tls`                   |                                        |
-| `persistentVolume.accessModes`  | ReadWriteOnce                          |
-| `persistentVolume.storageClass` | Default for the Kube cluster           |
-| `podManagementPolicy`           | Parallel                               |
-| `affinity`                      |                                        |
-| `resources`                     |                                        |
-| `service.annotations`           |                                        |
-| `service.enabled`               | true                                   |
-| `service.type`                  | ClusterIP                              |
-| `service.externalPort`          | 5984                                   |
-| `dns.clusterDomainSuffix`       | cluster.local                          |
-
+|           Parameter               |                Default                 |
+|-----------------------------------|----------------------------------------|
+| `adminUsername`                   | admin                                  |
+| `adminPassword`                   | auto-generated                         |
+| `cookieAuthSecret`                | auto-generated                         |
+| `image.repository`                | couchdb                                |
+| `image.tag`                       | 2.3.1                                  |
+| `image.pullPolicy`                | IfNotPresent                           |
+| `searchImage.repository`          | kocolosk/couchdb-search                |
+| `searchImage.tag`                 | 0.1.0                                  |
+| `searchImage.pullPolicy`          | IfNotPresent                           |
+| `initImage.repository`            | busybox                                |
+| `initImage.tag`                   | latest                                 |
+| `initImage.pullPolicy`            | Always                                 |
+| `ingress.enabled`                 | false                                  |
+| `ingress.hosts`                   | chart-example.local                    |
+| `ingress.annotations`             |                                        |
+| `ingress.path`                    | /                                      |
+| `ingress.tls`                     |                                        |
+| `persistentVolume.accessModes`    | ReadWriteOnce                          |
+| `persistentVolume.storageClass`   | Default for the Kube cluster           |
+| `podManagementPolicy`             | Parallel                               |
+| `affinity`                        |                                        |
+| `annotations`                     |                                        |
+| `tolerations`                     |                                        |
+| `resources`                       |                                        |
+| `service.annotations`             |                                        |
+| `service.enabled`                 | true                                   |
+| `service.type`                    | ClusterIP                              |
+| `service.externalPort`            | 5984                                   |
+| `dns.clusterDomainSuffix`         | cluster.local                          |
+| `networkPolicy.enabled`           | true                                   |
+| `serviceAccount.enabled`          | true                                   |
+| `serviceAccount.create`           | true                                   |
+| `serviceAccount.imagePullSecrets` |                                        |
 
 ## Feedback, Issues, Contributing
 
@@ -162,6 +168,9 @@ use GitHub Issues, do not report anything on Docker's website.
 - [@mainephd](https://github.com/mainephd)
 - [@AdamDang](https://github.com/AdamDang)
 - [@mrtyler](https://github.com/mrtyler)
+- [@kevinwlau](https://github.com/kevinwlau)
+- [@jeyenzo](https://github.com/jeyenzo)
+- [@Pinpin31.](https://github.com/Pinpin31)
 
 [1]: http://mail-archives.apache.org/mod_mbox/couchdb-user/
 [2]: http://mail-archives.apache.org/mod_mbox/couchdb-dev/

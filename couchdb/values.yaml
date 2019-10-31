@@ -25,10 +25,23 @@ adminUsername: admin
 # adminPassword: this_is_not_secure
 # cookieAuthSecret: neither_is_this
 
+## When enabled, will deploy a networkpolicy that allows CouchDB pods to
+## communicate with each other for clustering and ingress on port 5984
+networkPolicy:
+  enabled: true
+
 ## Use an alternate scheduler, e.g. "stork".
 ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
 ##
 # schedulerName:
+
+# Use a service account
+serviceAccount:
+  enabled: true
+  create: true
+# name:
+# imagePullSecrets:
+# - name: myimagepullsecret
 
 ## The storage volume used by each Pod in the StatefulSet. If a
 ## persistentVolume is not enabled, the Pods will use `emptyDir` ephemeral
@@ -79,6 +92,12 @@ affinity:
   #             values:
   #             - couchdb
   #       topologyKey: "kubernetes.io/hostname"
+
+## Optional pod annotations
+annotations:
+
+## Optional tolerations
+tolerations:
 
 ## A StatefulSet requires a headless Service to establish the stable network
 ## identities of the Pods, and that Service is created automatically by this

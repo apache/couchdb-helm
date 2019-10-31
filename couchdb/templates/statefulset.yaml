@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta2
+apiVersion:  apps/v1
 kind: StatefulSet
 metadata:
   name: {{ template "couchdb.fullname" . }}
@@ -18,9 +18,16 @@ spec:
     metadata:
       labels:
 {{ include "couchdb.ss.selector" . | indent 8 }}
+{{- with .Values.annotations }}
+      annotations:
+{{ toYaml . | indent 8 }}
+{{- end }}
     spec:
       {{- if .Values.schedulerName }}
       schedulerName: "{{ .Values.schedulerName }}"
+      {{- end }}
+      {{- if .Values.serviceAccount.enabled }}
+      serviceAccountName: {{ template "couchdb.serviceAccount" . }}
       {{- end }}
       initContainers:
         - name: init-copy
@@ -104,6 +111,10 @@ spec:
 {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
+{{- end }}
+{{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
 {{- end }}
 {{- with .Values.affinity }}
       affinity:

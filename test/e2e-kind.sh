@@ -79,10 +79,8 @@ install_local-path-provisioner() {
     echo
 }
 
-install_charts() {
-    docker_exec ct lint-and-install --charts couchdb --upgrade --chart-dirs . --helm-extra-args "--set 'telemetry.enabled=true'"
-    # without telemetry
-    docker_exec ct lint --charts couchdb --chart-dirs . --helm-extra-args "--set ingress.enabled=true'"
+install_charts() {    # without telemetry
+    docker_exec ct lint-and-install --charts couchdb --upgrade --chart-dirs .
     echo
 }
 

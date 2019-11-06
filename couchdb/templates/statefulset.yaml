@@ -18,9 +18,13 @@ spec:
     metadata:
       labels:
 {{ include "couchdb.ss.selector" . | indent 8 }}
-{{- with .Values.annotations }}
       annotations:
-{{ toYaml . | indent 8 }}
+{{- with .Values.annotations }}
+{{- toYaml . | indent 8 }}
+{{- end }}
+{{- if .Values.telemetry.enabled }}
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '9984'
 {{- end }}
     spec:
       {{- if .Values.schedulerName }}
@@ -124,6 +128,40 @@ spec:
 {{- end }}
 {{- if .Values.sidecars }}
 {{ toYaml .Values.sidecars | indent 8}}
+{{- end }}
+{{- if .Values.telemetry.enabled }}
+        - name: telemetry
+          image: "{{ .Values.telemetryImage.repository }}:{{ .Values.telemetryImage.tag }}"
+          imagePullPolicy: {{ .Values.telemetryImage.pullPolicy }}
+          ports:
+            - name: telemetry
+              containerPort: 9984
+          args: ["--couchdb.uri=http://localhost:5984"]
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: 9984
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: 9984
+          resources:
+{{ toYaml .Values.telemetry.resources | indent 12 }}
+          env:
+            - name: DATABASES
+              value: {{ .Values.telemetry.databases }}
+{{- if not .Values.allowAdminParty }}
+            - name: "COUCHDB.USERNAME"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "couchdb.defaultsecret" . }}
+                  key: adminUsername
+            - name: "COUCHDB.PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "couchdb.defaultsecret" . }}
+                  key: adminPassword
+{{- end }}
 {{- end }}
 {{- if .Values.nodeSelector }}
       nodeSelector:

@@ -4,7 +4,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-readonly CT_VERSION=v2.3.3
+readonly CT_VERSION=v2.4.0
 readonly KIND_VERSION=v0.5.1
 readonly CLUSTER_NAME=chart-testing
 readonly K8S_VERSION=v1.14.3
@@ -80,7 +80,9 @@ install_local-path-provisioner() {
 }
 
 install_charts() {
-    docker_exec ct lint-and-install --charts couchdb --upgrade --chart-dirs .
+    docker_exec ct lint-and-install --charts couchdb --upgrade --chart-dirs . --helm-extra-args "--set 'telemetry.enabled=true'"
+    # without telemetry
+    docker_exec ct lint --charts couchdb --chart-dirs . --helm-extra-args "--set ingress.enabled=true'"
     echo
 }
 

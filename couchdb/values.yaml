@@ -197,3 +197,21 @@ sidecars: {}
   #   volumeMounts:
   #     - name: database-storage
   #       mountPath: /opt/couchdb/data/
+
+# Adds a sidecar to expose CouchDB metrics as a prometheus endpoint
+# see https://github.com/gesellix/couchdb-prometheus-exporter/blob/master/README.md
+telemetryImage:
+  repository: gesellix/couchdb-prometheus-exporter
+  tag: v27.2.0
+  pullPolicy: IfNotPresent
+telemetry:
+  enabled: false
+# Enable database-specific metrics. Comma delimited list of database names or "_all_dbs" for all.
+# databases: _all_dbs
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 1
+      memory: 1Gi

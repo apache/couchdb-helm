@@ -130,6 +130,7 @@ CouchDB chart and their default values:
 | `persistentVolume.enabled`      | Boolean determining whether to attach a PV to each node | false
 | `persistentVolume.size`         | If enabled, the size of the persistent volume to attach                          | 10Gi
 | `enableSearch`                  | Adds a sidecar for Lucene-powered text search         | false                                  |
+| `telemetry.enabled`             | Adds a sidecar to expose CouchDB metrics to Prometheus| false                                  |
 
 You can set the values of the `couchdbConfig` map according to the
 [official configuration][4]. The following shows the map's default values and
@@ -192,6 +193,37 @@ A variety of other parameters are also configurable. See the comments in the
 | `readinessProbe.periodSeconds`       | 10                                     |
 | `readinessProbe.successThreshold`    | 1                                      |
 | `readinessProbe.timeoutSeconds`      | 1                                      |
+| `telemetry.databases`                |                                        |
+
+## Telemetry
+
+The chart optionally deploys the [CouchDB Prometheus exporter](https://github.com/gesellix/couchdb-prometheus-exporter) to each CouchDB node.
+Metrics are exposed on port 9984.
+
+Below is an example Prometheus scrape configuration that can be used to collect per-node CouchDB metrics:
+
+```
+- job_name: couchdb
+  scrape_interval: 10s
+  kubernetes_sd_configs:
+  - role: pod
+  relabel_configs:
+  - source_labels: [__meta_kubernetes_namespace]
+      action: replace
+      target_label: k8s_namespace
+  - source_labels: [__meta_kubernetes_pod_name]
+      action: replace
+      target_label: k8s_pod_name
+  - source_labels: [__address__]
+      action: replace
+      regex: ([^:]+)(?::\d+)?
+      replacement: ${1}:9984
+      target_label: __address__
+  - source_labels: [__meta_kubernetes_pod_label_app]
+      action: keep
+      regex: couchdb
+```
+
 
 ## Feedback, Issues, Contributing
 

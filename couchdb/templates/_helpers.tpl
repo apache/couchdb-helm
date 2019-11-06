@@ -79,3 +79,16 @@ Fail if couchdbConfig.couchdb.uuid is undefined
 {{- define "couchdb.uuid" -}}
 {{- required "A value for couchdbConfig.couchdb.uuid must be set" (.Values.couchdbConfig.couchdb | default dict).uuid -}}
 {{- end -}} 
+
+{{/*
+In the event that we create both a headless service and a traditional one,
+ensure that the latter gets a unique name.
+*/}}
+{{- define "couchdb.telemetrysvcname" -}}
+{{- if .Values.fullnameOverride -}}
+{{- printf "%s-telemetry-%s" .Values.fullnameOverride .Chart.Name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- printf "%s-telemetry-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}

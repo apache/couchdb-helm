@@ -72,3 +72,10 @@ If serviceAccount.name is specified, use that, else use the couchdb instance nam
 {{- template "couchdb.fullname" . -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Fail if couchdbConfig.couchdb.uuid is undefined
+*/}}
+{{- define "couchdb.uuid" -}}
+{{- required "A value for couchdbConfig.couchdb.uuid must be set" (.Values.couchdbConfig.couchdb | default dict).uuid -}}
+{{- end -}} 

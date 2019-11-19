@@ -150,6 +150,9 @@ erlangFlags:
 ## by a ConfigMap object.
 ## ref: http://docs.couchdb.org/en/latest/config/index.html
 couchdbConfig:
+  # couchdb:
+  #  uuid: decafbaddecafbaddecafbaddecafbad # Unique identifier for this CouchDB server instance
+
   # cluster:
   #   q: 8 # Create 8 shards for each database
   chttpd:

@@ -95,17 +95,27 @@ $ helm upgrade my-release couchdb/couchdb
 The following table lists the most commonly configured parameters of the
 CouchDB chart and their default values:
 
-|           Parameter             |             Description                               |                Default                 |
-|---------------------------------|-------------------------------------------------------|----------------------------------------|
-| `clusterSize`                   | The initial number of nodes in the CouchDB cluster    | 3                                      |
-| `couchdbConfig`                 | Map allowing override elements of server .ini config  | chttpd.bind_address=any                |
-| `allowAdminParty`               | If enabled, start cluster without admin account       | false (requires creating a Secret)     |
-| `createAdminSecret`             | If enabled, create an admin account and cookie secret | true                                   |
-| `schedulerName`                 | Name of the k8s scheduler (other than default)        | `nil`                                  |
-| `erlangFlags`                   | Map of flags supplied to the underlying Erlang VM     | name: couchdb, setcookie: monster
-| `persistentVolume.enabled`      | Boolean determining whether to attach a PV to each node | false
-| `persistentVolume.size`         | If enabled, the size of the persistent volume to attach                          | 10Gi
-| `enableSearch`                  | Adds a sidecar for Lucene-powered text search         | false                                  |
+|           Parameter             |             Description                                 |                Default                 |
+|---------------------------------|---------------------------------------------------------|----------------------------------------|
+| `clusterSize`                   | The initial number of nodes in the CouchDB cluster      | 3                                      |
+| `couchdbConfig`                 | Map allowing override elements of server .ini config    | *See below*                            |
+| `allowAdminParty`               | If enabled, start cluster without admin account         | false (requires creating a Secret)     |
+| `createAdminSecret`             | If enabled, create an admin account and cookie secret   | true                                   |
+| `schedulerName`                 | Name of the k8s scheduler (other than default)          | `nil`                                  |
+| `erlangFlags`                   | Map of flags supplied to the underlying Erlang VM       | name: couchdb, setcookie: monster      |
+| `persistentVolume.enabled`      | Boolean determining whether to attach a PV to each node | false                                  |
+| `persistentVolume.size`         | If enabled, the size of the persistent volume to attach | 10Gi                                   |
+| `enableSearch`                  | Adds a sidecar for Lucene-powered text search           | false                                  |
+
+You can set the values of the `couchdbConfig` map according to the 
+[official configuration][4]. The following shows the map's default values and 
+most important options to set:
+
+|           Parameter             |             Description                                            |                Default                 |
+|---------------------------------|--------------------------------------------------------------------|----------------------------------------|
+| `chttpd.bind_address`           | listens on all interfaces when set to any                          | any                                    |
+| `chttpd.require_valid_user`     | disables all the anonymous requests to the port 5984 when true     | false                                  |
+| `couchdb.uuid`                  | UUID for this CouchDB server instance ([Required in a cluster][5]) | *\<random UUID\>*                               |
 
 A variety of other parameters are also configurable. See the comments in the
 `values.yaml` file for further details:
@@ -175,3 +185,5 @@ use GitHub Issues, do not report anything on Docker's website.
 [1]: http://mail-archives.apache.org/mod_mbox/couchdb-user/
 [2]: http://mail-archives.apache.org/mod_mbox/couchdb-dev/
 [3]: https://github.com/apache/couchdb/blob/master/CONTRIBUTING.md
+[4]: https://docs.couchdb.org/en/stable/config/index.html
+[5]: https://docs.couchdb.org/en/latest/setup/cluster.html#preparing-couchdb-nodes-to-be-joined-into-a-cluster

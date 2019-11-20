@@ -91,6 +91,19 @@ deletes the release.
 A major chart version change (like v0.2.3 -> v1.0.0) indicates that there is an
 incompatible breaking change needing manual actions.
 
+### Upgrade to 3.0.0
+
+Since version 3.0.0 setting the CouchDB server instance UUID is mandatory. 
+Therefore you need to generate a UUID and supply it as a value during the 
+upgrade as follows:
+
+```bash
+$ helm upgrade <release-name> \
+  --reuse-values \
+  --set couchdbConfig.couchdb.uuid=<UUID> \
+  couchdb/couchdb
+```
+
 ## Migrating from stable/couchdb
 
 This chart replaces the `stable/couchdb` chart previously hosted by Helm and continues the

@@ -9,7 +9,9 @@ metadata:
     release: {{ .Release.Name | quote }}
 data:
   inifile: |
-    {{ range $section, $settings := .Values.couchdbConfig -}}
+    {{ $couchdbConfig := dict "couchdb" (dict "uuid" (include "couchdb.uuid" .)) -}}
+    {{- $couchdbConfig := merge $couchdbConfig .Values.couchdbConfig -}}
+    {{- range $section, $settings := $couchdbConfig -}}
     {{ printf "[%s]" $section }}
     {{ range $key, $value := $settings -}}
     {{ printf "%s = %s" $key ($value | toString) }}

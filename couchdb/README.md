@@ -15,7 +15,9 @@ storage volumes to each Pod in the Deployment.
 
 ```bash
 $ helm repo add couchdb https://apache.github.io/couchdb-helm
-$ helm install couchdb/couchdb --set allowAdminParty=true
+$ helm install couchdb/couchdb \
+  --set allowAdminParty=true \
+  --set couchdbConfig.couchdb.uuid=$(curl https://www.uuidgenerator.net/api/version4 2>/dev/null | tr -d -)
 ```
 
 ## Prerequisites
@@ -33,9 +35,14 @@ Add the CouchDB Helm repository:
 $ helm repo add couchdb https://apache.github.io/couchdb-helm
 ```
 
+Afterwards install the chart replacing the UUID 
+`decafbaddecafbaddecafbaddecafbad` with a custom one:
 
 ```bash
-$ helm install --name my-release couchdb/couchdb
+$ helm install \
+  --name my-release \
+  --set couchdbConfig.couchdb.uuid=decafbaddecafbaddecafbaddecafbad \
+  couchdb/couchdb 
 ```
 
 This will create a Secret containing the admin credentials for the cluster.
@@ -55,7 +62,11 @@ $  kubectl create secret generic my-release-couchdb --from-literal=adminUsername
 and then install the chart while overriding the `createAdminSecret` setting:
 
 ```bash
-$ helm install --name my-release --set createAdminSecret=false couchdb/couchdb
+$ helm install \
+  --name my-release \
+  --set createAdminSecret=false \
+  --set couchdbConfig.couchdb.uuid=decafbaddecafbaddecafbaddecafbad \
+  couchdb/couchdb
 ```
 
 This Helm chart deploys CouchDB on the Kubernetes cluster in a default
@@ -80,6 +91,19 @@ deletes the release.
 A major chart version change (like v0.2.3 -> v1.0.0) indicates that there is an
 incompatible breaking change needing manual actions.
 
+### Upgrade to 3.0.0
+
+Since version 3.0.0 setting the CouchDB server instance UUID is mandatory. 
+Therefore you need to generate a UUID and supply it as a value during the 
+upgrade as follows:
+
+```bash
+$ helm upgrade <release-name> \
+  --reuse-values \
+  --set couchdbConfig.couchdb.uuid=<UUID> \
+  couchdb/couchdb
+```
+
 ## Migrating from stable/couchdb
 
 This chart replaces the `stable/couchdb` chart previously hosted by Helm and continues the
@@ -98,7 +122,7 @@ CouchDB chart and their default values:
 |           Parameter             |             Description                               |                Default                 |
 |---------------------------------|-------------------------------------------------------|----------------------------------------|
 | `clusterSize`                   | The initial number of nodes in the CouchDB cluster    | 3                                      |
-| `couchdbConfig`                 | Map allowing override elements of server .ini config  | chttpd.bind_address=any                |
+| `couchdbConfig`                 | Map allowing override elements of server .ini config  | *See below*                            |
 | `allowAdminParty`               | If enabled, start cluster without admin account       | false (requires creating a Secret)     |
 | `createAdminSecret`             | If enabled, create an admin account and cookie secret | true                                   |
 | `schedulerName`                 | Name of the k8s scheduler (other than default)        | `nil`                                  |
@@ -106,6 +130,16 @@ CouchDB chart and their default values:
 | `persistentVolume.enabled`      | Boolean determining whether to attach a PV to each node | false
 | `persistentVolume.size`         | If enabled, the size of the persistent volume to attach                          | 10Gi
 | `enableSearch`                  | Adds a sidecar for Lucene-powered text search         | false                                  |
+
+You can set the values of the `couchdbConfig` map according to the 
+[official configuration][4]. The following shows the map's default values and 
+required options to set:
+
+|           Parameter             |             Description                                            |                Default                 |
+|---------------------------------|--------------------------------------------------------------------|----------------------------------------|
+| `couchdb.uuid`                  | UUID for this CouchDB server instance ([Required in a cluster][5]) |                                        |
+| `chttpd.bind_address`           | listens on all interfaces when set to any                          | any                                    |
+| `chttpd.require_valid_user`     | disables all the anonymous requests to the port 5984 when true     | false                                  |
 
 A variety of other parameters are also configurable. See the comments in the
 `values.yaml` file for further details:
@@ -175,3 +209,5 @@ use GitHub Issues, do not report anything on Docker's website.
 [1]: http://mail-archives.apache.org/mod_mbox/couchdb-user/
 [2]: http://mail-archives.apache.org/mod_mbox/couchdb-dev/
 [3]: https://github.com/apache/couchdb/blob/master/CONTRIBUTING.md
+[4]: https://docs.couchdb.org/en/stable/config/index.html
+[5]: https://docs.couchdb.org/en/latest/setup/cluster.html#preparing-couchdb-nodes-to-be-joined-into-a-cluster

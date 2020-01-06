@@ -69,6 +69,7 @@ spec:
 {{- end }}
             - name: ERL_FLAGS
               value: "{{ range $k, $v := .Values.erlangFlags }} -{{ $k }} {{ $v }} {{ end }}"
+{{- if .Values.livenessProbe.enabled }}
           livenessProbe:
 {{- if .Values.couchdbConfig.chttpd.require_valid_user }}
             exec:
@@ -81,6 +82,13 @@ spec:
               path: /
               port: 5984
 {{- end }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            successThreshold: {{ .Values.livenessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+{{- end }}
+{{- if .Values.readinessProbe.enabled }}
           readinessProbe:
 {{- if .Values.couchdbConfig.chttpd.require_valid_user }}
             exec:
@@ -92,6 +100,12 @@ spec:
             httpGet:
               path: /_up
               port: 5984
+{{- end }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
 {{- end }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}

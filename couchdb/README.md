@@ -35,14 +35,14 @@ Add the CouchDB Helm repository:
 $ helm repo add couchdb https://apache.github.io/couchdb-helm
 ```
 
-Afterwards install the chart replacing the UUID 
+Afterwards install the chart replacing the UUID
 `decafbaddecafbaddecafbaddecafbad` with a custom one:
 
 ```bash
 $ helm install \
   --name my-release \
   --set couchdbConfig.couchdb.uuid=decafbaddecafbaddecafbaddecafbad \
-  couchdb/couchdb 
+  couchdb/couchdb
 ```
 
 This will create a Secret containing the admin credentials for the cluster.
@@ -93,8 +93,8 @@ incompatible breaking change needing manual actions.
 
 ### Upgrade to 3.0.0
 
-Since version 3.0.0 setting the CouchDB server instance UUID is mandatory. 
-Therefore you need to generate a UUID and supply it as a value during the 
+Since version 3.0.0 setting the CouchDB server instance UUID is mandatory.
+Therefore you need to generate a UUID and supply it as a value during the
 upgrade as follows:
 
 ```bash
@@ -131,8 +131,8 @@ CouchDB chart and their default values:
 | `persistentVolume.size`         | If enabled, the size of the persistent volume to attach                          | 10Gi
 | `enableSearch`                  | Adds a sidecar for Lucene-powered text search         | false                                  |
 
-You can set the values of the `couchdbConfig` map according to the 
-[official configuration][4]. The following shows the map's default values and 
+You can set the values of the `couchdbConfig` map according to the
+[official configuration][4]. The following shows the map's default values and
 required options to set:
 
 |           Parameter             |             Description                                            |                Default                 |
@@ -144,41 +144,53 @@ required options to set:
 A variety of other parameters are also configurable. See the comments in the
 `values.yaml` file for further details:
 
-|           Parameter               |                Default                 |
-|-----------------------------------|----------------------------------------|
-| `adminUsername`                   | admin                                  |
-| `adminPassword`                   | auto-generated                         |
-| `cookieAuthSecret`                | auto-generated                         |
-| `image.repository`                | couchdb                                |
-| `image.tag`                       | 2.3.1                                  |
-| `image.pullPolicy`                | IfNotPresent                           |
-| `searchImage.repository`          | kocolosk/couchdb-search                |
-| `searchImage.tag`                 | 0.1.0                                  |
-| `searchImage.pullPolicy`          | IfNotPresent                           |
-| `initImage.repository`            | busybox                                |
-| `initImage.tag`                   | latest                                 |
-| `initImage.pullPolicy`            | Always                                 |
-| `ingress.enabled`                 | false                                  |
-| `ingress.hosts`                   | chart-example.local                    |
-| `ingress.annotations`             |                                        |
-| `ingress.path`                    | /                                      |
-| `ingress.tls`                     |                                        |
-| `persistentVolume.accessModes`    | ReadWriteOnce                          |
-| `persistentVolume.storageClass`   | Default for the Kube cluster           |
-| `podManagementPolicy`             | Parallel                               |
-| `affinity`                        |                                        |
-| `annotations`                     |                                        |
-| `tolerations`                     |                                        |
-| `resources`                       |                                        |
-| `service.annotations`             |                                        |
-| `service.enabled`                 | true                                   |
-| `service.type`                    | ClusterIP                              |
-| `service.externalPort`            | 5984                                   |
-| `dns.clusterDomainSuffix`         | cluster.local                          |
-| `networkPolicy.enabled`           | true                                   |
-| `serviceAccount.enabled`          | true                                   |
-| `serviceAccount.create`           | true                                   |
-| `serviceAccount.imagePullSecrets` |                                        |
+|           Parameter                  |                Default                 |
+|--------------------------------------|----------------------------------------|
+| `adminUsername`                      | admin                                  |
+| `adminPassword`                      | auto-generated                         |
+| `cookieAuthSecret`                   | auto-generated                         |
+| `image.repository`                   | couchdb                                |
+| `image.tag`                          | 2.3.1                                  |
+| `image.pullPolicy`                   | IfNotPresent                           |
+| `searchImage.repository`             | kocolosk/couchdb-search                |
+| `searchImage.tag`                    | 0.1.0                                  |
+| `searchImage.pullPolicy`             | IfNotPresent                           |
+| `initImage.repository`               | busybox                                |
+| `initImage.tag`                      | latest                                 |
+| `initImage.pullPolicy`               | Always                                 |
+| `ingress.enabled`                    | false                                  |
+| `ingress.hosts`                      | chart-example.local                    |
+| `ingress.annotations`                |                                        |
+| `ingress.path`                       | /                                      |
+| `ingress.tls`                        |                                        |
+| `persistentVolume.accessModes`       | ReadWriteOnce                          |
+| `persistentVolume.storageClass`      | Default for the Kube cluster           |
+| `podManagementPolicy`                | Parallel                               |
+| `affinity`                           |                                        |
+| `annotations`                        |                                        |
+| `tolerations`                        |                                        |
+| `resources`                          |                                        |
+| `service.annotations`                |                                        |
+| `service.enabled`                    | true                                   |
+| `service.type`                       | ClusterIP                              |
+| `service.externalPort`               | 5984                                   |
+| `dns.clusterDomainSuffix`            | cluster.local                          |
+| `networkPolicy.enabled`              | true                                   |
+| `serviceAccount.enabled`             | true                                   |
+| `serviceAccount.create`              | true                                   |
+| `serviceAccount.imagePullSecrets`    |                                        |
+| `livenessProbe.enabled`              | true                                   |
+| `livenessProbe.failureThreshold`     | 3                                      |
+| `livenessProbe.initialDelaySeconds`  | 0                                      |
+| `livenessProbe.periodSeconds`        | 10                                     |
+| `livenessProbe.successThreshold`     | 1                                      |
+| `livenessProbe.timeoutSeconds`       | 1                                      |
+| `readinessProbe.enabled`             | true                                   |
+| `readinessProbe.failureThreshold`    | 3                                      |
+| `readinessProbe.initialDelaySeconds` | 0                                      |
+| `readinessProbe.periodSeconds`       | 10                                     |
+| `readinessProbe.successThreshold`    | 1                                      |
+| `readinessProbe.timeoutSeconds`      | 1                                      |
 
 ## Feedback, Issues, Contributing
 

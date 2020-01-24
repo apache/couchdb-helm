@@ -39,6 +39,13 @@ networkPolicy:
 serviceAccount:
   enabled: true
   create: true
+  roles: []
+    # - metadata:
+    #     name: endpoint-access
+    #   rules:
+    #     - apiGroups: [""]
+    #       resources: ["endpoints"]
+    #       verbs: ["*"]
 # name:
 # imagePullSecrets:
 # - name: myimagepullsecret

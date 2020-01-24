@@ -1,0 +1,18 @@
+{{- $root := . -}}
+{{- range $role := .Values.serviceAccount.roles }}
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+{{ toYaml $role }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ $role.metadata.name }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ $role.metadata.name }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "couchdb.serviceAccount" $root }}
+{{- end }}

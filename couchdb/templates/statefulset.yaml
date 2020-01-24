@@ -114,6 +114,10 @@ spec:
             mountPath: /opt/couchdb/etc/default.d
           - name: database-storage
             mountPath: /opt/couchdb/data
+{{- if .Values.splitStorage.enabled }}
+          - name: view-index-storage
+            mountPath: /opt/couchdb/view-data
+{{- end }}
 {{- if .Values.enableSearch }}
         - name: clouseau
           image: "{{ .Values.searchImage.repository }}:{{ .Values.searchImage.tag }}"
@@ -149,6 +153,10 @@ spec:
 {{- if not .Values.persistentVolume.enabled }}
         - name: database-storage
           emptyDir: {}
+{{- if .Values.splitStorage.enabled }}
+        - name: view-index-storage
+          emptyDir: {}
+{{- end }}
 {{- else }}
   volumeClaimTemplates:
     - metadata:
@@ -171,4 +179,26 @@ spec:
         storageClassName: "{{ .Values.persistentVolume.storageClass }}"
       {{- end }}
       {{- end }}
+{{- if .Values.splitStorage.enabled }}
+    - metadata:
+        name: view-index-storage
+        labels:
+          app: {{ template "couchdb.name" . }}
+          release: {{ .Release.Name }}
+      spec:
+        accessModes:
+        {{- range .Values.persistentVolume.accessModes }}
+          - {{ . | quote }}
+        {{- end }}
+        resources:
+          requests:
+            storage: {{ .Values.persistentVolume.size | quote }}
+      {{- if .Values.persistentVolume.storageClass }}
+      {{- if (eq "-" .Values.persistentVolume.storageClass) }}
+        storageClassName: ""
+      {{- else }}
+        storageClassName: "{{ .Values.persistentVolume.storageClass }}"
+      {{- end }}
+      {{- end }}
+{{- end }}
 {{- end }}

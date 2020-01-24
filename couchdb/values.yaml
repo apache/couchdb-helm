@@ -55,6 +55,10 @@ persistentVolume:
   size: 10Gi
   # storageClass: "-"
 
+## If enabled the databases and view storage are written to separate volumes
+splitStorage:
+  enabled: false
+
 ## The CouchDB image
 image:
   repository: couchdb

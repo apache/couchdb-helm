@@ -11,6 +11,9 @@ data:
   inifile: |
     {{ $couchdbConfig := dict "couchdb" (dict "uuid" (include "couchdb.uuid" .)) -}}
     {{- $couchdbConfig := merge $couchdbConfig .Values.couchdbConfig -}}
+    {{- if .Values.splitStorage.enabled -}}
+    {{- $couchdbConfig := merge $couchdbConfig (dict "couchdb" (dict "view_index_dir" "./view-data")) -}}
+    {{- end -}}
     {{- range $section, $settings := $couchdbConfig -}}
     {{ printf "[%s]" $section }}
     {{ range $key, $value := $settings -}}

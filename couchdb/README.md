@@ -179,6 +179,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `serviceAccount.enabled`             | true                                   |
 | `serviceAccount.create`              | true                                   |
 | `serviceAccount.imagePullSecrets`    |                                        |
+| `sidecars`                           | {}                                     |
 | `livenessProbe.enabled`              | true                                   |
 | `livenessProbe.failureThreshold`     | 3                                      |
 | `livenessProbe.initialDelaySeconds`  | 0                                      |

@@ -59,6 +59,23 @@ Secret containing `adminUsername`, `adminPassword` and `cookieAuthSecret` keys:
 $  kubectl create secret generic my-release-couchdb --from-literal=adminUsername=foo --from-literal=adminPassword=bar --from-literal=cookieAuthSecret=baz
 ```
 
+If you want to set the `adminHash` directly to achieve consistent salts between 
+different nodes you need to addionally add the key `password.ini` to the secret:
+
+```bash
+$  kubectl create secret generic my-release-couchdb \
+   --from-literal=adminUsername=foo \
+   --from-literal=cookieAuthSecret=baz \
+   --from-file=./my-password.ini 
+```
+
+With the following contents in `my-password.ini`:
+
+```
+[admins]
+foo = <pbkdf2-hash>
+```
+
 and then install the chart while overriding the `createAdminSecret` setting:
 
 ```bash
@@ -148,6 +165,7 @@ A variety of other parameters are also configurable. See the comments in the
 |--------------------------------------|----------------------------------------|
 | `adminUsername`                      | admin                                  |
 | `adminPassword`                      | auto-generated                         |
+| `adminHash`                          |                                        |
 | `cookieAuthSecret`                   | auto-generated                         |
 | `image.repository`                   | couchdb                                |
 | `image.tag`                          | 2.3.1                                  |

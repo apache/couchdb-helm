@@ -13,9 +13,10 @@ allowAdminParty: false
 ## be created containing auto-generated credentials. Users who prefer to set
 ## these values themselves have a couple of options:
 ##
-## 1) The `adminUsername`, `adminPassword`, and `cookieAuthSecret` can be
-##    defined directly in the chart's values. Note that all of a chart's values
-##    are currently stored in plaintext in a ConfigMap in the tiller namespace.
+## 1) The `adminUsername`, `adminPassword`, `adminHash`, and `cookieAuthSecret`
+##    can be defined directly in the chart's values. Note that all of a chart's
+##    values are currently stored in plaintext in a ConfigMap in the tiller
+##    namespace.
 ##
 ## 2) This flag can be disabled and a Secret with the required keys can be
 ##    created ahead of time.
@@ -23,6 +24,7 @@ createAdminSecret: true
 
 adminUsername: admin
 # adminPassword: this_is_not_secure
+# adminHash: -pbkdf2-this_is_not_necessarily_secure_either
 # cookieAuthSecret: neither_is_this
 
 ## When enabled, will deploy a networkpolicy that allows CouchDB pods to
@@ -129,7 +131,8 @@ ingress:
 
 ## Optional resource requests and limits for the CouchDB container
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
-resources: {}
+resources:
+  {}
   # requests:
   #  cpu: 100m
   #  memory: 128Mi
@@ -159,7 +162,6 @@ couchdbConfig:
     # chttpd.require_valid_user disables all the anonymous requests to the port
     # 5984 when is set to true.
     require_valid_user: false
-
 
 # Kubernetes local cluster domain.
 # This is used to generate FQDNs for peers when joining the CouchDB cluster.

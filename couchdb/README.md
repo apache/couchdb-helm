@@ -174,6 +174,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `service.enabled`                    | true                                   |
 | `service.type`                       | ClusterIP                              |
 | `service.externalPort`               | 5984                                   |
+| `splitStorage.enabled`               | false                                  |
 | `dns.clusterDomainSuffix`            | cluster.local                          |
 | `networkPolicy.enabled`              | true                                   |
 | `serviceAccount.enabled`             | true                                   |

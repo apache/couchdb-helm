@@ -122,6 +122,9 @@ spec:
           - name: database-storage
             mountPath: /opt/couchdb-search/data
 {{- end }}
+{{- if .Values.sidecars }}
+{{ toYaml .Values.sidecars | indent 8}}
+{{- end }}
 {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}

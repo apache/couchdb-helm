@@ -3,10 +3,10 @@ entries:
   couchdb:
   - apiVersion: v1
     appVersion: 2.3.1
-    created: "2020-05-19T13:26:57.622941+01:00"
+    created: "2020-05-20T09:25:43.976663+01:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
-    digest: 608ea3c5ce15c6553c3f8774a691f998da3ec23c4e657cf4872eee731cadeb7c
+    digest: 22f29161288917e33e3df8a35009d78ae424f64880d14ff95bdbff9fdc4cd37c
     home: https://couchdb.apache.org/
     icon: http://couchdb.apache.org/CouchDB-visual-identity/logo/CouchDB-couch-symbol.svg
     keywords:
@@ -185,4 +185,4 @@ entries:
     urls:
     - https://apache.github.io/couchdb-helm/couchdb-2.2.0.tgz
     version: 2.2.0
-generated: "2020-05-19T13:26:57.620318+01:00"
+generated: "2020-05-20T09:25:43.974093+01:00"

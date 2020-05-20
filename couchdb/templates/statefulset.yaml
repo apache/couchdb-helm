@@ -136,7 +136,7 @@ spec:
           ports:
             - name: telemetry
               containerPort: 9984
-          args: ["--couchdb.uri=http://localhost:5984"]
+          args: ["--couchdb.uri=http://127.0.0.1:5984"]
           livenessProbe:
             httpGet:
               path: /metrics

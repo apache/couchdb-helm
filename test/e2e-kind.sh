@@ -4,10 +4,10 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-readonly CT_VERSION=v2.3.3
-readonly KIND_VERSION=v0.5.1
+readonly CT_VERSION=v3.0.0-rc.1
+readonly KIND_VERSION=v0.7.0
 readonly CLUSTER_NAME=chart-testing
-readonly K8S_VERSION=v1.14.3
+readonly K8S_VERSION=v1.17.0
 
 run_ct_container() {
     echo 'Running ct container...'
@@ -45,9 +45,10 @@ create_kind_cluster() {
     docker_exec mkdir -p /root/.kube
 
     echo 'Copying kubeconfig to container...'
-    local kubeconfig
-    kubeconfig="$(kind get kubeconfig-path --name "$CLUSTER_NAME")"
+    local kubeconfig=$(mktemp)
+    kind get kubeconfig --name "$CLUSTER_NAME" >"$kubeconfig"
     docker cp "$kubeconfig" ct:/root/.kube/config
+    rm "$kubeconfig"
 
     docker_exec kubectl cluster-info
     echo
@@ -56,26 +57,6 @@ create_kind_cluster() {
     echo
 
     echo 'Cluster ready!'
-    echo
-}
-
-install_tiller() {
-    echo 'Installing Tiller...'
-    docker_exec kubectl --namespace kube-system create sa tiller
-    docker_exec kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
-    docker_exec helm init --service-account tiller --upgrade --wait
-    echo
-}
-
-install_local-path-provisioner() {
-    # kind doesn't support Dynamic PVC provisioning yet, this is one ways to get it working
-    # https://github.com/rancher/local-path-provisioner
-
-    # Remove default storage class. It will be recreated by local-path-provisioner
-    docker_exec kubectl delete storageclass standard
-
-    echo 'Installing local-path-provisioner...'
-    docker_exec kubectl apply -f test/local-path-provisioner.yaml
     echo
 }
 
@@ -89,8 +70,6 @@ main() {
     trap cleanup EXIT
 
     create_kind_cluster
-    install_local-path-provisioner
-    install_tiller
     install_charts
 }
 

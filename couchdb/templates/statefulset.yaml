@@ -39,6 +39,18 @@ spec:
             mountPath: /tmp/
           - name: config-storage
             mountPath: /default.d
+{{- if .Values.adminHash }}
+        - name: admin-hash-copy
+          image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
+          imagePullPolicy: {{ .Values.initImage.pullPolicy }}
+          command: ['sh','-c','cp /tmp/password.ini /local.d/ ;']
+          volumeMounts:
+            - name: admin-password
+              mountPath: /tmp/password.ini
+              subPath: "password.ini"
+            - name: local-config-storage
+              mountPath: /local.d
+{{- end }}
       containers:
         - name: couchdb
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -112,6 +124,10 @@ spec:
           volumeMounts:
           - name: config-storage
             mountPath: /opt/couchdb/etc/default.d
+{{- if .Values.adminHash }}
+          - name: local-config-storage
+            mountPath: /opt/couchdb/etc/local.d
+{{- end }}
           - name: database-storage
             mountPath: /opt/couchdb/data
 {{- if .Values.enableSearch }}
@@ -148,6 +164,14 @@ spec:
                 path: chart.ini
               - key: seedlistinifile
                 path: seedlist.ini
+
+{{- if .Values.adminHash }}
+        - name: local-config-storage
+          emptyDir: {}
+        - name: admin-password
+          secret:
+            secretName: {{ template "couchdb.fullname" . }}
+{{- end -}}
 
 {{- if not .Values.persistentVolume.enabled }}
         - name: database-storage

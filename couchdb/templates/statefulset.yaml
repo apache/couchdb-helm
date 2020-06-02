@@ -20,6 +20,7 @@ spec:
 {{ include "couchdb.ss.selector" . | indent 8 }}
 {{- with .Values.annotations }}
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
 {{ toYaml . | indent 8 }}
 {{- end }}
     spec:

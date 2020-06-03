@@ -20,6 +20,7 @@ spec:
 {{ include "couchdb.ss.selector" . | indent 8 }}
 {{- with .Values.annotations }}
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
 {{ toYaml . | indent 8 }}
 {{- end }}
     spec:
@@ -88,10 +89,10 @@ spec:
               command:
                 - sh
                 - -c
-                - curl -G --silent --fail -u ${COUCHDB_USER}:${COUCHDB_PASSWORD} http://localhost:5984/
+                - curl -G --silent --fail -u ${COUCHDB_USER}:${COUCHDB_PASSWORD} http://localhost:5984/_up
 {{- else }}
             httpGet:
-              path: /
+              path: /_up
               port: 5984
 {{- end }}
             failureThreshold: {{ .Values.livenessProbe.failureThreshold }}

@@ -84,7 +84,7 @@ podManagementPolicy: Parallel
 
 ## To better tolerate Node failures, we can prevent Kubernetes scheduler from
 ## assigning more than one Pod of CouchDB StatefulSet per Node using podAntiAffinity.
-affinity:
+affinity: {}
   # podAntiAffinity:
   #   requiredDuringSchedulingIgnoredDuringExecution:
   #     - labelSelector:
@@ -96,10 +96,10 @@ affinity:
   #       topologyKey: "kubernetes.io/hostname"
 
 ## Optional pod annotations
-annotations:
+annotations: {}
 
 ## Optional tolerations
-tolerations:
+tolerations: []
 
 ## A StatefulSet requires a headless Service to establish the stable network
 ## identities of the Pods, and that Service is created automatically by this
@@ -120,7 +120,7 @@ ingress:
   hosts:
     - chart-example.local
   path: /
-  annotations:
+  annotations: []
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   tls:

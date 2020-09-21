@@ -2,13 +2,12 @@ Apache CouchDB is starting. Check the status of the Pods using:
 
   kubectl get pods --namespace {{ .Release.Namespace }} -l "app={{ template "couchdb.name" . }},release={{ .Release.Name }}"
 
-Once all of the Pods are fully Ready, execute the following command to create
+Once all of the pods are fully ready, execute the following command to create
 some required system databases:
 
   kubectl exec --namespace {{ .Release.Namespace }} {{ if not .Values.allowAdminParty }}-it {{ end }}{{ template "couchdb.fullname" . }}-0 -c couchdb -- \
     curl -s \
     http://127.0.0.1:5984/_cluster_setup \
-    -X POST \
     -H "Content-Type: application/json" \
 {{- if .Values.allowAdminParty }}
     -d '{"action": "finish_cluster"}'
@@ -18,3 +17,6 @@ some required system databases:
 {{- end }}
 
 Then it's time to relax.
+
+As of chart version 3.4.0, the helm chart will attempt automatically to complete
+cluster setup after installation if the `clusterSetup` value is set to true.

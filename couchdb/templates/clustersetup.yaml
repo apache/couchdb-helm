@@ -15,17 +15,18 @@ data:
     BASE_URL=http://{{ template "couchdb.fullname" . }}:5984
     set -x
 
+    touch /tmp/curl.cf
+    {{ if or .Values.couchdbConfig.chttpd.require_valid_user (not .Values.allowAdminParty) }}
+        echo "-u $(cat /tmp/admin-password/adminUsername):$(cat /tmp/admin-password/adminPassword)" >> /tmp/curl.cf
+    {{ end }}
+
     echo "Waiting for CouchDB service to start..."
-    until curl --silent -max-time 5 --head --fail "${BASE_URL}/_up"; do
+    until curl --silent --max-time 5 --head --fail "${BASE_URL}/_up" -K /tmp/curl.cf; do
         printf "%s: CouchDB not up yet. Will try again\n" "$(date)"
         sleep 2
     done
 
     echo "Initializing cluster"
-    touch /tmp/curl.cf
-    {{ if not .Values.allowAdminParty }}
-        echo "-u $(cat /tmp/admin-password/adminUsername):$(cat /tmp/admin-password/adminPassword)" >> /tmp/curl.cf
-    {{ end }}
     curl -silent "${BASE_URL}/_cluster_setup" \
       -H "Content-Type: application/json" \
       -d '{"action": "finish_cluster"}' \

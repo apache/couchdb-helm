@@ -1,0 +1,77 @@
+{{ if .Values.clusterSetup }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-setup-script
+  labels:
+    app: {{ template "couchdb.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  setup.sh: |
+    set -e
+    BASE_URL=http://{{ template "couchdb.fullname" . }}:5984
+    set -x
+
+    touch /tmp/curl.cf
+    {{ if or .Values.couchdbConfig.chttpd.require_valid_user (not .Values.allowAdminParty) }}
+        echo "-u $(cat /tmp/admin-password/adminUsername):$(cat /tmp/admin-password/adminPassword)" >> /tmp/curl.cf
+    {{ end }}
+
+    echo "Waiting for CouchDB service to start..."
+    until curl --silent --max-time 5 --head --fail "${BASE_URL}/_up" -K /tmp/curl.cf; do
+        printf "%s: CouchDB not up yet. Will try again\n" "$(date)"
+        sleep 2
+    done
+
+    echo "Initializing cluster"
+    curl -silent "${BASE_URL}/_cluster_setup" \
+      -H "Content-Type: application/json" \
+      -d '{"action": "finish_cluster"}' \
+      -K /tmp/curl.cf
+
+    echo "Success!"
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cluster-setup-job
+  labels:
+    app: {{ template "couchdb.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      name: cluster-setup-job
+      labels:
+        app: {{ template "couchdb.name" . }}
+        chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+        release: {{ .Release.Name }}
+        heritage: {{ .Release.Service }}
+    spec:
+      restartPolicy: Never
+      volumes:
+        - name: admin-password-volume
+          secret:
+            secretName: {{ template "couchdb.fullname" . }}
+        - name: cluster-setup-script-volume
+          configMap:
+            name: cluster-setup-script
+      containers:
+      - name: cluster-setup-job
+        image: "curlimages/curl:7.72.0"
+        command: [ "/bin/sh", "/tmp/setup/setup.sh" ]
+        volumeMounts:
+        - name: admin-password-volume
+          readOnly: true
+          mountPath: /tmp/admin-password
+        - name: cluster-setup-script-volume
+          mountPath: /tmp/setup
+{{ end }}

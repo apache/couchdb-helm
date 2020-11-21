@@ -37,6 +37,11 @@ networkPolicy:
 ##
 # schedulerName:
 
+## When enabled, will deploy PodSecurityPolicy, ClusterRole and ClusterRoleBinding.
+## Requires serviceAccount to be enabled as well.
+podSecurityPolicy:
+  enabled: false
+
 # Use a service account
 serviceAccount:
   enabled: true

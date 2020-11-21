@@ -1,0 +1,19 @@
+{{- if .Values.podSecurityPolicy.enabled }}
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ template "couchdb.fullname" . }}-psp
+  labels:
+    app: {{ include "couchdb.name" . }}
+    app.kubernetes.io/name: {{ include "couchdb.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/component: "controller"
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+rules:
+- apiGroups: ['policy']
+  resources: ['podsecuritypolicies']
+  verbs:     ['use']
+  resourceNames:
+  - {{ template "couchdb.fullname" . }}
+{{- end }}

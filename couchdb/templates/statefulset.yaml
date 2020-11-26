@@ -35,6 +35,8 @@ spec:
           image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
           imagePullPolicy: {{ .Values.initImage.pullPolicy }}
           command: ['sh','-c','cp /tmp/chart.ini /default.d; cp /tmp/seedlist.ini /default.d; ls -lrt /default.d;']
+          resources: 
+{{ toYaml .Values.init.resources | indent 12 }}
           volumeMounts:
           - name: config
             mountPath: /tmp/
@@ -45,6 +47,8 @@ spec:
           image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
           imagePullPolicy: {{ .Values.initImage.pullPolicy }}
           command: ['sh','-c','cp /tmp/password.ini /local.d/ ;']
+          resources: 
+{{ toYaml .Values.init.resources | indent 12 }}
           volumeMounts:
             - name: admin-password
               mountPath: /tmp/password.ini

@@ -1,3 +1,20 @@
 github:
+  description: "Apache Couchdb Helm Chart"
+  homepage: https://couchdb.apache.org/
+  labels:
+    - apache
+    - couchdb
+    - helm
+    - erlang
+    - network-client
+    - http
+    - cplusplus
+    - big-data
+    - cloud
+    - database
+    - network-server
+    - javascript
+  protected_branches:
+    main
   ghp_branch:  master
   ghp_path:    /docs

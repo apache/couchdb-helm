@@ -165,7 +165,7 @@ couchdbConfig:
   # required to use Fauxton if chttpd.require_valid_user is set to true
   # httpd:
   #   WWW-Authenticate: "Basic realm=\"administrator\""
-    
+
 
 # Kubernetes local cluster domain.
 # This is used to generate FQDNs for peers when joining the CouchDB cluster.

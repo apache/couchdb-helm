@@ -77,6 +77,18 @@ initImage:
   tag: latest
   pullPolicy: Always
 
+## Optional resource requests and limits for all the init containers
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+init:
+  resources:
+    {}
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # limits:
+    #   cpu: 56
+    #   memory: 256Gi
+
 ## CouchDB is happy to spin up cluster nodes in parallel, but if you encounter
 ## problems you can try setting podManagementPolicy to the StatefulSet default
 ## `OrderedReady`

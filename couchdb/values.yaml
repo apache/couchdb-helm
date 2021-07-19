@@ -22,6 +22,8 @@ allowAdminParty: false
 ##    created ahead of time.
 createAdminSecret: true
 
+clusterSetup: false
+
 adminUsername: admin
 # adminPassword: this_is_not_secure
 # adminHash: -pbkdf2-this_is_not_necessarily_secure_either

@@ -142,6 +142,7 @@ CouchDB chart and their default values:
 | `couchdbConfig`                 | Map allowing override elements of server .ini config  | *See below*                            |
 | `allowAdminParty`               | If enabled, start cluster without admin account       | false (requires creating a Secret)     |
 | `createAdminSecret`             | If enabled, create an admin account and cookie secret | true                                   |
+| `clusterSetup`                  | Finalize cluster configuration by calling /_cluster_setup endpoint after installation | false  |
 | `schedulerName`                 | Name of the k8s scheduler (other than default)        | `nil`                                  |
 | `erlangFlags`                   | Map of flags supplied to the underlying Erlang VM     | name: couchdb, setcookie: monster
 | `persistentVolume.enabled`      | Boolean determining whether to attach a PV to each node | false

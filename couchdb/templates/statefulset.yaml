@@ -34,7 +34,14 @@ spec:
         - name: init-copy
           image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
           imagePullPolicy: {{ .Values.initImage.pullPolicy }}
-          command: ['sh','-c','cp /tmp/chart.ini /default.d; cp /tmp/seedlist.ini /default.d; ls -lrt /default.d;']
+          command: 
+            - 'sh'
+            - '-c'
+{{- if .Values.prometheusPort.enabled }}
+            - 'cp /tmp/chart.ini /default.d; cp /tmp/seedlist.ini /default.d; cp /tmp/prometheus.ini /default.d; ls -lrt /default.d;'
+{{- else }}
+            - 'cp /tmp/chart.ini /default.d; cp /tmp/seedlist.ini /default.d; ls -lrt /default.d;'
+{{- end }}
           volumeMounts:
           - name: config
             mountPath: /tmp/
@@ -62,6 +69,10 @@ spec:
             - name: epmd
               containerPort: 4369
             - containerPort: 9100
+{{- if .Values.prometheusPort.enabled }}
+            - name: metrics
+              containerPort: {{ .Values.prometheusPort.port }}
+{{- end }}
           env:
 {{- if not .Values.allowAdminParty }}
             - name: COUCHDB_USER
@@ -165,6 +176,10 @@ spec:
                 path: chart.ini
               - key: seedlistinifile
                 path: seedlist.ini
+{{- if .Values.prometheusPort.enabled }}
+              - key: prometheusinifile 
+                path: prometheus.ini
+{{- end }}
 
 {{- if .Values.adminHash }}
         - name: local-config-storage

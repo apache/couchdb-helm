@@ -17,6 +17,10 @@ spec:
     - ports:
         - protocol: TCP
           port: 5984
+{{- if .Values.prometheusPort.enabled }}
+        - protocol: TCP
+          port: {{ .Values.prometheusPort.port }}
+{{- end }}
     - ports:
         - protocol: TCP
           port: 9100

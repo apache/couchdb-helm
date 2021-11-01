@@ -60,7 +60,7 @@ persistentVolume:
 ## The CouchDB image
 image:
   repository: couchdb
-  tag: 3.1.1
+  tag: 3.2.0
   pullPolicy: IfNotPresent
 
 ## Experimental integration with Lucene-powered fulltext search
@@ -188,6 +188,13 @@ readinessProbe:
   periodSeconds: 10
   successThreshold: 1
   timeoutSeconds: 1
+
+# CouchDB 3.2.0 adds in a metrics endpoint on the path `/_node/_local/_prometheus`.
+# Optionally, a standalone, unauthenticated port can be exposed for these metrics.
+prometheusPort:
+  enabled: false
+  bind_address: "0.0.0.0"
+  port: 17986
 
 # Configure arbitrary sidecar containers for CouchDB pods created by the
 # StatefulSet

@@ -21,3 +21,11 @@ data:
   seedlistinifile: |
     [cluster]
     seedlist = {{ template "couchdb.seedlist" . }}
+
+{{- if .Values.prometheusPort.enabled }}
+  prometheusinifile: |
+    [prometheus]
+    additional_port = {{ .Values.prometheusPort.enabled }}
+    bind_address = {{ .Values.prometheusPort.bind_address }}
+    port = {{ .Values.prometheusPort.port }}
+{{- end }}

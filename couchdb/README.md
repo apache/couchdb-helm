@@ -168,7 +168,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `adminHash`                          |                                        |
 | `cookieAuthSecret`                   | auto-generated                         |
 | `image.repository`                   | couchdb                                |
-| `image.tag`                          | 3.1.1                                  |
+| `image.tag`                          | 3.2.0                                  |
 | `image.pullPolicy`                   | IfNotPresent                           |
 | `searchImage.repository`             | kocolosk/couchdb-search                |
 | `searchImage.tag`                    | 0.1.0                                  |
@@ -210,7 +210,9 @@ A variety of other parameters are also configurable. See the comments in the
 | `readinessProbe.periodSeconds`       | 10                                     |
 | `readinessProbe.successThreshold`    | 1                                      |
 | `readinessProbe.timeoutSeconds`      | 1                                      |
-
+| `prometheusPort.enabled`             | false                                  |
+| `prometheusPort.port`                | 17896                                  |
+| `prometheusPort.bind_address`        | 0.0.0.0                                |
 ## Feedback, Issues, Contributing
 
 General feedback is welcome at our [user][1] or [developer][2] mailing lists.

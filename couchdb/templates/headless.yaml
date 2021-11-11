@@ -13,5 +13,9 @@ spec:
   ports:
     - name: couchdb
       port: 5984
+{{- if .Values.prometheusPort.enabled }}
+    - name: metrics
+      port: {{ .Values.prometheusPort.port }}
+{{- end }}
   selector:
 {{ include "couchdb.ss.selector" . | indent 4 }}

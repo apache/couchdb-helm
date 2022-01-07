@@ -168,7 +168,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `adminHash`                          |                                        |
 | `cookieAuthSecret`                   | auto-generated                         |
 | `image.repository`                   | couchdb                                |
-| `image.tag`                          | 3.2.0                                  |
+| `image.tag`                          | 3.2.1                                  |
 | `image.pullPolicy`                   | IfNotPresent                           |
 | `searchImage.repository`             | kocolosk/couchdb-search                |
 | `searchImage.tag`                    | 0.1.0                                  |

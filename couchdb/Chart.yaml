@@ -11,6 +11,7 @@ keywords:
   - nosql
 home: https://couchdb.apache.org/
 sources:
+  - https://github.com/apache/couchdb-helm
   - https://github.com/apache/couchdb-docker
 maintainers:
   - name: kocolosk

@@ -23,7 +23,7 @@ $ helm install couchdb/couchdb \
 ## Prerequisites
 
 - Kubernetes 1.9+ with Beta APIs enabled
-- Ingress requires Kubernetes 1.14+
+- Ingress requires Kubernetes 1.19+
 
 ## Installing the Chart
 

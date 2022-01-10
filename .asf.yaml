@@ -1,3 +1,12 @@
 github:
-  ghp_branch:  master
+  description: "Apache CouchDB Helm Chart"
+  labels:
+    - couchdb
+    - helm
+    - kubernetes
+  protected_branches:
+    main:
+      required_status_checks:
+        strict: true
+  ghp_branch:  main
   ghp_path:    /docs

@@ -95,8 +95,8 @@ affinity: {}
   #             - couchdb
   #       topologyKey: "kubernetes.io/hostname"
 
-## To add restrictions in topology spread constraints such as distribute pods across aws zones 
-## in eks aws, use podTopologySpreadConstraints
+## To control how Pods are spread across your cluster among failure-domains such as regions,
+## zones, nodes, and other user-defined topology domains use topologySpreadConstraints.
 topologySpreadConstraints: {}
   # topologySpreadConstraints:
   #   - maxSkew: 1

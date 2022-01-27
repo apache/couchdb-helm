@@ -215,8 +215,8 @@ A variety of other parameters are also configurable. See the comments in the
 | `prometheusPort.port`                | 17896                                  |
 | `prometheusPort.bind_address`        | 0.0.0.0                                |
 | `placementConfig.enabled`            | false                                  |
-| `placementConfig.image`              | caligrafix/couchdb-autoscaler-placement-manager|
-| `placementConfig.tag`                | latest                                 |
+| `placementConfig.image.repository`   | caligrafix/couchdb-autoscaler-placement-manager|
+| `placementConfig.image.tag`          | 0.1.0                                  |
 
 ## Feedback, Issues, Contributing
 

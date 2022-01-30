@@ -221,3 +221,13 @@ sidecars: {}
   #   volumeMounts:
   #     - name: database-storage
   #       mountPath: /opt/couchdb/data/
+
+
+# Placement manager to annotate each document in the nodes DB with "zone" attribute
+# recording the zone where node has been scheduled
+# Ref: https://docs.couchdb.org/en/stable/cluster/sharding.html#specifying-database-placement
+placementConfig:
+  enabled: false
+  image:
+    repository: caligrafix/couchdb-autoscaler-placement-manager
+    tag: 0.1.0

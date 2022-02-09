@@ -152,12 +152,15 @@ resources:
   #  memory: 256Gi
 
 ## erlangFlags is a map that is passed to the Erlang VM as flags using the
-## ERL_FLAGS env. `name` and `setcookie` flags are minimally required to
-## establish connectivity between cluster nodes.
+## ERL_FLAGS env. The `name` flag is required to establish connectivity
+## between cluster nodes.
 ## ref: http://erlang.org/doc/man/erl.html#init_flags
 erlangFlags:
   name: couchdb
-  setcookie: monster
+  # Older versions of the official CouchDB image (anything prior to 3.2.1)
+  # do not act on the COUCHDB_ERLANG_COOKIE environment variable, so if you
+  # want to cluster these deployments it's necessary to pass in a cookie here
+  # setcookie: make-something-up
 
 ## couchdbConfig will override default CouchDB configuration settings.
 ## The contents of this map are reformatted into a .ini file laid down

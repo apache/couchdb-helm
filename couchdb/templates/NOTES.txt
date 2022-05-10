@@ -18,3 +18,14 @@ some required system databases:
 {{- end }}
 
 Then it's time to relax.
+
+{{- $uuidVar := index (.Values.couchdbConfig.couchdb | default dict) "uuid" -}}
+{{- if (empty $uuidVar) }}
+NOTE: You are using an auto-generated value for the Couch DB UUID
+  - We recommend making this value persistent by setting it in: `couchdbConfig.couchdb.uuid`
+  - Changing this value can cause problems for the Couch DB installation
+  - You can get the current value with:
+```
+kubectl -n {{ $.Release.Namespace }} get secret {{ include "couchdb.fullname" . }}-internal --template='{{print "{{" }}index .data "uuid" | base64decode{{ print "}}" }}'
+```
+{{- end }}

@@ -1,12 +1,19 @@
 # NEWS
 
+## 4.6.4
+
+- Auto-generate `couchdbConfig.couchdb.uuid` value on install
+ 
 ## 4.6.3
+
 - Update default CouchDB version to 3.5.1
 
 ## 4.6.2
+
 - Added options to specify `erlangCookie` and `cookieAuthSecret` within the extra secret
 
 ## 4.6.1
+
 - Update default CouchDB version to 3.5.0
 
 ## 4.5.7

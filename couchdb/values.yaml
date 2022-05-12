@@ -128,11 +128,14 @@ service:
 ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
   enabled: false
+  ## Add className to the Ingress
+  # className: nginx
   hosts:
     - chart-example.local
   path: /
   annotations: []
-    # kubernetes.io/ingress.class: nginx
+    # use className instead, kubernetes.io/ingress.class is deprecated since Kubernetes 1.18+
+    # kubernetes.io/ingress.class: nginx ()
     # kubernetes.io/tls-acme: "true"
   tls:
     # Secrets must be manually created in the namespace.
@@ -142,8 +145,7 @@ ingress:
 
 ## Optional resource requests and limits for the CouchDB container
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
-resources:
-  {}
+resources: {}
   # requests:
   #  cpu: 100m
   #  memory: 128Mi
@@ -179,7 +181,6 @@ couchdbConfig:
   # required to use Fauxton if chttpd.require_valid_user is set to true
   # httpd:
   #   WWW-Authenticate: "Basic realm=\"administrator\""
-
 
 # Kubernetes local cluster domain.
 # This is used to generate FQDNs for peers when joining the CouchDB cluster.
@@ -224,7 +225,6 @@ sidecars: {}
   #   volumeMounts:
   #     - name: database-storage
   #       mountPath: /opt/couchdb/data/
-
 
 # Placement manager to annotate each document in the nodes DB with "zone" attribute
 # recording the zone where node has been scheduled

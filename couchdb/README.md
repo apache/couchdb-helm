@@ -178,6 +178,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `initImage.pullPolicy`               | Always                                 |
 | `ingress.enabled`                    | false                                  |
 | `ingress.hosts`                      | chart-example.local                    |
+| `ingress.className`                  | chart-example.local                    |
 | `ingress.annotations`                |                                        |
 | `ingress.path`                       | /                                      |
 | `ingress.tls`                        |                                        |

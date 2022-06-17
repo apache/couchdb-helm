@@ -26,15 +26,17 @@ jobs:
       - name: Run chart-testing (list-changed)
         id: list-changed
         run: |
-          changed=$(ct list-changed --target-branch main --chart-dirs .
+          changed=$(ct list-changed --target-branch main --chart-dirs .)
           if [[ -n "$changed" ]]; then
             echo "::set-output name=changed::true"
           fi
 
       - name: Run chart-testing (lint changed)
+        if: ${{ github.ref != 'refs/heads/main' }}
         run: ct lint --target-branch main --chart-dirs .
 
       - name: Run chart-testing (lint all)
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: ct lint --target-branch main --all --chart-dirs .
 
   install:
@@ -56,7 +58,7 @@ jobs:
       - name: Run chart-testing (list-changed)
         id: list-changed
         run: |
-          changed=$(ct list-changed --target-branch main --chart-dirs .
+          changed=$(ct list-changed --target-branch main --chart-dirs .)
           if [[ -n "$changed" ]]; then
             echo "::set-output name=changed::true"
           fi
@@ -68,11 +70,11 @@ jobs:
       # no allow-failure until https://github.com/actions/toolkit/issues/399
       - name: Run chart-testing (install changed)
         if: ${{ github.ref != 'refs/heads/main' }}
-        run: ct install --target-branch main --chart-dirs .
+        run: ct install --target-branch main --chart-dirs --upgrade .
         continue-on-error: true
 
       # no allow-failure until https://github.com/actions/toolkit/issues/399
       - name: Run chart-testing (install all)
         if: ${{ github.ref == 'refs/heads/main' }}
-        run: ct install --target-branch main --all --chart-dirs .
+        run: ct install --target-branch main --all --chart-dirs --upgrade .
         continue-on-error: true

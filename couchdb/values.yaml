@@ -1,25 +1,25 @@
-## clusterSize is the initial size of the CouchDB cluster.
+# -- the initial number of nodes in the CouchDB cluster.
 clusterSize: 3
 
-## If allowAdminParty is enabled the cluster will start up without any database
-## administrator account; i.e., all users will be granted administrative
-## access. Otherwise, the system will look for a Secret called
-## <ReleaseName>-couchdb containing `adminUsername`, `adminPassword` and
-## `cookieAuthSecret` keys. See the `createAdminSecret` flag.
-## ref: https://kubernetes.io/docs/concepts/configuration/secret/
+# -- If allowAdminParty is enabled the cluster will start up without any database
+# administrator account; i.e., all users will be granted administrative
+# access. Otherwise, the system will look for a Secret called
+# <ReleaseName>-couchdb containing `adminUsername`, `adminPassword` and
+# `cookieAuthSecret` keys. See the `createAdminSecret` flag.
+# ref: https://kubernetes.io/docs/concepts/configuration/secret/
 allowAdminParty: false
 
-## If createAdminSecret is enabled a Secret called <ReleaseName>-couchdb will
-## be created containing auto-generated credentials. Users who prefer to set
-## these values themselves have a couple of options:
-##
-## 1) The `adminUsername`, `adminPassword`, `adminHash`, and `cookieAuthSecret`
-##    can be defined directly in the chart's values. Note that all of a chart's
-##    values are currently stored in plaintext in a ConfigMap in the tiller
-##    namespace.
-##
-## 2) This flag can be disabled and a Secret with the required keys can be
-##    created ahead of time.
+# -- If createAdminSecret is enabled a Secret called <ReleaseName>-couchdb will
+# be created containing auto-generated credentials. Users who prefer to set
+# these values themselves have a couple of options:
+#
+# 1) The `adminUsername`, `adminPassword`, `adminHash`, and `cookieAuthSecret`
+#    can be defined directly in the chart's values. Note that all of a chart's
+#    values are currently stored in plaintext in a ConfigMap in the tiller
+#    namespace.
+#
+# 2) This flag can be disabled and a Secret with the required keys can be
+#    created ahead of time.
 createAdminSecret: true
 
 adminUsername: admin
@@ -45,11 +45,11 @@ serviceAccount:
 # imagePullSecrets:
 # - name: myimagepullsecret
 
-## The storage volume used by each Pod in the StatefulSet. If a
-## persistentVolume is not enabled, the Pods will use `emptyDir` ephemeral
-## local storage. Setting the storageClass attribute to "-" disables dynamic
-## provisioning of Persistent Volumes; leaving it unset will invoke the default
-## provisioner.
+# -- The storage volume used by each Pod in the StatefulSet. If a
+# persistentVolume is not enabled, the Pods will use `emptyDir` ephemeral
+# local storage. Setting the storageClass attribute to "-" disables dynamic
+# provisioning of Persistent Volumes; leaving it unset will invoke the default
+# provisioner.
 persistentVolume:
   enabled: false
   accessModes:
@@ -69,7 +69,7 @@ searchImage:
   tag: 0.2.0
   pullPolicy: IfNotPresent
 
-## Flip this to flag to include the Search container in each Pod
+# -- Flip this to flag to include the Search container in each Pod
 enableSearch: false
 
 initImage:
@@ -151,10 +151,10 @@ resources:
   #  cpu: 56
   #  memory: 256Gi
 
-## erlangFlags is a map that is passed to the Erlang VM as flags using the
-## ERL_FLAGS env. The `name` flag is required to establish connectivity
-## between cluster nodes.
-## ref: http://erlang.org/doc/man/erl.html#init_flags
+# -- erlangFlags is a map that is passed to the Erlang VM as flags using the
+# ERL_FLAGS env. The `name` flag is required to establish connectivity
+# between cluster nodes.
+# ref: http://erlang.org/doc/man/erl.html#init_flags
 erlangFlags:
   name: couchdb
   # Older versions of the official CouchDB image (anything prior to 3.2.1)
@@ -162,10 +162,10 @@ erlangFlags:
   # want to cluster these deployments it's necessary to pass in a cookie here
   # setcookie: make-something-up
 
-## couchdbConfig will override default CouchDB configuration settings.
-## The contents of this map are reformatted into a .ini file laid down
-## by a ConfigMap object.
-## ref: http://docs.couchdb.org/en/latest/config/index.html
+# -- couchdbConfig will override default CouchDB configuration settings.
+# The contents of this map are reformatted into a .ini file laid down
+# by a ConfigMap object.
+# ref: http://docs.couchdb.org/en/latest/config/index.html
 couchdbConfig:
   # couchdb:
   #  uuid: decafbaddecafbaddecafbaddecafbad # Unique identifier for this CouchDB server instance

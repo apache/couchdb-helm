@@ -1,0 +1,9 @@
+{{- define "couchdb.valuesTable" }}
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+  {{- range .Values }}
+      {{- if eq .Key "allowAdminParty" "clusterSize" "couchdbConfig" "createAdminSecret" "schedulerName" "erlangFlags" "persistentVolume" "enableSearch" }}
+| {{ .Key }} | {{ .Type }} | {{ if .Default }}{{ .Default }}{{ else }}{{ .AutoDefault }}{{ end }} | {{ if .Description }}{{ .Description }}{{ else }}{{ .AutoDescription }}{{ end }} |
+      {{- end }}
+  {{- end }}
+{{- end }}

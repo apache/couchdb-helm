@@ -3,6 +3,10 @@ name: Rebuild index.yaml manually
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   rebuild:
     runs-on: ubuntu-latest

@@ -43,6 +43,29 @@ Create a random string if the supplied key does not exist
 {{- end -}}
 {{- end -}}
 
+{{- /*
+Create a random string if the supplied "secret" key does not exist. Otherwise create the key in a persistent fashion
+using `lookup` and `get`. The "key", "ns", and "secretName" keys need to be provided for this to work
+*/ -}}
+{{- define "couchdb.defaultsecret-stateful" -}}
+  {{- if .secret -}}
+    {{- .secret | b64enc | quote -}}
+  {{- else -}}
+    {{- /* generate secret, which will be overwritten if already exists */ -}}
+    {{- $autoSecret := randAlphaNum 20 | b64enc -}}
+    {{- if and (not (empty .key)) (not (empty .secretName)) }}
+      {{- $currentSecret := lookup "v1" "Secret" .ns .secretName }}
+      {{- if $currentSecret }}
+        {{- /* already exists, looking up */ -}}
+        {{- $autoSecret = get $currentSecret.data .key -}}
+      {{- end }}
+    {{- end }}
+    {{- print $autoSecret | quote -}}
+  {{- end -}}
+{{- end -}}
+
+
+
 {{/*
 Labels used to define Pods in the CouchDB statefulset
 */}}
@@ -78,4 +101,4 @@ Fail if couchdbConfig.couchdb.uuid is undefined
 */}}
 {{- define "couchdb.uuid" -}}
 {{- required "A value for couchdbConfig.couchdb.uuid must be set" (.Values.couchdbConfig.couchdb | default dict).uuid -}}
-{{- end -}} 
+{{- end -}}

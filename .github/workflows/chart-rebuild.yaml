@@ -1,6 +1,11 @@
+# Will be superseded by https://github.com/helm/chart-releaser/issues/133
 name: Rebuild index.yaml manually
 on:
   workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   rebuild:
@@ -9,6 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          persist-credentials: false
           ref: 'gh-pages'
           fetch-depth: 0
 
@@ -19,7 +25,7 @@ jobs:
 
       - name: Rebuild index.yaml
         env:
-          version: v1.4.0
+          version: v1.5.0
         run: |
           if [[ ! -d "$RUNNER_TOOL_CACHE" ]]; then
               echo "Cache directory '$RUNNER_TOOL_CACHE' does not exist" >&2

@@ -7,3 +7,9 @@
 [submodule ".github/actions/chart-releaser-action"]
 	path = .github/actions/chart-releaser-action
 	url = https://github.com/helm/chart-releaser-action.git
+[submodule ".github/actions/setup-helm"]
+	path = .github/actions/setup-helm
+	url = https://github.com/Azure/setup-helm.git
+[submodule ".github/actions/create-pull-request"]
+	path = .github/actions/create-pull-request
+	url = https://github.com/peter-evans/create-pull-request.git

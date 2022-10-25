@@ -19,7 +19,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Helm
-        uses: azure/setup-helm@v3
+        uses: ./.github/actions/setup-helm
         with:
           version: v3.10.0
 
@@ -52,7 +52,7 @@ jobs:
 
       - name: Create Pull Request
         id: cpr
-        uses: peter-evans/create-pull-request@v4
+        uses: ./.github/actions/create-pull-request
         with:
           commit-message: Rebuild index.yaml
           title: Rebuild index.yaml

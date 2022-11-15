@@ -209,6 +209,10 @@ spec:
         labels:
           app: {{ template "couchdb.name" . }}
           release: {{ .Release.Name }}
+        {{- with .Values.persistentVolume.annotations }}
+        annotations:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
       spec:
         accessModes:
         {{- range .Values.persistentVolume.accessModes }}

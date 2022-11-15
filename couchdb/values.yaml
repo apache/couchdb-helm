@@ -52,6 +52,7 @@ serviceAccount:
 ## provisioner.
 persistentVolume:
   enabled: false
+  annotations: {}
   accessModes:
     - ReadWriteOnce
   size: 10Gi

@@ -187,6 +187,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `ingress.tls`                        |                                        |
 | `persistentVolume.accessModes`       | ReadWriteOnce                          |
 | `persistentVolume.storageClass`      | Default for the Kube cluster           |
+| `persistentVolume.annotations`       | {}                                     |
 | `podManagementPolicy`                | Parallel                               |
 | `affinity`                           |                                        |
 | `topologySpreadConstraints`          |                                        |

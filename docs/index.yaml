@@ -3,7 +3,7 @@ entries:
   couchdb:
   - apiVersion: v1
     appVersion: 3.2.1
-    created: "2022-11-15T15:38:29.086863061-08:00"
+    created: "2022-11-16T09:45:06.52472612-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: 9091c8a4bca3c965ef6b18907a9e0a4b8c1db38fc312e8a3f59f96a39cd005a1
@@ -23,11 +23,11 @@ entries:
     - https://github.com/apache/couchdb-helm
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-3.6.3.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-3.6.3.tgz
     version: 3.6.3
   - apiVersion: v1
     appVersion: 3.2.1
-    created: "2022-11-15T15:38:29.086299922-08:00"
+    created: "2022-11-16T09:45:06.524150605-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: a04f5c774f9696270562b01721e17b52b03a6bca2ef3fa55129b5d0a320552c8
@@ -47,11 +47,11 @@ entries:
     - https://github.com/apache/couchdb-helm
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-3.6.1.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-3.6.1.tgz
     version: 3.6.1
   - apiVersion: v1
     appVersion: 3.2.1
-    created: "2022-11-15T15:38:29.085195856-08:00"
+    created: "2022-11-16T09:45:06.523598429-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: 8a6dc96fbf7df0f4bf1f95bd763fb523bad98dcc34282a5b3623c2a5b2b5d36a
@@ -71,11 +71,11 @@ entries:
     - https://github.com/apache/couchdb-helm
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-3.6.0.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-3.6.0.tgz
     version: 3.6.0
   - apiVersion: v1
     appVersion: 3.2.1
-    created: "2022-11-15T15:38:29.084678117-08:00"
+    created: "2022-11-16T09:45:06.523026812-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: cf08bce16aa11476c93b48208182235b10541d5b0b75f6de87775c94742e02b1
@@ -95,11 +95,11 @@ entries:
     - https://github.com/apache/couchdb-helm
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-3.5.2.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-3.5.2.tgz
     version: 3.5.2
   - apiVersion: v1
     appVersion: 3.2.1
-    created: "2022-11-15T15:38:29.084202216-08:00"
+    created: "2022-11-16T09:45:06.522035975-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: e0042aa48624c3b795b82d473c08ff181ead9c7ccd172b09c3b57021d08dca60
@@ -118,11 +118,11 @@ entries:
     sources:
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-3.5.1.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-3.5.1.tgz
     version: 3.5.1
   - apiVersion: v1
     appVersion: 3.2.0
-    created: "2022-11-15T15:38:29.083728169-08:00"
+    created: "2022-11-16T09:45:06.521535657-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: ea79c63e56c3c7d9f4b185bba5c5e89402de62b31dd61b928d9666b0466179a7
@@ -141,11 +141,11 @@ entries:
     sources:
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-3.5.0.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-3.5.0.tgz
     version: 3.5.0
   - apiVersion: v1
     appVersion: 3.2.0
-    created: "2022-11-15T15:38:29.083196226-08:00"
+    created: "2022-11-16T09:45:06.520953697-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: 1fd2f15ab2449e2a6e00d09163de7282f21b3fe4f902c967b37c94d546373616
@@ -164,11 +164,11 @@ entries:
     sources:
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-3.4.1.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-3.4.1.tgz
     version: 3.4.1
   - apiVersion: v1
     appVersion: 3.2.0
-    created: "2022-11-15T15:38:29.082752527-08:00"
+    created: "2022-11-16T09:45:06.520433848-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: f02403a6e33116ca8ac7d4cf438e6fd449628be2624c54e4fab4598b368a99f8
@@ -187,11 +187,11 @@ entries:
     sources:
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-3.4.0.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-3.4.0.tgz
     version: 3.4.0
   - apiVersion: v1
     appVersion: 3.1.1
-    created: "2022-11-15T15:38:29.082302712-08:00"
+    created: "2022-11-16T09:45:06.519983344-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: 20e63d0f49af172cf80bfe242e8b2eca4dd8de99a4c2cddd53c41b22233547f2
@@ -210,11 +210,11 @@ entries:
     sources:
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-3.3.4.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-3.3.4.tgz
     version: 3.3.4
   - apiVersion: v1
     appVersion: 2.3.1
-    created: "2022-11-15T15:38:29.081863076-08:00"
+    created: "2022-11-16T09:45:06.519537614-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: 2eb7baa9fd807194a6c223b0fd0959819c3fc0b7b3ad640f6a44d34004d65d33
@@ -233,11 +233,11 @@ entries:
     sources:
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-3.3.3.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-3.3.3.tgz
     version: 3.3.3
   - apiVersion: v1
     appVersion: 2.3.1
-    created: "2022-11-15T15:38:29.081414484-08:00"
+    created: "2022-11-16T09:45:06.519102845-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: fd3b6cfa14fe2bb7c30919dc328c74e9ccdb833e3f29dd0e0e5b14cfa1711952
@@ -256,11 +256,11 @@ entries:
     sources:
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-3.3.2.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-3.3.2.tgz
     version: 3.3.2
   - apiVersion: v1
     appVersion: 2.3.1
-    created: "2022-11-15T15:38:29.080929384-08:00"
+    created: "2022-11-16T09:45:06.518653856-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: 6c6f9e646f4eda3bcca8556f2ff8f8d456e411136012c67e359c21c12c10785e
@@ -279,11 +279,11 @@ entries:
     sources:
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-3.3.1.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-3.3.1.tgz
     version: 3.3.1
   - apiVersion: v1
     appVersion: 2.3.1
-    created: "2022-11-15T15:38:29.080418317-08:00"
+    created: "2022-11-16T09:45:06.518220117-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: 0d2613f898fd6f6d86e396e2f64f21e85d3d07889fe3fcc76e03cdb741ecce74
@@ -302,11 +302,11 @@ entries:
     sources:
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-3.3.0.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-3.3.0.tgz
     version: 3.3.0
   - apiVersion: v1
     appVersion: 2.3.1
-    created: "2022-11-15T15:38:29.079936394-08:00"
+    created: "2022-11-16T09:45:06.517778992-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: bc1fc4cd7208209abce383d0f57ae7c628698462b63af78e9b2641f8afd40c6e
@@ -325,11 +325,11 @@ entries:
     sources:
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-3.2.0.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-3.2.0.tgz
     version: 3.2.0
   - apiVersion: v1
     appVersion: 2.3.1
-    created: "2022-11-15T15:38:29.078924183-08:00"
+    created: "2022-11-16T09:45:06.517252476-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: c6e72b6d9d7befc8ec015852e1bf74476222953ebcd2803ac33c1c0491f96d16
@@ -348,11 +348,11 @@ entries:
     sources:
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-3.1.0.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-3.1.0.tgz
     version: 3.1.0
   - apiVersion: v1
     appVersion: 2.3.1
-    created: "2022-11-15T15:38:29.078485385-08:00"
+    created: "2022-11-16T09:45:06.516665011-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: 7770f1c19e948d9928eeed4f11ff960e598149bb5c0ae3e1f546b61e9dfb65f4
@@ -371,11 +371,11 @@ entries:
     sources:
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-3.0.0.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-3.0.0.tgz
     version: 3.0.0
   - apiVersion: v1
     appVersion: 2.3.1
-    created: "2022-11-15T15:38:29.078080152-08:00"
+    created: "2022-11-16T09:45:06.515665566-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: db0815c2766f76049b58d0954b66e0b70bf673a7d11c1d3cd9e07c775c646c12
@@ -394,11 +394,11 @@ entries:
     sources:
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-2.4.1.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-2.4.1.tgz
     version: 2.4.1
   - apiVersion: v1
     appVersion: 2.3.1
-    created: "2022-11-15T15:38:29.077703293-08:00"
+    created: "2022-11-16T09:45:06.515274868-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: daddf6cc7fe8bb63d6fa8679565d4496d92c23d9ff85b19521fca74c6412bc11
@@ -417,11 +417,11 @@ entries:
     sources:
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-2.4.0.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-2.4.0.tgz
     version: 2.4.0
   - apiVersion: v1
     appVersion: 2.3.1
-    created: "2022-11-15T15:38:29.077298586-08:00"
+    created: "2022-11-16T09:45:06.514887486-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: 0eba7c20ec47bc8556b3cb3b5137b578d46b37397493087d61b8199066f84782
@@ -440,11 +440,11 @@ entries:
     sources:
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-2.3.0.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-2.3.0.tgz
     version: 2.3.0
   - apiVersion: v1
     appVersion: 2.3.1
-    created: "2022-11-15T15:38:29.076930724-08:00"
+    created: "2022-11-16T09:45:06.514521114-08:00"
     description: A database featuring seamless multi-master sync, that scales from
       big data to mobile, with an intuitive HTTP/JSON API and designed for reliability.
     digest: f68e6187c2b65a02fdde9d49ec38e76a68c3d82421e5ea9e599bac87f4193c6a
@@ -463,6 +463,6 @@ entries:
     sources:
     - https://github.com/apache/couchdb-docker
     urls:
-    - couchdb-2.2.0.tgz
+    - https://apache.github.io/couchdb-helm/couchdb-2.2.0.tgz
     version: 2.2.0
-generated: "2022-11-15T15:38:29.076455179-08:00"
+generated: "2022-11-16T09:45:06.514050815-08:00"

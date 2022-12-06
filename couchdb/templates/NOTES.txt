@@ -27,6 +27,8 @@ NOTE: You are using an auto-generated value for the Couch DB UUID
   - You can get the current value with:
 ```
 kubectl -n {{ $.Release.Namespace }} get secret {{ include "couchdb.fullname" . }}-internal --template='{{print "{{" }}index .data "uuid" | base64decode{{ print "}}" }}'
+```
+{{- end }}
 
 {{- $erlangCookie := .Values.erlangFlags.setcookie }}
 {{- if (empty $erlangCookie) }}

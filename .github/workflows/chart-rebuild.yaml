@@ -1,0 +1,63 @@
+# Will be superseded by https://github.com/helm/chart-releaser/issues/133
+name: Rebuild index.yaml manually
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          ref: 'gh-pages'
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: ./.github/actions/setup-helm
+        with:
+          version: v3.10.0
+
+      - name: Rebuild index.yaml
+        env:
+          version: v1.5.0
+        run: |
+          if [[ ! -d "$RUNNER_TOOL_CACHE" ]]; then
+              echo "Cache directory '$RUNNER_TOOL_CACHE' does not exist" >&2
+              exit 1
+          fi
+
+          arch=$(uname -m)
+          cache_dir="$RUNNER_TOOL_CACHE/ct/$version/$arch"
+
+          if [[ ! -d "$cache_dir" ]]; then
+              mkdir -p "$cache_dir"
+
+              echo "Installing chart-releaser..."
+              curl -sSLo cr.tar.gz "https://github.com/helm/chart-releaser/releases/download/$version/chart-releaser_${version#v}_linux_amd64.tar.gz"
+              tar -xzf cr.tar.gz -C "$cache_dir"
+              rm -f cr.tar.gz
+
+              echo 'Adding cr directory to PATH...'
+              export PATH="$cache_dir:$PATH"
+          fi
+
+          echo "Rebuilding index.yaml"
+          scripts/rebuild.sh
+
+      - name: Create Pull Request
+        id: cpr
+        uses: ./.github/actions/create-pull-request
+        with:
+          commit-message: Rebuild index.yaml
+          title: Rebuild index.yaml
+
+      - name: Check outputs
+        run: |
+          echo "Created Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"

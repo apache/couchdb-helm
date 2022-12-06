@@ -43,6 +43,29 @@ Create a random string if the supplied key does not exist
 {{- end -}}
 {{- end -}}
 
+{{- /*
+Create a random string if the supplied "secret" key does not exist. Otherwise create the key in a persistent fashion
+using `lookup` and `get`. The "key", "ns", and "secretName" keys need to be provided for this to work
+*/ -}}
+{{- define "couchdb.defaultsecret-stateful" -}}
+  {{- if .secret -}}
+    {{- .secret | b64enc | quote -}}
+  {{- else -}}
+    {{- /* generate secret, which will be overwritten if already exists */ -}}
+    {{- $autoSecret := randAlphaNum 20 | b64enc -}}
+    {{- if and (not (empty .key)) (not (empty .secretName)) }}
+      {{- $currentSecret := lookup "v1" "Secret" .ns .secretName }}
+      {{- if $currentSecret }}
+        {{- /* already exists, looking up */ -}}
+        {{- $autoSecret = get $currentSecret.data .key -}}
+      {{- end }}
+    {{- end }}
+    {{- print $autoSecret | quote -}}
+  {{- end -}}
+{{- end -}}
+
+
+
 {{/*
 Labels used to define Pods in the CouchDB statefulset
 */}}
@@ -83,15 +106,17 @@ If serviceAccount.name is specified, use that, else use the couchdb instance nam
     Also warn in NOTES.txt if this value is not persistent
 */}}
 {{- define "couchdb.uuid" -}}
-  {{- $uuidVar := index (.Values.couchdbConfig.couchdb | default dict) "uuid" -}}
-  {{- if (empty $uuidVar) }}
-    {{- $secretName := print (include "couchdb.fullname" .) "-internal" }}
-    {{- $currentSecret := lookup "v1" "Secret" $.Release.Namespace $secretName}}
-    {{- if and $currentSecret (not .Values.dangerRegenerateAutomatedValues ) }}
-      {{- $uuidVar = get $currentSecret.data "uuid" | b64dec }}
-    {{- else }}
-      {{- $uuidVar = uuidv4 -}}
-    {{- end }}
+
+{{- $uuidVar := index (.Values.couchdbConfig.couchdb | default dict) "uuid" -}}
+{{- if (empty $uuidVar) }}
+  {{- $secretName := print (include "couchdb.fullname" .) "-internal" }}
+  {{- $currentSecret := lookup "v1" "Secret" $.Release.Namespace $secretName}}
+  {{- if and $currentSecret (not .Values.dangerRegenerateAutomatedValues ) }}
+    {{- $uuidVar = get $currentSecret.data "uuid" | b64dec }}
+  {{- else }}
+    {{- $uuidVar = uuidv4 -}}
   {{- end }}
-  {{- print $uuidVar -}}
+{{- end }}
+{{- print $uuidVar -}}
+
 {{- end -}}

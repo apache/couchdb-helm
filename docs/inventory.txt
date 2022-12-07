@@ -1,0 +1,19 @@
+couchdb-2.2.0.tgz: 3e2f02e Address review comments
+couchdb-2.3.0.tgz: 40832bb Add configurable path
+couchdb-2.4.0.tgz: d6fec58 Bump chart version to 2.4.0
+couchdb-2.4.1.tgz: ad5417d Bugfix: fixes wrong Values iteration in ingress host
+couchdb-3.0.0.tgz: b46f424 Require a server instance UUID (#15)
+couchdb-3.1.0.tgz: bbf7201 Bump chart version
+couchdb-3.2.0.tgz: d8a2194 Bump chart version to 3.2.0
+couchdb-3.3.0.tgz: bb17404 Prehashed pw (#26)
+couchdb-3.3.1.tgz: 832994c Publish 3.3.1 chart
+couchdb-3.3.2.tgz: fc411c1 Update chart and index
+couchdb-3.3.3.tgz: da1d946 Bump chart version and publish
+couchdb-3.3.4.tgz: a75233c Bump default CouchDB version to 3.1.1
+couchdb-3.4.0.tgz: 252e73b Bump chart to 3.4.0 CouchDB to 3.2.0
+couchdb-3.4.1.tgz: 6e46579 Publish updated chart
+couchdb-3.5.0.tgz: 9f10dad Add topologySpreadConstraints parameter to be used in StatefulSet (#59)
+couchdb-3.5.1.tgz: e727842 Bump chart version and publish
+couchdb-3.5.2.tgz: dc2899b Bump chart version and publish
+couchdb-3.6.0.tgz: 22761f9 Add helm post-install hook to automate placement tagging in CouchDB nodes (#66)
+couchdb-3.6.1.tgz: bd9bce1 Bump chart version and publish

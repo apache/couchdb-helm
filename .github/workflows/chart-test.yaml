@@ -1,0 +1,62 @@
+name: Lint and Test Charts
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    paths:
+      - '.github/workflows/chart-test.yaml'
+      - '.github/actions/**'
+      - 'couchdb/**'
+
+permissions:
+  checks: write
+  contents: read
+  statuses: write
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          submodules: recursive
+
+      - name: Set up Helm
+        uses: ./.github/actions/setup-helm
+        with:
+          version: v3.10.0
+
+      - name: Set up chart-testing
+        uses: ./.github/actions/chart-testing-action
+
+      - name: Run chart-testing (lint all)
+        run: ct lint --target-branch main --all --chart-dirs .
+
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          submodules: recursive
+
+      - name: Set up Helm
+        uses: ./.github/actions/setup-helm
+        with:
+          version: v3.10.0
+
+      - name: Set up chart-testing
+        uses: ./.github/actions/chart-testing-action
+
+      - name: Create kind cluster
+        uses: ./.github/actions/kind-action
+
+      - name: Run chart-testing (install all)
+        run: ct install --target-branch main --all --upgrade --chart-dirs .

@@ -1,6 +1,6 @@
 # CouchDB
 
-![Version: 3.6.1](https://img.shields.io/badge/Version-3.6.1-informational?style=flat-square) ![AppVersion: 3.2.1](https://img.shields.io/badge/AppVersion-3.2.1-informational?style=flat-square)
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
 
 Apache CouchDB is a database featuring seamless multi-master sync, that scales
 from big data to mobile, with an intuitive HTTP/JSON API and designed for
@@ -18,7 +18,7 @@ storage volumes to each Pod in the Deployment.
 ```bash
 $ helm repo add couchdb https://apache.github.io/couchdb-helm
 $ helm install couchdb/couchdb \
-  --version=3.6.1 \
+  --version={{ template "chart.version" . }} \
   --set allowAdminParty=true \
   --set couchdbConfig.couchdb.uuid=$(curl https://www.uuidgenerator.net/api/version4 2>/dev/null | tr -d -)
 ```
@@ -44,7 +44,7 @@ Afterwards install the chart replacing the UUID
 ```bash
 $ helm install \
   --name my-release \
-  --version=3.6.1 \
+  --version={{ template "chart.version" . }} \
   --set couchdbConfig.couchdb.uuid=decafbaddecafbaddecafbaddecafbad \
   couchdb/couchdb
 ```
@@ -53,7 +53,7 @@ This will create a Secret containing the admin credentials for the cluster.
 Those credentials can be retrieved as follows:
 
 ```bash
-$ kubectl get secret my-release-couchdb -o go-template='{{ .data.adminPassword }}' | base64 --decode
+$ kubectl get secret my-release-couchdb -o go-template='{{ print "{{ .data.adminPassword }}" }}' | base64 --decode
 ```
 
 If you prefer to configure the admin credentials directly you can create a
@@ -63,14 +63,14 @@ Secret containing `adminUsername`, `adminPassword` and `cookieAuthSecret` keys:
 $  kubectl create secret generic my-release-couchdb --from-literal=adminUsername=foo --from-literal=adminPassword=bar --from-literal=cookieAuthSecret=baz
 ```
 
-If you want to set the `adminHash` directly to achieve consistent salts between
+If you want to set the `adminHash` directly to achieve consistent salts between 
 different nodes you need to addionally add the key `password.ini` to the secret:
 
 ```bash
 $  kubectl create secret generic my-release-couchdb \
    --from-literal=adminUsername=foo \
    --from-literal=cookieAuthSecret=baz \
-   --from-file=./my-password.ini
+   --from-file=./my-password.ini 
 ```
 
 With the following contents in `my-password.ini`:
@@ -85,7 +85,7 @@ and then install the chart while overriding the `createAdminSecret` setting:
 ```bash
 $ helm install \
   --name my-release \
-  --version=3.6.1 \
+  --version={{ template "chart.version" . }} \
   --set createAdminSecret=false \
   --set couchdbConfig.couchdb.uuid=decafbaddecafbaddecafbaddecafbad \
   couchdb/couchdb
@@ -121,7 +121,7 @@ upgrade as follows:
 
 ```bash
 $ helm upgrade <release-name> \
-  --version=3.6.1 \
+  --version={{ template "chart.version" . }} \
   --reuse-values \
   --set couchdbConfig.couchdb.uuid=<UUID> \
   couchdb/couchdb
@@ -134,7 +134,7 @@ version semantics. You can upgrade directly from `stable/couchdb` to this chart 
 
 ```bash
 $ helm repo add couchdb https://apache.github.io/couchdb-helm
-$ helm upgrade my-release --version=3.6.1 couchdb/couchdb
+$ helm upgrade my-release --version={{ template "chart.version" . }} couchdb/couchdb
 ```
 
 ## Configuration
@@ -142,15 +142,7 @@ $ helm upgrade my-release --version=3.6.1 couchdb/couchdb
 The following table lists the most commonly configured parameters of the
 CouchDB chart and their default values:
 
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| allowAdminParty | bool | `false` | If allowAdminParty is enabled the cluster will start up without any database administrator account; i.e., all users will be granted administrative access. Otherwise, the system will look for a Secret called <ReleaseName>-couchdb containing `adminUsername`, `adminPassword` and `cookieAuthSecret` keys. See the `createAdminSecret` flag. ref: https://kubernetes.io/docs/concepts/configuration/secret/ |
-| clusterSize | int | `3` | the initial number of nodes in the CouchDB cluster. |
-| couchdbConfig | object | `{"chttpd":{"bind_address":"any","require_valid_user":false}}` | couchdbConfig will override default CouchDB configuration settings. The contents of this map are reformatted into a .ini file laid down by a ConfigMap object. ref: http://docs.couchdb.org/en/latest/config/index.html |
-| createAdminSecret | bool | `true` | If createAdminSecret is enabled a Secret called <ReleaseName>-couchdb will be created containing auto-generated credentials. Users who prefer to set these values themselves have a couple of options: 1) The `adminUsername`, `adminPassword`, `adminHash`, and `cookieAuthSecret`    can be defined directly in the chart's values. Note that all of a chart's    values are currently stored in plaintext in a ConfigMap in the tiller    namespace. 2) This flag can be disabled and a Secret with the required keys can be    created ahead of time. |
-| enableSearch | bool | `false` | Flip this to flag to include the Search container in each Pod |
-| erlangFlags | object | `{"name":"couchdb"}` | erlangFlags is a map that is passed to the Erlang VM as flags using the ERL_FLAGS env. The `name` flag is required to establish connectivity between cluster nodes. ref: http://erlang.org/doc/man/erl.html#init_flags |
-| persistentVolume | object | `{"accessModes":["ReadWriteOnce"],"enabled":false,"size":"10Gi"}` | The storage volume used by each Pod in the StatefulSet. If a persistentVolume is not enabled, the Pods will use `emptyDir` ephemeral local storage. Setting the storageClass attribute to "-" disables dynamic provisioning of Persistent Volumes; leaving it unset will invoke the default provisioner. |
+{{ template "couchdb.valuesTable" . }}
 
 You can set the values of the `couchdbConfig` map according to the
 [official configuration][4]. The following shows the map's default values and
@@ -182,7 +174,6 @@ A variety of other parameters are also configurable. See the comments in the
 | `initImage.pullPolicy`               | Always                                 |
 | `ingress.enabled`                    | false                                  |
 | `ingress.hosts`                      | chart-example.local                    |
-| `ingress.className`                  | chart-example.local                    |
 | `ingress.annotations`                |                                        |
 | `ingress.path`                       | /                                      |
 | `ingress.tls`                        |                                        |

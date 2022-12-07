@@ -18,3 +18,15 @@ some required system databases:
 {{- end }}
 
 Then it's time to relax.
+
+{{- $erlangCookie := .Values.erlangFlags.setcookie }}
+{{- if (empty $erlangCookie) }}
+
+NOTE: You are using an auto-generated value for the Erlang Cookie
+  - We recommend making this value persistent by setting it in: `erlangFlags.setcookie`
+  - Changing this value can cause problems for the Couch DB installation (particularly upgrades / config changes)
+  - You can get the current value with:
+```
+kubectl -n {{ $.Release.Namespace }} get secret {{ include "couchdb.fullname" . }} --template='{{print "{{" }}index .data "erlangCookie" | base64decode{{ print "}}" }}'
+```
+{{- end }}

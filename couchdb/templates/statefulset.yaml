@@ -207,6 +207,10 @@ spec:
 {{- if not .Values.persistentVolume.enabled }}
         - name: database-storage
           emptyDir: {}
+{{- else if .Values.existingPersistentVolume.enabled }}
+        - name: database-storage
+          persistentVolumeClaim:
+            claimName: {{ .Values.couchdb.existingPersistentVolume.claimName }}
 {{- else }}
   volumeClaimTemplates:
     - metadata:

@@ -52,6 +52,7 @@ serviceAccount:
 # provisioner.
 persistentVolume:
   enabled: false
+  existing: false
   annotations: {}
   accessModes:
     - ReadWriteOnce

@@ -25,5 +25,5 @@ spec:
     storageClassName: "{{ .Values.persistentVolume.storageClass }}"
   {{- end }}
   {{- end }}
-  volumeName: {{ .Values.persistentVolume.name }}
+  volumeName: {{ .Values.persistentVolume.volumeName }}
 {{- end }}

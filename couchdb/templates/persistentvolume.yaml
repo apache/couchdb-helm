@@ -1,0 +1,20 @@
+{{- if .Values.persistentVolume.enabled and .Values.persistentVolume.existing -}}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Values.persistentVolume.volumeName }}
+spec:
+{{- if .Values.persistentVolume.storageClass }}
+{{- if (eq "-" .Values.persistentVolume.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.persistentVolume.storageClass }}"
+{{- end }}
+  accessModes:
+  {{- range .Values.persistentVolume.accessModes }}
+    - {{ . | quote }}
+  {{- end }}
+  capacity:
+    storage: {{ .Values.persistentVolume.size }}
+  {{ toYaml .Values.persistentVolume.volumeSource | indent 2 }}
+{{- end }}

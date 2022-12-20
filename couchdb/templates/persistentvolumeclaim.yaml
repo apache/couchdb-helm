@@ -1,0 +1,29 @@
+{{- if .Values.persistentVolume.enabled and .Values.persistentVolume.existing -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.persistentVolume.claimName }}
+  labels:
+    app: {{ template "couchdb.name" . }}
+    release: {{ .Release.Name }}
+  {{- with .Values.persistentVolume.annotations }}
+  annotations:
+    {{- toYaml . | nindent 10 }}
+  {{- end }}
+spec:
+  accessModes:
+  {{- range .Values.persistentVolume.accessModes }}
+    - {{ . | quote }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.persistentVolume.size | quote }}
+  {{- if .Values.persistentVolume.storageClass }}
+  {{- if (eq "-" .Values.persistentVolume.storageClass) }}
+    storageClassName: ""
+  {{- else }}
+    storageClassName: "{{ .Values.persistentVolume.storageClass }}"
+  {{- end }}
+  {{- end }}
+  volumeName: {{ .Values.persistentVolume.name }}
+{{- end }}

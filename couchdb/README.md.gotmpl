@@ -63,21 +63,14 @@ Secret containing `adminUsername`, `adminPassword` and `cookieAuthSecret` keys:
 $  kubectl create secret generic my-release-couchdb --from-literal=adminUsername=foo --from-literal=adminPassword=bar --from-literal=cookieAuthSecret=baz
 ```
 
-If you want to set the `adminHash` directly to achieve consistent salts between 
-different nodes you need to addionally add the key `password.ini` to the secret:
+If you want to set the `adminHash` directly to achieve consistent salts between
+different nodes you need to add it to the secret:
 
 ```bash
 $  kubectl create secret generic my-release-couchdb \
    --from-literal=adminUsername=foo \
    --from-literal=cookieAuthSecret=baz \
-   --from-file=./my-password.ini 
-```
-
-With the following contents in `my-password.ini`:
-
-```
-[admins]
-foo = <pbkdf2-hash>
+   --from-literal=adminHash=-pbkdf2-d4b887da....
 ```
 
 and then install the chart while overriding the `createAdminSecret` setting:
@@ -86,6 +79,7 @@ and then install the chart while overriding the `createAdminSecret` setting:
 $ helm install \
   --name my-release \
   --version={{ template "chart.version" . }} \
+  --set adminHash=true/false \
   --set createAdminSecret=false \
   --set couchdbConfig.couchdb.uuid=decafbaddecafbaddecafbaddecafbad \
   couchdb/couchdb
@@ -157,62 +151,68 @@ required options to set:
 A variety of other parameters are also configurable. See the comments in the
 `values.yaml` file for further details:
 
-|           Parameter                  |                Default                 |
-|--------------------------------------|----------------------------------------|
-| `adminUsername`                      | admin                                  |
-| `adminPassword`                      | auto-generated                         |
-| `adminHash`                          |                                        |
-| `cookieAuthSecret`                   | auto-generated                         |
-| `image.repository`                   | couchdb                                |
-| `image.tag`                          | 3.2.1                                  |
-| `image.pullPolicy`                   | IfNotPresent                           |
-| `searchImage.repository`             | kocolosk/couchdb-search                |
-| `searchImage.tag`                    | 0.1.0                                  |
-| `searchImage.pullPolicy`             | IfNotPresent                           |
-| `initImage.repository`               | busybox                                |
-| `initImage.tag`                      | latest                                 |
-| `initImage.pullPolicy`               | Always                                 |
-| `ingress.enabled`                    | false                                  |
-| `ingress.hosts`                      | chart-example.local                    |
-| `ingress.annotations`                |                                        |
-| `ingress.path`                       | /                                      |
-| `ingress.tls`                        |                                        |
-| `persistentVolume.accessModes`       | ReadWriteOnce                          |
-| `persistentVolume.storageClass`      | Default for the Kube cluster           |
-| `podManagementPolicy`                | Parallel                               |
-| `affinity`                           |                                        |
-| `topologySpreadConstraints`          |                                        |
-| `annotations`                        |                                        |
-| `tolerations`                        |                                        |
-| `resources`                          |                                        |
-| `service.annotations`                |                                        |
-| `service.enabled`                    | true                                   |
-| `service.type`                       | ClusterIP                              |
-| `service.externalPort`               | 5984                                   |
-| `dns.clusterDomainSuffix`            | cluster.local                          |
-| `networkPolicy.enabled`              | true                                   |
-| `serviceAccount.enabled`             | true                                   |
-| `serviceAccount.create`              | true                                   |
-| `serviceAccount.imagePullSecrets`    |                                        |
-| `sidecars`                           | {}                                     |
-| `livenessProbe.enabled`              | true                                   |
-| `livenessProbe.failureThreshold`     | 3                                      |
-| `livenessProbe.initialDelaySeconds`  | 0                                      |
-| `livenessProbe.periodSeconds`        | 10                                     |
-| `livenessProbe.successThreshold`     | 1                                      |
-| `livenessProbe.timeoutSeconds`       | 1                                      |
-| `readinessProbe.enabled`             | true                                   |
-| `readinessProbe.failureThreshold`    | 3                                      |
-| `readinessProbe.initialDelaySeconds` | 0                                      |
-| `readinessProbe.periodSeconds`       | 10                                     |
-| `readinessProbe.successThreshold`    | 1                                      |
-| `readinessProbe.timeoutSeconds`      | 1                                      |
-| `prometheusPort.enabled`             | false                                  |
-| `prometheusPort.port`                | 17896                                  |
-| `prometheusPort.bind_address`        | 0.0.0.0                                |
-| `placementConfig.enabled`            | false                                  |
-| `placementConfig.image.repository`   | caligrafix/couchdb-autoscaler-placement-manager|
-| `placementConfig.image.tag`          | 0.1.0                                  |
+| Parameter                            | Default                                                                                                                                                      |
+|--------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `adminUsername`                      | admin                                                                                                                                                        |
+| `adminPassword`                      | auto-generated                                                                                                                                               |
+| `adminHash`                          |                                                                                                                                                              |
+| `cookieAuthSecret`                   | auto-generated                                                                                                                                               |
+| `image.repository`                   | couchdb                                                                                                                                                      |
+| `image.tag`                          | 3.2.1                                                                                                                                                        |
+| `image.pullPolicy`                   | IfNotPresent                                                                                                                                                 |
+| `searchImage.repository`             | kocolosk/couchdb-search                                                                                                                                      |
+| `searchImage.tag`                    | 0.1.0                                                                                                                                                        |
+| `searchImage.pullPolicy`             | IfNotPresent                                                                                                                                                 |
+| `initImage.repository`               | busybox                                                                                                                                                      |
+| `initImage.tag`                      | latest                                                                                                                                                       |
+| `initImage.pullPolicy`               | Always                                                                                                                                                       |
+| `ingress.enabled`                    | false                                                                                                                                                        |
+| `ingress.hosts`                      | chart-example.local                                                                                                                                          |
+| `ingress.annotations`                |                                                                                                                                                              |
+| `ingress.path`                       | /                                                                                                                                                            |
+| `ingress.tls`                        |                                                                                                                                                              |
+| `persistentVolume.accessModes`       | ReadWriteOnce                                                                                                                                                |
+| `persistentVolume.storageClass`      | Default for the Kube cluster                                                                                                                                 |
+| `persistentVolume.annotations`       | {}                                                                                                                                                           |
+| `podManagementPolicy`                | Parallel                                                                                                                                                     |
+| `affinity`                           |                                                                                                                                                              |
+| `topologySpreadConstraints`          |                                                                                                                                                              |
+| `annotations`                        |                                                                                                                                                              |
+| `tolerations`                        |                                                                                                                                                              |
+| `resources`                          |                                                                                                                                                              |
+| `autoSetup.enabled`                  | false (if set to true, must have `service.enabled` set to true and a correct `adminPassword` - deploy it with the `--wait` flag to avoid first jobs failure) |
+| `autoSetup.repository`               | alpine/curl                                                                                                                                                  |
+| `autoSetup.tag`                      | latest                                                                                                                                                       |
+| `autoSetup.pullPolicy`               | Always                                                                                                                                                       |
+| `autoSetup.defaultDatabases`         | [`_global_changes`]                                                                                                                                          |
+| `service.annotations`                |                                                                                                                                                              |
+| `service.enabled`                    | true                                                                                                                                                         |
+| `service.type`                       | ClusterIP                                                                                                                                                    |
+| `service.externalPort`               | 5984                                                                                                                                                         |
+| `dns.clusterDomainSuffix`            | cluster.local                                                                                                                                                |
+| `networkPolicy.enabled`              | true                                                                                                                                                         |
+| `serviceAccount.enabled`             | true                                                                                                                                                         |
+| `serviceAccount.create`              | true                                                                                                                                                         |
+| `serviceAccount.imagePullSecrets`    |                                                                                                                                                              |
+| `sidecars`                           | {}                                                                                                                                                           |
+| `livenessProbe.enabled`              | true                                                                                                                                                         |
+| `livenessProbe.failureThreshold`     | 3                                                                                                                                                            |
+| `livenessProbe.initialDelaySeconds`  | 0                                                                                                                                                            |
+| `livenessProbe.periodSeconds`        | 10                                                                                                                                                           |
+| `livenessProbe.successThreshold`     | 1                                                                                                                                                            |
+| `livenessProbe.timeoutSeconds`       | 1                                                                                                                                                            |
+| `readinessProbe.enabled`             | true                                                                                                                                                         |
+| `readinessProbe.failureThreshold`    | 3                                                                                                                                                            |
+| `readinessProbe.initialDelaySeconds` | 0                                                                                                                                                            |
+| `readinessProbe.periodSeconds`       | 10                                                                                                                                                           |
+| `readinessProbe.successThreshold`    | 1                                                                                                                                                            |
+| `readinessProbe.timeoutSeconds`      | 1                                                                                                                                                            |
+| `prometheusPort.enabled`             | false                                                                                                                                                        |
+| `prometheusPort.port`                | 17896                                                                                                                                                        |
+| `prometheusPort.bind_address`        | 0.0.0.0                                                                                                                                                      |
+| `placementConfig.enabled`            | false                                                                                                                                                        |
+| `placementConfig.image.repository`   | caligrafix/couchdb-autoscaler-placement-manager                                                                                                              |
+| `placementConfig.image.tag`          | 0.1.0                                                                                                                                                        |
 
 ## Feedback, Issues, Contributing
 

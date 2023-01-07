@@ -9,6 +9,20 @@ clusterSize: 3
 # ref: https://kubernetes.io/docs/concepts/configuration/secret/
 allowAdminParty: false
 
+# Set it to true to automatically enable the cluster after installation.
+# It will create a post-install job that will send the {"action": "finish_cluster"}
+# message to CouchDB to finalize the cluster and add the defaultDatabases listed.
+# Note that this job needs service.enabled to be set to true and if you use adminHash,
+# a valid adminPassword in the secret. Also set the --wait flag when you install to
+# avoid first jobs failure (helm install --wait ...)
+autoSetup:
+  enabled: false
+  repository: alpine/curl
+  tag: latest
+  pullPolicy: Always
+  defaultDatabases:
+    - _global_changes
+
 # -- If createAdminSecret is enabled a Secret called <ReleaseName>-couchdb will
 # be created containing auto-generated credentials. Users who prefer to set
 # these values themselves have a couple of options:

@@ -114,11 +114,17 @@ upgrade as follows:
 
 ```bash
 $ helm upgrade <release-name> \
-  --version=4.0.0 \
+  --version=3.6.4 \
   --reuse-values \
   --set couchdbConfig.couchdb.uuid=<UUID> \
   couchdb/couchdb
 ```
+
+### Upgrade to 4.0.0
+
+Breaking change between v3 and v4 is the `adminHash` in the secret that no longer uses
+the `password.ini`. It stores the `adminHash` only instead, make sure to change it if you
+use your own secret.
 
 ## Migrating from stable/couchdb
 
@@ -129,10 +135,6 @@ version semantics. You can upgrade directly from `stable/couchdb` to this chart 
 $ helm repo add couchdb https://apache.github.io/couchdb-helm
 $ helm upgrade my-release --version=4.0.0 couchdb/couchdb
 ```
-
-Breaking change between v3 and v4 is the `adminHash` in the secret that no longer uses
-the `password.ini`. It stores the `adminHash` only instead, make sure to change it if you
-use your own secret.
 
 ## Configuration
 

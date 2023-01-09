@@ -115,7 +115,7 @@ upgrade as follows:
 
 ```bash
 $ helm upgrade <release-name> \
-  --version={{ template "chart.version" . }} \
+  --version=3.6.4 \
   --reuse-values \
   --set couchdbConfig.couchdb.uuid=<UUID> \
   couchdb/couchdb

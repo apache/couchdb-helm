@@ -79,7 +79,6 @@ and then install the chart while overriding the `createAdminSecret` setting:
 $ helm install \
   --name my-release \
   --version={{ template "chart.version" . }} \
-  --set adminHash=true/false \
   --set createAdminSecret=false \
   --set couchdbConfig.couchdb.uuid=decafbaddecafbaddecafbaddecafbad \
   couchdb/couchdb

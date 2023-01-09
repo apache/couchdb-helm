@@ -1,6 +1,6 @@
 # CouchDB
 
-![Version: 3.6.5](https://img.shields.io/badge/Version-3.6.5-informational?style=flat-square) ![AppVersion: 3.2.1](https://img.shields.io/badge/AppVersion-3.2.1-informational?style=flat-square)
+![Version: 4.0.0](https://img.shields.io/badge/Version-4.0.0-informational?style=flat-square) ![AppVersion: 3.2.1](https://img.shields.io/badge/AppVersion-3.2.1-informational?style=flat-square)
 
 Apache CouchDB is a database featuring seamless multi-master sync, that scales
 from big data to mobile, with an intuitive HTTP/JSON API and designed for
@@ -18,7 +18,7 @@ storage volumes to each Pod in the Deployment.
 ```bash
 $ helm repo add couchdb https://apache.github.io/couchdb-helm
 $ helm install couchdb/couchdb \
-  --version=3.6.5 \
+  --version=4.0.0 \
   --set allowAdminParty=true \
   --set couchdbConfig.couchdb.uuid=$(curl https://www.uuidgenerator.net/api/version4 2>/dev/null | tr -d -)
 ```
@@ -44,7 +44,7 @@ Afterwards install the chart replacing the UUID
 ```bash
 $ helm install \
   --name my-release \
-  --version=3.6.5 \
+  --version=4.0.0 \
   --set couchdbConfig.couchdb.uuid=decafbaddecafbaddecafbaddecafbad \
   couchdb/couchdb
 ```
@@ -78,7 +78,7 @@ and then install the chart while overriding the `createAdminSecret` setting:
 ```bash
 $ helm install \
   --name my-release \
-  --version=3.6.5 \
+  --version=4.0.0 \
   --set createAdminSecret=false \
   --set couchdbConfig.couchdb.uuid=decafbaddecafbaddecafbaddecafbad \
   couchdb/couchdb
@@ -114,7 +114,7 @@ upgrade as follows:
 
 ```bash
 $ helm upgrade <release-name> \
-  --version=3.6.5 \
+  --version=4.0.0 \
   --reuse-values \
   --set couchdbConfig.couchdb.uuid=<UUID> \
   couchdb/couchdb
@@ -127,8 +127,12 @@ version semantics. You can upgrade directly from `stable/couchdb` to this chart 
 
 ```bash
 $ helm repo add couchdb https://apache.github.io/couchdb-helm
-$ helm upgrade my-release --version=3.6.5 couchdb/couchdb
+$ helm upgrade my-release --version=4.0.0 couchdb/couchdb
 ```
+
+Breaking change between v3 and v4 is the `adminHash` in the secret that no longer uses
+the `password.ini`. It stores the `adminHash` only instead, make sure to change it if you
+use your own secret.
 
 ## Configuration
 

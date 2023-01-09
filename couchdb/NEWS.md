@@ -1,6 +1,6 @@
 # NEWS
 
-## 3.6.5
+## 4.0.0
 
 - Simplified the `adminHash` in the secret
 

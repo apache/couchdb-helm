@@ -120,6 +120,12 @@ $ helm upgrade <release-name> \
   couchdb/couchdb
 ```
 
+### Upgrade to 4.0.0
+
+Breaking change between v3 and v4 is the `adminHash` in the secret that no longer uses
+the `password.ini`. It stores the `adminHash` only instead, make sure to change it if you
+use your own secret.
+
 ## Migrating from stable/couchdb
 
 This chart replaces the `stable/couchdb` chart previously hosted by Helm and continues the

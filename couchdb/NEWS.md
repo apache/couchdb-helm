@@ -3,7 +3,6 @@
 ## 3.6.5
 
 - Simplified the `adminHash` in the secret
-- Added the `autoSetup` to automatically finalize the cluster after installation
 
 # 3.6.4
 

@@ -1,5 +1,9 @@
 # NEWS
 
+## 4.0.0
+
+- Simplified the `adminHash` in the secret
+
 # 3.6.4
 
 - Add `service.labels` value to pass along labels to the client-facing service

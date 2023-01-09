@@ -11,3 +11,4 @@ github:
       required_linear_history: true
     gh-pages: {}
   ghp_branch: gh-pages
+  ghp_path: ~

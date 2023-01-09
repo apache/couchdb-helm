@@ -52,11 +52,19 @@ spec:
         - name: admin-hash-copy
           image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
           imagePullPolicy: {{ .Values.initImage.pullPolicy }}
-          command: ['sh','-c','cp /tmp/password.ini /local.d/ ;']
+          env:
+            - name: "ADMINUSERNAME"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "couchdb.fullname" . }}
+                  key: adminUsername
+            - name: "ADMINHASH"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "couchdb.fullname" . }}
+                  key: adminHash
+          command: ['sh','-c','echo -e "[admins]\n$ADMINUSERNAME = $ADMINHASH" > /local.d/password.ini ;']
           volumeMounts:
-            - name: admin-password
-              mountPath: /tmp/password.ini
-              subPath: "password.ini"
             - name: local-config-storage
               mountPath: /local.d
 {{- end }}
@@ -194,9 +202,6 @@ spec:
 {{- if .Values.adminHash }}
         - name: local-config-storage
           emptyDir: {}
-        - name: admin-password
-          secret:
-            secretName: {{ template "couchdb.fullname" . }}
 {{- end -}}
 
 {{- if not .Values.persistentVolume.enabled }}

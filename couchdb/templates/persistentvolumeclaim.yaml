@@ -1,4 +1,4 @@
-{{- if .Values.persistentVolume.enabled and .Values.persistentVolume.existing -}}
+{{- if and .Values.persistentVolume.enabled .Values.persistentVolume.existing -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -18,12 +18,12 @@ spec:
   resources:
     requests:
       storage: {{ .Values.persistentVolume.size | quote }}
-  {{- if .Values.persistentVolume.storageClass }}
-  {{- if (eq "-" .Values.persistentVolume.storageClass) }}
-    storageClassName: ""
-  {{- else }}
-    storageClassName: "{{ .Values.persistentVolume.storageClass }}"
-  {{- end }}
-  {{- end }}
+{{- if .Values.persistentVolume.storageClass }}
+{{- if (eq "-" .Values.persistentVolume.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.persistentVolume.storageClass }}"
+{{- end }}
+{{- end }}
   volumeName: {{ .Values.persistentVolume.volumeName }}
 {{- end }}

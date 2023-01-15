@@ -1,4 +1,4 @@
-{{- if .Values.persistentVolume.enabled and .Values.persistentVolume.existing -}}
+{{- if and .Values.persistentVolume.enabled .Values.persistentVolume.existing -}}
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -10,11 +10,12 @@ spec:
 {{- else }}
   storageClassName: "{{ .Values.persistentVolume.storageClass }}"
 {{- end }}
+{{- end }}
   accessModes:
   {{- range .Values.persistentVolume.accessModes }}
     - {{ . | quote }}
   {{- end }}
   capacity:
     storage: {{ .Values.persistentVolume.size }}
-  {{ toYaml .Values.persistentVolume.volumeSource | indent 2 }}
+{{ toYaml .Values.persistentVolume.volumeSource | indent 2 }}
 {{- end }}

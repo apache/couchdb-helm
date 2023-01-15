@@ -164,7 +164,6 @@ required options to set:
 A variety of other parameters are also configurable. See the comments in the
 `values.yaml` file for further details:
 
-<<<<<<< HEAD
 | Parameter                              | Default                                          |
 | -------------------------------------- | ------------------------------------------------ |
 | `adminUsername`                        | admin                                            |

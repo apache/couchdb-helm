@@ -64,8 +64,6 @@ using `lookup` and `get`. The "key", "ns", and "secretName" keys need to be prov
   {{- end -}}
 {{- end -}}
 
-
-
 {{/*
 Labels used to define Pods in the CouchDB statefulset
 */}}
@@ -102,3 +100,42 @@ Fail if couchdbConfig.couchdb.uuid is undefined
 {{- define "couchdb.uuid" -}}
 {{- required "A value for couchdbConfig.couchdb.uuid must be set" (.Values.couchdbConfig.couchdb | default dict).uuid -}}
 {{- end -}}
+
+{{/*
+Repurpose volume claim metadata whether using the new volume claim template
+or an existing volume claim.
+*/}}
+{{- define "persistentVolume.metadata" -}}
+name: database-storage
+labels:
+  app: {{ template "couchdb.name" . }}
+  release: {{ .Release.Name }}
+{{- with .Values.persistentVolume.annotations }}
+annotations:
+  {{- toYaml . | nindent 6 }}
+{{- end }}
+{{- end -}}
+
+{{/*
+Repurpose volume claim spec whether using the new volume claim template
+or an existing volume claim.
+*/}}
+{{- define "persistentVolume.spec" -}}
+  accessModes:
+  {{- range .Values.persistentVolume.accessModes }}
+    - {{ . | quote }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.persistentVolume.size | quote }}
+{{- if .Values.persistentVolume.storageClass }}
+{{- if (eq "-" .Values.persistentVolume.storageClass) }}
+storageClassName: ""
+{{- else }}
+storageClassName: "{{ .Values.persistentVolume.storageClass }}"
+{{- end }}
+{{- end }}
+{{- if .Values.persistentVolume.volumeName }}
+volumeName: {{ .Values.persistentVolume.volumeName }}
+{{- end }}
+{{- end }}

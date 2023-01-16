@@ -214,27 +214,7 @@ spec:
 {{- else }}
   volumeClaimTemplates:
     - metadata:
-        name: database-storage
-        labels:
-          app: {{ template "couchdb.name" . }}
-          release: {{ .Release.Name }}
-        {{- with .Values.persistentVolume.annotations }}
-        annotations:
-          {{- toYaml . | nindent 10 }}
-        {{- end }}
+        {{- include "persistentVolume.metadata" . | nindent 8 }}
       spec:
-        accessModes:
-        {{- range .Values.persistentVolume.accessModes }}
-          - {{ . | quote }}
-        {{- end }}
-        resources:
-          requests:
-            storage: {{ .Values.persistentVolume.size | quote }}
-      {{- if .Values.persistentVolume.storageClass }}
-      {{- if (eq "-" .Values.persistentVolume.storageClass) }}
-        storageClassName: ""
-      {{- else }}
-        storageClassName: "{{ .Values.persistentVolume.storageClass }}"
-      {{- end }}
-      {{- end }}
+        {{- include "persistentVolume.spec" . | nindent 8 }}
 {{- end }}

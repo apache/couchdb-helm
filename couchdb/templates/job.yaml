@@ -1,4 +1,4 @@
-{{- if .Values.auto.enabled -}}
+{{- if .Values.autoSetup.enabled -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -22,15 +22,15 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: cluster-setup
-          image: {{ .Values.auto.repository }}:{{ .Values.auto.tag }}
-          imagePullPolicy: {{ .Values.auto.pullPolicy }}
+          image: {{ .Values.autoSetup.repository }}:{{ .Values.autoSetup.tag }}
+          imagePullPolicy: {{ .Values.autoSetup.pullPolicy }}
           command:
             - 'sh'
             - '-c'
             - 'curl -s http://$COUCHDB_ADDRESS/_cluster_setup -X POST -H "Content-Type: application/json" -d "{\"action\": \"finish_cluster\"}" -u $COUCHDB_ADMIN:$COUCHDB_PASS && export IFS=","; for db_name in $DEFAULT_DBS; do curl -X PUT http://$COUCHDB_ADDRESS/$db_name -u $COUCHDB_ADMIN:$COUCHDB_PASS; done'
           env:
             - name: DEFAULT_DBS
-              value: {{ join "," .Values.auto.defaultDatabases }}
+              value: {{ join "," .Values.autoSetup.defaultDatabases }}
             - name: COUCHDB_ADDRESS
               value: "{{ template "couchdb.svcname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.externalPort}}"
             - name: COUCHDB_ADMIN

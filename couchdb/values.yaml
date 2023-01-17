@@ -15,7 +15,7 @@ allowAdminParty: false
 # Note that this job needs service.enabled to be set to true and if you use adminHash,
 # a valid adminPassword in the secret. Also set the --wait flag when you install to
 # avoid first jobs failure (helm install --wait ...)
-autoSetup:
+auto:
   enabled: false
   repository: alpine/curl
   tag: latest

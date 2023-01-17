@@ -1,4 +1,4 @@
-{{- if .Values.autoSetup.enabled -}}
+{{- if and .Values.autoSetup.enabled .Values.service.enabled -}}
 apiVersion: batch/v1
 kind: Job
 metadata:

@@ -1,4 +1,4 @@
-{{- if and .Values.autoSetup.enabled .Values.service.enabled -}}
+{{- if .Values.autoSetup.enabled -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -28,7 +28,7 @@ spec:
           command:
             - 'sh'
             - '-c'
-            - 'curl -s http://$COUCHDB_ADDRESS/_cluster_setup'
+            - 'curl -s http://$COUCHDB_ADDRESS/_cluster_setup -X POST -H "Content-Type: application/json" -d "{\"action\": \"finish_cluster\"}" -u $COUCHDB_ADMIN:$COUCHDB_PASS && export IFS=","; for db_name in $DEFAULT_DBS; do curl -X PUT http://$COUCHDB_ADDRESS/$db_name -u $COUCHDB_ADMIN:$COUCHDB_PASS; done'
           env:
             - name: DEFAULT_DBS
               value: {{ join "," .Values.autoSetup.defaultDatabases }}

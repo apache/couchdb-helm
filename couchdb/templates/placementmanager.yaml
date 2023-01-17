@@ -1,4 +1,4 @@
-{{- if and .Values.autoSetup.enabled -}}
+{{- if .Values.placementConfig.enabled -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -25,20 +25,20 @@ spec:
     spec:
       restartPolicy: OnFailure
       containers:
-        - name: placement-tagging-job
-          image: {{ .Values.placementConfig.image.repository }}:{{ .Values.placementConfig.image.tag }}
-          imagePullPolicy: Always
-          args: ["--placement-manager"]
-          envFrom:
-            - secretRef:
-                name: couchdb-couchdb
-            - configMapRef:
-                name: {{ template "couchdb.fullname" . }}
-          env:
-            - name: NAMESPACE
-              value: {{ .Release.Namespace }}
-            - name: COUCHDB_SVC
-              value: {{ template "couchdb.svcname" . }}
-            - name: COUCHDB_PORT
-              value: {{ .Values.service.externalPort | quote }}
+      - name: placement-tagging-job
+        image: {{ .Values.placementConfig.image.repository }}:{{ .Values.placementConfig.image.tag }}
+        imagePullPolicy: Always
+        args: ["--placement-manager"]
+        envFrom:
+          - secretRef:
+              name: couchdb-couchdb
+          - configMapRef:
+              name: {{ template "couchdb.fullname" . }}
+        env:
+          - name: NAMESPACE
+            value: {{ .Release.Namespace }}
+          - name: COUCHDB_SVC
+            value: {{ template "couchdb.svcname" . }}
+          - name: COUCHDB_PORT
+            value: {{ .Values.service.externalPort | quote }}
 {{- end -}}

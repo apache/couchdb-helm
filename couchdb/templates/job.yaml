@@ -21,28 +21,22 @@ spec:
     spec:
       restartPolicy: OnFailure
       containers:
-      - name: cluster-setup
-        image: {{ .Values.autoSetup.repository }}:{{ .Values.autoSetup.tag }}
-        imagePullPolicy: {{ .Values.autoSetup.pullPolicy }}
-        command:
-          - 'sh'
-          - '-c'
-          - 'curl -s http://$COUCHDB_ADDRESS/_cluster_setup -X POST -H "Content-Type: application/json" -d "{\"action\": \"finish_cluster\"}" -u $COUCHDB_ADMIN:$COUCHDB_PASS && export IFS=","; for db_name in $DEFAULT_DBS; do curl -X PUT http://$COUCHDB_ADDRESS/$db_name -u $COUCHDB_ADMIN:$COUCHDB_PASS; done'
+      - name: placement-tagging-job
+        image: {{ .Values.placementConfig.image.repository }}:{{ .Values.placementConfig.image.tag }}
+        imagePullPolicy: Always
+        args: ["--placement-manager"]
+        envFrom:
+          - secretRef:
+              name: couchdb-couchdb
+          - configMapRef:
+              name: {{ template "couchdb.fullname" . }}
         env:
-          - name: DEFAULT_DBS
-            value: {{ join "," .Values.autoSetup.defaultDatabases }}
-          - name: COUCHDB_ADDRESS
-            value: "{{ template "couchdb.svcname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.externalPort}}"
-          - name: COUCHDB_ADMIN
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "couchdb.fullname" . }}
-                key: adminUsername
-          - name: COUCHDB_PASS
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "couchdb.fullname" . }}
-                key: adminPassword
+          - name: NAMESPACE
+            value: {{ .Release.Namespace }}
+          - name: COUCHDB_SVC
+            value: {{ template "couchdb.svcname" . }}
+          - name: COUCHDB_PORT
+            value: {{ .Values.service.externalPort | quote }}
   backoffLimit: 2
   ttlSecondsAfterFinished: 600
 {{- end -}}

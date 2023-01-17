@@ -37,6 +37,4 @@ spec:
             value: {{ template "couchdb.svcname" . }}
           - name: COUCHDB_PORT
             value: {{ .Values.service.externalPort | quote }}
-  backoffLimit: 2
-  ttlSecondsAfterFinished: 600
 {{- end -}}

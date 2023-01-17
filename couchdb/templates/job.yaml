@@ -1,8 +1,8 @@
-{{- if and .Values.autoSetup.enabled .Values.service.enabled -}}
+{{- if .Values.placementConfig.enabled -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "{{ .Release.Name }}-post-install"
+  name: {{ template "couchdb.fullname" . }}
   labels:
     app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
     app.kubernetes.io/instance: {{ .Release.Name | quote }}

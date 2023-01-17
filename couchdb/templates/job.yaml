@@ -22,8 +22,8 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: cluster-setup
-          image: {{ .Values.autoSetup.repository }}:{{ .Values.autoSetup.tag }}
-          imagePullPolicy: {{ .Values.autoSetup.pullPolicy }}
+          image: {{ .Values.autoSetup.image.repository }}:{{ .Values.autoSetup.image.tag }}
+          imagePullPolicy: {{ .Values.autoSetup.image.pullPolicy }}
           command:
             - 'sh'
             - '-c'

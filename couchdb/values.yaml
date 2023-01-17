@@ -17,9 +17,10 @@ allowAdminParty: false
 # avoid first jobs failure (helm install --wait ...)
 autoSetup:
   enabled: false
-  repository: alpine/curl
-  tag: latest
-  pullPolicy: Always
+  image:
+    repository: alpine/curl
+    tag: latest
+    pullPolicy: Always
   defaultDatabases:
     - _global_changes
 

@@ -1,6 +1,6 @@
 # CouchDB
 
-![Version: 4.1.0](https://img.shields.io/badge/Version-4.1.0-informational?style=flat-square) ![AppVersion: 3.2.1](https://img.shields.io/badge/AppVersion-3.2.1-informational?style=flat-square)
+![Version: 4.1.1](https://img.shields.io/badge/Version-4.1.1-informational?style=flat-square) ![AppVersion: 3.2.1](https://img.shields.io/badge/AppVersion-3.2.1-informational?style=flat-square)
 
 Apache CouchDB is a database featuring seamless multi-master sync, that scales
 from big data to mobile, with an intuitive HTTP/JSON API and designed for
@@ -18,7 +18,7 @@ storage volumes to each Pod in the Deployment.
 ```bash
 $ helm repo add couchdb https://apache.github.io/couchdb-helm
 $ helm install couchdb/couchdb \
-  --version=4.1.0 \
+  --version=4.1.1 \
   --set allowAdminParty=true \
   --set couchdbConfig.couchdb.uuid=$(curl https://www.uuidgenerator.net/api/version4 2>/dev/null | tr -d -)
 ```
@@ -44,7 +44,7 @@ Afterwards install the chart replacing the UUID
 ```bash
 $ helm install \
   --name my-release \
-  --version=4.1.0 \
+  --version=4.1.1 \
   --set couchdbConfig.couchdb.uuid=decafbaddecafbaddecafbaddecafbad \
   couchdb/couchdb
 ```
@@ -78,7 +78,7 @@ and then install the chart while overriding the `createAdminSecret` setting:
 ```bash
 $ helm install \
   --name my-release \
-  --version=4.1.0 \
+  --version=4.1.1 \
   --set createAdminSecret=false \
   --set couchdbConfig.couchdb.uuid=decafbaddecafbaddecafbaddecafbad \
   couchdb/couchdb
@@ -133,7 +133,7 @@ version semantics. You can upgrade directly from `stable/couchdb` to this chart 
 
 ```bash
 $ helm repo add couchdb https://apache.github.io/couchdb-helm
-$ helm upgrade my-release --version=4.1.0 couchdb/couchdb
+$ helm upgrade my-release --version=4.1.1 couchdb/couchdb
 ```
 
 ## Configuration
@@ -194,7 +194,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `tolerations`                        |                                                                                                                                                              |
 | `resources`                          |                                                                                                                                                              |
 | `autoSetup.enabled`                  | false (if set to true, must have `service.enabled` set to true and a correct `adminPassword` - deploy it with the `--wait` flag to avoid first jobs failure) |
-| `autoSetup.image.repository`         | alpine/curl                                                                                                                                                  |
+| `autoSetup.image.repository`         | curlimages/curl                                                                                                                                                  |
 | `autoSetup.image.tag`                | latest                                                                                                                                                       |
 | `autoSetup.image.pullPolicy`         | Always                                                                                                                                                       |
 | `autoSetup.defaultDatabases`         | [`_global_changes`]                                                                                                                                          |

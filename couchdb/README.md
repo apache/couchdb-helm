@@ -197,6 +197,14 @@ A variety of other parameters are also configurable. See the comments in the
 | `annotations`                          |                                                  |
 | `tolerations`                          |                                                  |
 | `resources`                            |                                                  |
+| `autoSetup.enabled`                    | false (if set to true, must have                 |
+|                                        | `service.enabled` set to true and a correct      |
+|                                        | `adminPassword` - deploy it with the `--wait`    |
+|                                        | flag to avoid first jobs failure)                |
+| `autoSetup.image.repository`           | alpine/curl                                      |
+| `autoSetup.image.tag`                  | latest                                           |
+| `autoSetup.image.pullPolicy`           | Always                                           |
+| `autoSetup.defaultDatabases`           | [`_global_changes`]                              |
 | `service.annotations`                  |                                                  |
 | `service.enabled`                      | true                                             |
 | `service.type`                         | ClusterIP                                        |

@@ -103,14 +103,16 @@ Fail if couchdbConfig.couchdb.uuid is undefined
 
 {{/*
 Repurpose volume claim metadata whether using the new volume claim template
-or an existing volume claim.
+or existing volume claims.
 */}}
 {{- define "persistentVolume.metadata" -}}
-name: database-storage
+{{- $context := index . "context" -}}
+{{- $claim := index . "claim" -}}
+name: {{ $claim.volumeName | default "database-storage" }}
 labels:
-  app: {{ template "couchdb.name" . }}
-  release: {{ .Release.Name }}
-{{- with .Values.persistentVolume.annotations }}
+  app: {{ template "couchdb.name" $context }}
+  release: {{ $context.Release.Name }}
+{{- with $context.Values.persistentVolume.annotations }}
 annotations:
   {{- toYaml . | nindent 6 }}
 {{- end }}
@@ -121,21 +123,23 @@ Repurpose volume claim spec whether using the new volume claim template
 or an existing volume claim.
 */}}
 {{- define "persistentVolume.spec" -}}
-  accessModes:
-  {{- range .Values.persistentVolume.accessModes }}
-    - {{ . | quote }}
-  {{- end }}
-  resources:
-    requests:
-      storage: {{ .Values.persistentVolume.size | quote }}
-{{- if .Values.persistentVolume.storageClass }}
-{{- if (eq "-" .Values.persistentVolume.storageClass) }}
+{{- $context := index . "context" -}}
+{{- $claim := index . "claim" -}}
+accessModes:
+{{- range $context.Values.persistentVolume.accessModes }}
+- {{ . | quote }}
+{{- end }}
+resources:
+  requests:
+    storage: {{ $context.Values.persistentVolume.size | quote }}
+{{- if $context.Values.persistentVolume.storageClass }}
+{{- if (eq "-" $context.Values.persistentVolume.storageClass) }}
 storageClassName: ""
 {{- else }}
-storageClassName: "{{ .Values.persistentVolume.storageClass }}"
+storageClassName: "{{ $context.Values.persistentVolume.storageClass }}"
 {{- end }}
 {{- end }}
-{{- if .Values.persistentVolume.volumeName }}
-volumeName: {{ .Values.persistentVolume.volumeName }}
+{{- if $claim.persistentVolumeName }}
+volumeName: {{ $claim.persistentVolumeName }}
 {{- end }}
-{{- end }}
+{{- end -}}

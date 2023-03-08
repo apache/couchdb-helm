@@ -187,7 +187,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `persistentVolume.accessModes`         | ReadWriteOnce                                    |
 | `persistentVolume.storageClass`        | Default for the Kube cluster                     |
 | `persistentVolume.annotations`         | {}                                               |
-| `persistentVolume.existing`            | false                                            |
+| `persistentVolume.existingClaims`      | [] (a list of existing PV/PVC volume value objects with `volumeName`, `claimName`, `persistentVolumeName` and `volumeSource` defined)                                                                |
 | `persistentVolume.volumeName`          |                                                  |
 | `persistentVolume.claimName`           |                                                  |
 | `persistentVolume.volumeSource`        |                                                  |
@@ -197,7 +197,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `annotations`                          |                                                  |
 | `tolerations`                          |                                                  |
 | `resources`                            |                                                  |
-| `autoSetup.enabled`                    | false (if set to true, must have `service.enabled` set to true and a correct `adminPassword` - deploy it with the `--wait` flag to avoid first jobs failure)                                              |
+| `autoSetup.enabled`                    | false (if set to true, must have `service.enabled` set to true and a correct `adminPassword` - deploy it with the `--wait` flag to avoid first jobs failure)                                         |
 | `autoSetup.image.repository`           | alpine/curl                                      |
 | `autoSetup.image.tag`                  | latest                                           |
 | `autoSetup.image.pullPolicy`           | Always                                           |

@@ -207,10 +207,12 @@ spec:
 {{- if not .Values.persistentVolume.enabled }}
         - name: database-storage
           emptyDir: {}
-{{- else if and .Values.persistentVolume.enabled .Values.persistentVolume.existing }}
-        - name: database-storage
+{{- else if and .Values.persistentVolume.enabled .Values.persistentVolume.existingClaims }}
+        {{- range $claim := .Values.persistentVolume.existingClaims }}
+        - name: {{ $claim.volumeName }}
           persistentVolumeClaim:
-            claimName: {{ .Values.persistentVolume.claimName }}
+            claimName: {{ $claim.claimName }}
+        {{- end }}
 {{- else }}
   volumeClaimTemplates:
     - metadata:

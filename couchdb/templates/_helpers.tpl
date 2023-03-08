@@ -108,7 +108,7 @@ or existing volume claims.
 {{- define "persistentVolume.metadata" -}}
 {{- $context := index . "context" -}}
 {{- $claim := index . "claim" -}}
-name: {{ $claim.volumeName | default "database-storage" }}
+name: {{ $claim.claimName | default "database-storage" }}
 labels:
   app: {{ template "couchdb.name" $context }}
   release: {{ $context.Release.Name }}

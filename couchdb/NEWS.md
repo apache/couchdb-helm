@@ -1,5 +1,9 @@
 # NEWS
 
+## 4.1.0
+
+- Added the `autoSetup` to automatically finalize the cluster after installation
+
 ## 4.0.0
 
 - Simplified the `adminHash` in the secret

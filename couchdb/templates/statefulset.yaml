@@ -216,7 +216,7 @@ spec:
 {{- else }}
   volumeClaimTemplates:
     - metadata:
-        {{- include "persistentVolume.metadata" . | nindent 8 }}
+        {{- include "persistentVolume.metadata" (dict "context" .) | nindent 8 }}
       spec:
-        {{- include "persistentVolume.spec" . | nindent 8 }}
+        {{- include "persistentVolume.spec" (dict "context" .) | nindent 8 }}
 {{- end }}

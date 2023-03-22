@@ -18,7 +18,7 @@ allowAdminParty: false
 autoSetup:
   enabled: false
   image:
-    repository: alpine/curl
+    repository: curlimages/curl
     tag: latest
     pullPolicy: Always
   defaultDatabases:

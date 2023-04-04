@@ -4,10 +4,10 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-readonly CT_VERSION=v3.5.0
-readonly KIND_VERSION=v0.11.1
+readonly CT_VERSION=v3.7.1
+readonly KIND_VERSION=v0.17.0
 readonly CLUSTER_NAME=chart-testing
-readonly K8S_VERSION=v1.19.7@sha256:a70639454e97a4b733f9d9b67e12c01f6b0297449d5b9cbbef87473458e26dca
+readonly K8S_VERSION=v1.25.3
 
 run_ct_container() {
     echo 'Running ct container...'

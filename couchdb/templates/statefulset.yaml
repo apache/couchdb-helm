@@ -207,30 +207,16 @@ spec:
 {{- if not .Values.persistentVolume.enabled }}
         - name: database-storage
           emptyDir: {}
+{{- else if and .Values.persistentVolume.enabled .Values.persistentVolume.existingClaims }}
+        {{- range $claim := .Values.persistentVolume.existingClaims }}
+        - name: {{ $claim.volumeName }}
+          persistentVolumeClaim:
+            claimName: {{ $claim.claimName }}
+        {{- end }}
 {{- else }}
   volumeClaimTemplates:
     - metadata:
-        name: database-storage
-        labels:
-          app: {{ template "couchdb.name" . }}
-          release: {{ .Release.Name }}
-        {{- with .Values.persistentVolume.annotations }}
-        annotations:
-          {{- toYaml . | nindent 10 }}
-        {{- end }}
+        {{- include "persistentVolume.metadata" (dict "context" .) | nindent 8 }}
       spec:
-        accessModes:
-        {{- range .Values.persistentVolume.accessModes }}
-          - {{ . | quote }}
-        {{- end }}
-        resources:
-          requests:
-            storage: {{ .Values.persistentVolume.size | quote }}
-      {{- if .Values.persistentVolume.storageClass }}
-      {{- if (eq "-" .Values.persistentVolume.storageClass) }}
-        storageClassName: ""
-      {{- else }}
-        storageClassName: "{{ .Values.persistentVolume.storageClass }}"
-      {{- end }}
-      {{- end }}
+        {{- include "persistentVolume.spec" (dict "context" .) | nindent 8 }}
 {{- end }}

@@ -164,6 +164,7 @@ required options to set:
 A variety of other parameters are also configurable. See the comments in the
 `values.yaml` file for further details:
 
+
 | Parameter                              | Default                                          |
 | -------------------------------------- | ------------------------------------------------ |
 | `adminUsername`                        | admin                                            |
@@ -180,6 +181,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `initImage.tag`                        | latest                                           |
 | `initImage.pullPolicy`                 | Always                                           |
 | `ingress.enabled`                      | false                                            |
+| `ingress.className`                    |                                                  |
 | `ingress.hosts`                        | chart-example.local                              |
 | `ingress.annotations`                  |                                                  |
 | `ingress.path`                         | /                                                |

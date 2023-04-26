@@ -1,6 +1,6 @@
 # CouchDB
 
-![Version: 4.2.0](https://img.shields.io/badge/Version-4.2.0-informational?style=flat-square) ![AppVersion: 3.3.2](https://img.shields.io/badge/AppVersion-3.3.2-informational?style=flat-square)
+![Version: 4.3.1](https://img.shields.io/badge/Version-4.3.1-informational?style=flat-square) ![AppVersion: 3.3.2](https://img.shields.io/badge/AppVersion-3.3.2-informational?style=flat-square)
 
 Apache CouchDB is a database featuring seamless multi-master sync, that scales
 from big data to mobile, with an intuitive HTTP/JSON API and designed for

@@ -78,7 +78,7 @@ persistentVolume:
 ## The CouchDB image
 image:
   repository: couchdb
-  tag: 3.2.1
+  tag: 3.3.2
   pullPolicy: IfNotPresent
 
 ## Experimental integration with Lucene-powered fulltext search

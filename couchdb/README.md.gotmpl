@@ -179,6 +179,9 @@ A variety of other parameters are also configurable. See the comments in the
 | `persistentVolume.accessModes`       | ReadWriteOnce                                                                                                                                                |
 | `persistentVolume.storageClass`      | Default for the Kube cluster                                                                                                                                 |
 | `persistentVolume.annotations`       | {}                                                                                                                                                           |
+| `podDisruptionBudget.enabled`        | false                                                                                                                                                        |
+| `podDisruptionBudget.minAvailable`   | nil                                                                                                                                                          |
+| `podDisruptionBudget.maxUnavailable` | 1                                                                                                                                                            |
 | `podManagementPolicy`                | Parallel                                                                                                                                                     |
 | `affinity`                           |                                                                                                                                                              |
 | `topologySpreadConstraints`          |                                                                                                                                                              |

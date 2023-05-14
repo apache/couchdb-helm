@@ -1,7 +1,8 @@
 {{- if .Values.podDisruptionBudget.enabled }}
 apiVersion: policy/v1
 kind: PodDisruptionBudget
-name: "{{ .Release.Name }}-pdb"
+metadata:
+  name: "{{ .Release.Name }}-pdb"
   labels:
     app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
     app.kubernetes.io/instance: {{ .Release.Name | quote }}

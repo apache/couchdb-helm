@@ -221,6 +221,13 @@ readinessProbe:
   successThreshold: 1
   timeoutSeconds: 1
 
+# Control an optional pod disruption budget
+podDisruptionBudget:
+  # toggle creation of pod disruption budget, disabled by default
+  enabled: false
+  # minAvailable: 1
+  maxUnavailable: 1
+
 # CouchDB 3.2.0 adds in a metrics endpoint on the path `/_node/_local/_prometheus`.
 # Optionally, a standalone, unauthenticated port can be exposed for these metrics.
 prometheusPort:

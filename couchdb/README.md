@@ -18,7 +18,7 @@ storage volumes to each Pod in the Deployment.
 ```bash
 $ helm repo add couchdb https://apache.github.io/couchdb-helm
 $ helm install couchdb/couchdb \
-  --version=4.3.2 \
+  --version=4.4.1 \
   --set allowAdminParty=true \
   --set couchdbConfig.couchdb.uuid=$(curl https://www.uuidgenerator.net/api/version4 2>/dev/null | tr -d -)
 ```
@@ -44,7 +44,7 @@ Afterwards install the chart replacing the UUID
 ```bash
 $ helm install \
   --name my-release \
-  --version=4.3.2 \
+  --version=4.4.1 \
   --set couchdbConfig.couchdb.uuid=decafbaddecafbaddecafbaddecafbad \
   couchdb/couchdb
 ```
@@ -78,7 +78,7 @@ and then install the chart while overriding the `createAdminSecret` setting:
 ```bash
 $ helm install \
   --name my-release \
-  --version=4.3.2 \
+  --version=4.4.1 \
   --set createAdminSecret=false \
   --set couchdbConfig.couchdb.uuid=decafbaddecafbaddecafbaddecafbad \
   couchdb/couchdb
@@ -133,7 +133,7 @@ version semantics. You can upgrade directly from `stable/couchdb` to this chart 
 
 ```bash
 $ helm repo add couchdb https://apache.github.io/couchdb-helm
-$ helm upgrade my-release --version=4.3.2 couchdb/couchdb
+$ helm upgrade my-release --version=4.4.1 couchdb/couchdb
 ```
 
 ## Configuration
@@ -193,6 +193,10 @@ A variety of other parameters are also configurable. See the comments in the
 | `persistentVolume.volumeName`          |                                                  |
 | `persistentVolume.claimName`           |                                                  |
 | `persistentVolume.volumeSource`        |                                                  |
+| `persistentVolume.annotations`         | {}                                               |
+| `podDisruptionBudget.enabled`          | false                                            |
+| `podDisruptionBudget.minAvailable`     | nil                                              |
+| `podDisruptionBudget.maxUnavailable`   | 1                                                |
 | `podManagementPolicy`                  | Parallel                                         |
 | `affinity`                             |                                                  |
 | `topologySpreadConstraints`            |                                                  |

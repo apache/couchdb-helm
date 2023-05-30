@@ -188,6 +188,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `ingress.tls`                          |                                                  |
 | `persistentVolume.accessModes`         | ReadWriteOnce                                    |
 | `persistentVolume.storageClass`        | Default for the Kube cluster                     |
+| `persistentVolume.selfManaged`         | Set selfManaged to true if you want to provide the chart with existing PVCs created outside of the scope of this helm chart.                                          |
 | `persistentVolume.annotations`         | {}                                               |
 | `persistentVolume.existingClaims`      | [] (a list of existing PV/PVC volume value objects with `volumeName`, `claimName`, `persistentVolumeName` and `volumeSource` defined)                                                                |
 | `persistentVolume.volumeName`          |                                                  |

@@ -165,77 +165,78 @@ A variety of other parameters are also configurable. See the comments in the
 `values.yaml` file for further details:
 
 
-| Parameter                              | Default                                          |
-| -------------------------------------- | ------------------------------------------------ |
-| `adminUsername`                        | admin                                            |
-| `adminPassword`                        | auto-generated                                   |
-| `adminHash`                            |                                                  |
-| `cookieAuthSecret`                     | auto-generated                                   |
-| `image.repository`                     | couchdb                                          |
-| `image.tag`                            | 3.3.2                                            |
-| `image.pullPolicy`                     | IfNotPresent                                     |
-| `searchImage.repository`               | kocolosk/couchdb-search                          |
-| `searchImage.tag`                      | 0.1.0                                            |
-| `searchImage.pullPolicy`               | IfNotPresent                                     |
-| `initImage.repository`                 | busybox                                          |
-| `initImage.tag`                        | latest                                           |
-| `initImage.pullPolicy`                 | Always                                           |
-| `ingress.enabled`                      | false                                            |
-| `ingress.className`                    |                                                  |
-| `ingress.hosts`                        | chart-example.local                              |
-| `ingress.annotations`                  |                                                  |
-| `ingress.path`                         | /                                                |
-| `ingress.tls`                          |                                                  |
-| `persistentVolume.accessModes`         | ReadWriteOnce                                    |
-| `persistentVolume.storageClass`        | Default for the Kube cluster                     |
-| `persistentVolume.annotations`         | {}                                               |
-| `persistentVolume.existingClaims`      | [] (a list of existing PV/PVC volume value objects with `volumeName`, `claimName`, `persistentVolumeName` and `volumeSource` defined)                                                                |
-| `persistentVolume.volumeName`          |                                                  |
-| `persistentVolume.claimName`           |                                                  |
-| `persistentVolume.volumeSource`        |                                                  |
-| `persistentVolume.annotations`         | {}                                               |
-| `podDisruptionBudget.enabled`          | false                                            |
-| `podDisruptionBudget.minAvailable`     | nil                                              |
-| `podDisruptionBudget.maxUnavailable`   | 1                                                |
-| `podManagementPolicy`                  | Parallel                                         |
-| `affinity`                             |                                                  |
-| `topologySpreadConstraints`            |                                                  |
-| `annotations`                          |                                                  |
-| `tolerations`                          |                                                  |
-| `resources`                            |                                                  |
-| `autoSetup.enabled`                    | false (if set to true, must have `service.enabled` set to true and a correct `adminPassword` - deploy it with the `--wait` flag to avoid first jobs failure)                                         |
-| `autoSetup.image.repository`           | curlimages/curl                                  |
-| `autoSetup.image.tag`                  | latest                                           |
-| `autoSetup.image.pullPolicy`           | Always                                           |
-| `autoSetup.defaultDatabases`           | [`_global_changes`]                              |
-| `service.annotations`                  |                                                  |
-| `service.enabled`                      | true                                             |
-| `service.type`                         | ClusterIP                                        |
-| `service.externalPort`                 | 5984                                             |
-| `dns.clusterDomainSuffix`              | cluster.local                                    |
-| `networkPolicy.enabled`                | true                                             |
-| `serviceAccount.enabled`               | true                                             |
-| `serviceAccount.create`                | true                                             |
-| `serviceAccount.imagePullSecrets`      |                                                  |
-| `sidecars`                             | {}                                               |
-| `livenessProbe.enabled`                | true                                             |
-| `livenessProbe.failureThreshold`       | 3                                                |
-| `livenessProbe.initialDelaySeconds`    | 0                                                |
-| `livenessProbe.periodSeconds`          | 10                                               |
-| `livenessProbe.successThreshold`       | 1                                                |
-| `livenessProbe.timeoutSeconds`         | 1                                                |
-| `readinessProbe.enabled`               | true                                             |
-| `readinessProbe.failureThreshold`      | 3                                                |
-| `readinessProbe.initialDelaySeconds`   | 0                                                |
-| `readinessProbe.periodSeconds`         | 10                                               |
-| `readinessProbe.successThreshold`      | 1                                                |
-| `readinessProbe.timeoutSeconds`        | 1                                                |
-| `prometheusPort.enabled`               | false                                            |
-| `prometheusPort.port`                  | 17896                                            |
-| `prometheusPort.bind_address`          | 0.0.0.0                                          |
-| `placementConfig.enabled`              | false                                            |
-| `placementConfig.image.repository`     | caligrafix/couchdb-autoscaler-placement-manager  |
-| `placementConfig.image.tag`            | 0.1.0                                            |
+| Parameter                            | Default                                          |
+|--------------------------------------| ------------------------------------------------ |
+| `adminUsername`                      | admin                                            |
+| `adminPassword`                      | auto-generated                                   |
+| `adminHash`                          |                                                  |
+| `cookieAuthSecret`                   | auto-generated                                   |
+| `image.repository`                   | couchdb                                          |
+| `image.tag`                          | 3.3.2                                            |
+| `image.pullPolicy`                   | IfNotPresent                                     |
+| `searchImage.repository`             | kocolosk/couchdb-search                          |
+| `searchImage.tag`                    | 0.1.0                                            |
+| `searchImage.pullPolicy`             | IfNotPresent                                     |
+| `initImage.repository`               | busybox                                          |
+| `initImage.tag`                      | latest                                           |
+| `initImage.pullPolicy`               | Always                                           |
+| `ingress.enabled`                    | false                                            |
+| `ingress.className`                  |                                                  |
+| `ingress.hosts`                      | chart-example.local                              |
+| `ingress.annotations`                |                                                  |
+| `ingress.path`                       | /                                                |
+| `ingress.tls`                        |                                                  |
+| `persistentVolume.accessModes`       | ReadWriteOnce                                    |
+| `persistentVolume.storageClass`      | Default for the Kube cluster                     |
+| `persistentVolume.annotations`       | {}                                               |
+| `persistentVolume.existingClaims`    | [] (a list of existing PV/PVC volume value objects with `volumeName`, `claimName`, `persistentVolumeName` and `volumeSource` defined)                                                                |
+| `persistentVolume.volumeName`        |                                                  |
+| `persistentVolume.claimName`         |                                                  |
+| `persistentVolume.volumeSource`      |                                                  |
+| `persistentVolume.annotations`       | {}                                               |
+| `podDisruptionBudget.enabled`        | false                                            |
+| `podDisruptionBudget.minAvailable`   | nil                                              |
+| `podDisruptionBudget.maxUnavailable` | 1                                                |
+| `podManagementPolicy`                | Parallel                                         |
+| `affinity`                           |                                                  |
+| `topologySpreadConstraints`          |                                                  |
+| `annotations`                        |                                                  |
+| `tolerations`                        |                                                  |
+| `resources`                          |                                                  |
+| `autoSetup.enabled`                  | false (if set to true, must have `service.enabled` set to true and a correct `adminPassword` - deploy it with the `--wait` flag to avoid first jobs failure)                                         |
+| `autoSetup.image.repository`         | curlimages/curl                                  |
+| `autoSetup.image.tag`                | latest                                           |
+| `autoSetup.image.pullPolicy`         | Always                                           |
+| `autoSetup.defaultDatabases`         | [`_global_changes`]                              |
+| `service.annotations`                |                                                  |
+| `service.enabled`                    | true                                             |
+| `service.type`                       | ClusterIP                                        |
+| `service.externalPort`               | 5984                                             |
+| `service.targetPort`                 | 5984                                             |
+| `dns.clusterDomainSuffix`            | cluster.local                                    |
+| `networkPolicy.enabled`              | true                                             |
+| `serviceAccount.enabled`             | true                                             |
+| `serviceAccount.create`              | true                                             |
+| `serviceAccount.imagePullSecrets`    |                                                  |
+| `sidecars`                           | {}                                               |
+| `livenessProbe.enabled`              | true                                             |
+| `livenessProbe.failureThreshold`     | 3                                                |
+| `livenessProbe.initialDelaySeconds`  | 0                                                |
+| `livenessProbe.periodSeconds`        | 10                                               |
+| `livenessProbe.successThreshold`     | 1                                                |
+| `livenessProbe.timeoutSeconds`       | 1                                                |
+| `readinessProbe.enabled`             | true                                             |
+| `readinessProbe.failureThreshold`    | 3                                                |
+| `readinessProbe.initialDelaySeconds` | 0                                                |
+| `readinessProbe.periodSeconds`       | 10                                               |
+| `readinessProbe.successThreshold`    | 1                                                |
+| `readinessProbe.timeoutSeconds`      | 1                                                |
+| `prometheusPort.enabled`             | false                                            |
+| `prometheusPort.port`                | 17896                                            |
+| `prometheusPort.bind_address`        | 0.0.0.0                                          |
+| `placementConfig.enabled`            | false                                            |
+| `placementConfig.image.repository`   | caligrafix/couchdb-autoscaler-placement-manager  |
+| `placementConfig.image.tag`          | 0.1.0                                            |
 
 ## Feedback, Issues, Contributing
 

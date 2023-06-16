@@ -143,3 +143,16 @@ storageClassName: "{{ $context.Values.persistentVolume.storageClass }}"
 volumeName: {{ $claim.persistentVolumeName }}
 {{- end }}
 {{- end -}}
+
+{{/* support templated values */}}
+{{ define "render-value" }}
+  {{- if kindIs "string" .value }}
+    {{- tpl .value .context }}
+  {{- else }}
+    {{- tpl (.value | toYaml) .context }}
+  {{- end }}
+{{- end }}
+
+{{ define "render-value-test" }}
+  {{- tpl (tpl (.value | toYaml) . .context }}
+{{- end }}

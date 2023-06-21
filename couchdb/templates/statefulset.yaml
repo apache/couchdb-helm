@@ -115,6 +115,11 @@ spec:
                   key: erlangCookie
             - name: ERL_FLAGS
               value: "{{ range $k, $v := .Values.erlangFlags }} -{{ $k }} {{ $v }} {{ end }}"
+{{- if .Values.extraEnv }}
+{{ toYaml .Values.extraEnv | indent 12 }}
+{{- else if .Values.extraEnvTemplate }}
+{{- include "couchdb.extraEnvTemplate" . | indent 12 }}
+{{- end }}
 {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
 {{- if .Values.couchdbConfig.chttpd.require_valid_user }}

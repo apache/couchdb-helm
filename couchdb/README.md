@@ -237,6 +237,8 @@ A variety of other parameters are also configurable. See the comments in the
 | `prometheusPort.bind_address`        | 0.0.0.0                                          |
 | `lifecycle`                          | {}                                               |
 | `lifecycleTemplate`                  | false (set `true` and add a named `lifecycleTemplate` if using couchdb as a subchart) |
+| `extraEnv`                           | []                                               |
+| `extraEnvTemplate`                   | false (set `true` and add a named `extraEnvTemplate` if using couchdb as a subchart) |
 | `placementConfig.enabled`            | false                                            |
 | `placementConfig.image.repository`   | caligrafix/couchdb-autoscaler-placement-manager  |
 | `placementConfig.image.tag`          | 0.1.0                                            |

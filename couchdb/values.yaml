@@ -246,6 +246,12 @@ prometheusPort:
   bind_address: "0.0.0.0"
   port: 17986
 
+# Optional lifecycle hooks defined by a lifecyle value map or parent template
+# (for e.g. more complex use cases requiring variable interpolation by parent
+# charts)
+lifecycle: {}
+lifecycleTemplate: false
+
 # Configure arbitrary sidecar containers for CouchDB pods created by the
 # StatefulSet
 sidecars: {}

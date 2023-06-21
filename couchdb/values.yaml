@@ -252,6 +252,11 @@ prometheusPort:
 lifecycle: {}
 lifecycleTemplate: false
 
+# Optional environment variables defined by a values array or parent template
+# (for e.g. passing secrets as environment variables or for use in the statefulset)
+extraEnv: []
+extraEnvTemplate: false
+
 # Configure arbitrary sidecar containers for CouchDB pods created by the
 # StatefulSet
 sidecars: {}

@@ -142,6 +142,7 @@ service:
   enabled: true
   type: ClusterIP
   externalPort: 5984
+  targetPort: 5984
   labels: {}
 
 ## An Ingress resource can provide name-based virtual hosting and TLS

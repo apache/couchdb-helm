@@ -1,5 +1,9 @@
 # NEWS
 
+## 4.4.1
+
+- Add possibility to customize `service.targetPort` from values. Set default to 5984.
+
 ## 4.3.0
 
 - Use Ingress `className` instead of `kubernetes.io/ingress.class` annotation which has been deprecated since Kubernetes 1.18+ ([#69](https://github.com/apache/couchdb-helm/issues/69))

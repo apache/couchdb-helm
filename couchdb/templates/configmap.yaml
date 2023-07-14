@@ -14,7 +14,10 @@ data:
     {{- range $section, $settings := $couchdbConfig -}}
     {{ printf "[%s]" $section }}
     {{ range $key, $value := $settings -}}
-    {{ printf "%s = %s" $key ($value | toString) }}
+    {{- if kindIs "float64" $value }}
+    {{ $value = (int $value) }}
+    {{ end -}}
+    {{ printf "%s = %v" $key $value }}
     {{ end }}
     {{ end }}
 

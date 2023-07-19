@@ -67,6 +67,8 @@ spec:
           volumeMounts:
             - name: local-config-storage
               mountPath: /local.d
+          resources:
+{{ toYaml .Values.initResources | indent 12 }}
 {{- end }}
       containers:
         - name: couchdb

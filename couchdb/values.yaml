@@ -171,6 +171,16 @@ resources: {}
   #  cpu: 56
   #  memory: 256Gi
 
+## Optional resource requests and limits for the CouchDB init container
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+initResources: {}
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # limits:
+  #  cpu: 500m
+  #  memory: 128Mi
+
 # -- erlangFlags is a map that is passed to the Erlang VM as flags using the
 # ERL_FLAGS env. The `name` flag is required to establish connectivity
 # between cluster nodes.

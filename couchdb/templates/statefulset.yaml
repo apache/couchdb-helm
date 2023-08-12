@@ -48,6 +48,8 @@ spec:
             mountPath: /tmp/
           - name: config-storage
             mountPath: /default.d
+          resources:
+{{ toYaml .Values.initResources | indent 12 }}
 {{- if .Values.adminHash }}
         - name: admin-hash-copy
           image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"

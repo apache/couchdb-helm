@@ -124,6 +124,9 @@ topologySpreadConstraints: {}
   #       matchLabels:
   #         app: couchdb
 
+## Optional pod labels
+labels: {}
+
 ## Optional pod annotations
 annotations: {}
 

@@ -18,6 +18,9 @@ spec:
     metadata:
       labels:
 {{ include "couchdb.ss.selector" . | indent 8 }}
+{{- if .Values.labels }}
+{{ toYaml .Values.labels | indent 8 }}
+{{- end }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
@@ -35,7 +38,7 @@ spec:
         - name: init-copy
           image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
           imagePullPolicy: {{ .Values.initImage.pullPolicy }}
-          command: 
+          command:
             - 'sh'
             - '-c'
 {{- if .Values.prometheusPort.enabled }}
@@ -199,7 +202,7 @@ spec:
               - key: seedlistinifile
                 path: seedlist.ini
 {{- if .Values.prometheusPort.enabled }}
-              - key: prometheusinifile 
+              - key: prometheusinifile
                 path: prometheus.ini
 {{- end }}
 

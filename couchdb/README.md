@@ -200,6 +200,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `podManagementPolicy`                | Parallel                                         |
 | `affinity`                           |                                                  |
 | `topologySpreadConstraints`          |                                                  |
+| `labels`                             |                                                  |
 | `annotations`                        |                                                  |
 | `tolerations`                        |                                                  |
 | `resources`                          |                                                  |

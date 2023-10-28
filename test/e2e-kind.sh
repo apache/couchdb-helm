@@ -4,8 +4,8 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-readonly CT_VERSION=v3.7.1
-readonly KIND_VERSION=v0.17.0
+readonly CT_VERSION=v3.8.0
+readonly KIND_VERSION=v0.18.0
 readonly CLUSTER_NAME=chart-testing
 readonly K8S_VERSION=v1.25.3
 

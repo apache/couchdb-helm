@@ -170,7 +170,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `adminUsername`                      | admin                                            |
 | `adminPassword`                      | auto-generated                                   |
 | `adminHash`                          |                                                  |
-| `erlangCookie`                   | auto-generated                                   |
+| `erlangCookie`                       | auto-generated                                   |
 | `image.repository`                   | couchdb                                          |
 | `image.tag`                          | 3.3.2                                            |
 | `image.pullPolicy`                   | IfNotPresent                                     |

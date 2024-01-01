@@ -28,6 +28,9 @@ spec:
       {{- if .Values.schedulerName }}
       schedulerName: "{{ .Values.schedulerName }}"
       {{- end }}
+      {{- if .Values.podSecurityContext }}
+      securityContext: {{ .Values.podSecurityContext | toYaml | nindent 8 }}
+      {{- end }}
       {{- if .Values.serviceAccount.enabled }}
       serviceAccountName: {{ template "couchdb.serviceAccount" . }}
       {{- end }}
@@ -48,6 +51,9 @@ spec:
             mountPath: /tmp/
           - name: config-storage
             mountPath: /default.d
+          {{- if .Values.containerSecurityContext }}
+          securityContext: {{ .Values.containerSecurityContext | toYaml | nindent 12 }}
+          {{- end }}
 {{- if .Values.adminHash }}
         - name: admin-hash-copy
           image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
@@ -67,6 +73,9 @@ spec:
           volumeMounts:
             - name: local-config-storage
               mountPath: /local.d
+          {{- if .Values.containerSecurityContext }}
+          securityContext: {{ .Values.containerSecurityContext | toYaml | nindent 12 }}
+          {{- end }}
 {{- end }}
       containers:
         - name: couchdb
@@ -156,6 +165,9 @@ spec:
 {{- end }}
           - name: database-storage
             mountPath: /opt/couchdb/data
+          {{- if .Values.containerSecurityContext }}
+          securityContext: {{ .Values.containerSecurityContext | toYaml | nindent 12 }}
+          {{- end }}
 {{- if .Values.enableSearch }}
         - name: clouseau
           image: "{{ .Values.searchImage.repository }}:{{ .Values.searchImage.tag }}"
@@ -163,6 +175,9 @@ spec:
           volumeMounts:
           - name: database-storage
             mountPath: /opt/couchdb-search/data
+          {{- if .Values.containerSecurityContext }}
+          securityContext: {{ .Values.containerSecurityContext | toYaml | nindent 12 }}
+          {{- end }}
 {{- end }}
 {{- if .Values.sidecars }}
 {{ toYaml .Values.sidecars | indent 8}}

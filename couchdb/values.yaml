@@ -124,6 +124,9 @@ topologySpreadConstraints: {}
   #       matchLabels:
   #         app: couchdb
 
+## Optional pod labels
+labels: {}
+
 ## Optional pod annotations
 annotations: {}
 
@@ -139,6 +142,7 @@ service:
   enabled: true
   type: ClusterIP
   externalPort: 5984
+  targetPort: 5984
   labels: {}
 
 ## An Ingress resource can provide name-based virtual hosting and TLS
@@ -169,6 +173,16 @@ resources: {}
   # limits:
   #  cpu: 56
   #  memory: 256Gi
+
+## Optional resource requests and limits for the CouchDB init container
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+initResources: {}
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # limits:
+  #  cpu: 500m
+  #  memory: 128Mi
 
 # -- erlangFlags is a map that is passed to the Erlang VM as flags using the
 # ERL_FLAGS env. The `name` flag is required to establish connectivity

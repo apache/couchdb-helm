@@ -67,6 +67,9 @@ serviceAccount:
 # provisioner.
 persistentVolume:
   enabled: false
+  # Set selfManaged to true if you want to provide the chart with existing PVCs created outside of the scope of this helm chart. 
+  # Warning: If you have existing PVCs generated through the helm chart and you set this to true, it will end up deleting the PVCs unless you remove the owner reference of helm from the PVCs/PVs OR if you keep a snapshot/backup and restore yourself. 
+  selfManaged: false
   # NOTE: the number of existing claims must match the cluster size
   existingClaims: []
   annotations: {}

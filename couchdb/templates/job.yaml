@@ -21,6 +21,9 @@ spec:
         helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     spec:
       restartPolicy: OnFailure
+      {{- if .Values.podSecurityContext }}
+      securityContext: {{ .Values.podSecurityContext | toYaml | nindent 8 }}
+      {{- end }}
       containers:
         - name: cluster-setup
           image: {{ .Values.autoSetup.image.repository }}:{{ .Values.autoSetup.image.tag }}
@@ -44,6 +47,9 @@ spec:
                 secretKeyRef:
                   name: {{ template "couchdb.fullname" . }}
                   key: adminPassword
+          {{- if .Values.containerSecurityContext }}
+          securityContext: {{ .Values.containerSecurityContext | toYaml | nindent 12 }}
+          {{- end }}
   backoffLimit: 2
   ttlSecondsAfterFinished: 600
 {{- end -}}

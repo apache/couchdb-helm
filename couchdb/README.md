@@ -194,6 +194,9 @@ A variety of other parameters are also configurable. See the comments in the
 | `persistentVolume.claimName`         |                                                  |
 | `persistentVolume.volumeSource`      |                                                  |
 | `persistentVolume.annotations`       | {}                                               |
+| `persistentVolumeClaimRetentionPolicy.enabled`     | Field controls if and how PVCs are deleted during the lifecycle                                            |
+| `persistentVolumeClaimRetentionPolicy.whenScaled`  | Configures the volume retention behavior that applies when the replica count of the StatefulSet is reduced |
+| `persistentVolumeClaimRetentionPolicy.whenDeleted` | Configures the volume retention behavior that applies when the StatefulSet is deleted                      |
 | `podDisruptionBudget.enabled`        | false                                            |
 | `podDisruptionBudget.minAvailable`   | nil                                              |
 | `podDisruptionBudget.maxUnavailable` | 1                                                |

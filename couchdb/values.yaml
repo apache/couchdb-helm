@@ -75,6 +75,7 @@ persistentVolume:
   size: 10Gi
   # storageClass: "-"
 
+# Experimental - FEATURE STATE: Kubernetes v1.27 [beta]
 # Field controls if and how PVCs are deleted during the lifecycle
 # of a StatefulSet
 # ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#persistentvolumeclaim-retention

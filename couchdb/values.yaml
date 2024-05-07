@@ -86,7 +86,7 @@ persistentVolumeClaimRetentionPolicy:
 ## The CouchDB image
 image:
   repository: couchdb
-  tag: 3.3.2
+  tag: 3.3.3
   pullPolicy: IfNotPresent
 
 ## Experimental integration with Lucene-powered fulltext search

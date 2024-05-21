@@ -18,6 +18,9 @@ jobs:
           ref: 'gh-pages'
           fetch-depth: 0
 
+      - name: Build Setup Helm
+        run: cd ./.github/actions/setup-helm && npm run-script build
+
       - name: Set up Helm
         uses: ./.github/actions/setup-helm
         with:

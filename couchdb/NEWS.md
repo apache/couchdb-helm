@@ -1,5 +1,13 @@
 # NEWS
 
+## 4.5.2
+
+- Allow to specify a persistentVolumeClaimRetentionPolicy in both the primary and secondary StatefulSet.
+
+## 4.5.1
+
+- Update default CouchDB version to 3.3.3.
+
 ## 4.5.0
 
 - Add capability to set pod and container level securityContext settings.

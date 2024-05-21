@@ -98,6 +98,12 @@ spec:
             - name: metrics
               containerPort: {{ .Values.prometheusPort.port }}
 {{- end }}
+{{- if .Values.lifecycle }}
+          lifecycle: {{ toYaml .Values.lifecycle | nindent 12 }}
+{{- else if .Values.lifecycleTemplate }}
+          lifecycle:
+            {{- include "couchdb.lifecycleTemplate" . | nindent 12 }}
+{{- end }}
           env:
 {{- if not .Values.allowAdminParty }}
             - name: COUCHDB_USER
@@ -123,6 +129,11 @@ spec:
                   key: erlangCookie
             - name: ERL_FLAGS
               value: "{{ range $k, $v := .Values.erlangFlags }} -{{ $k }} {{ $v }} {{ end }}"
+{{- if .Values.extraEnv }}
+{{ toYaml .Values.extraEnv | indent 12 }}
+{{- else if .Values.extraEnvTemplate }}
+{{- include "couchdb.extraEnvTemplate" . | indent 12 }}
+{{- end }}
 {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
 {{- if .Values.couchdbConfig.chttpd.require_valid_user }}

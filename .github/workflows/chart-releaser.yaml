@@ -28,7 +28,8 @@ jobs:
       - name: Install Helm
         uses: ./.github/actions/setup-helm
         with:
-          version: v4.2.0
+          version: v3.14.4
+        id: install
 
       - name: Run chart-releaser
         uses: ./.github/actions/chart-releaser-action

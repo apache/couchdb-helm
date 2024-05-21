@@ -25,10 +25,17 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
+      - name: Build Setup Helm
+        run: npm build
+
+      - name: Build Setup Helm
+        run: cd ./.github/actions/setup-helm && npm run-script build
+
       - name: Install Helm
         uses: ./.github/actions/setup-helm
         with:
-          version: v4.2.0
+          version: v3.14.4
+        id: install
 
       - name: Run chart-releaser
         uses: ./.github/actions/chart-releaser-action

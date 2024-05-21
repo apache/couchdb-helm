@@ -1,5 +1,9 @@
 # NEWS
 
+## 4.5.0
+
+- Add capability to set pod and container level securityContext settings.
+
 ## 4.4.1
 
 - Add possibility to customize `service.targetPort` from values. Set default to 5984.

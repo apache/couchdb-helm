@@ -24,6 +24,9 @@ spec:
         helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     spec:
       restartPolicy: OnFailure
+      {{- if .Values.podSecurityContext }}
+      securityContext: {{ .Values.podSecurityContext | toYaml | nindent 8 }}
+      {{- end }}
       containers:
       - name: placement-tagging-job
         image: {{ .Values.placementConfig.image.repository }}:{{ .Values.placementConfig.image.tag }}
@@ -41,4 +44,7 @@ spec:
             value: {{ template "couchdb.svcname" . }}
           - name: COUCHDB_PORT
             value: {{ .Values.service.externalPort | quote }}
+        {{- if .Values.containerSecurityContext }}
+        securityContext: {{ .Values.containerSecurityContext | toYaml | nindent 10 }}
+        {{- end }}
 {{- end -}}

@@ -75,10 +75,19 @@ persistentVolume:
   size: 10Gi
   # storageClass: "-"
 
+# Experimental - FEATURE STATE: Kubernetes v1.27 [beta]
+# Field controls if and how PVCs are deleted during the lifecycle
+# of a StatefulSet
+# ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#persistentvolumeclaim-retention
+persistentVolumeClaimRetentionPolicy:
+  enabled: false
+  whenScaled: Retain
+  whenDeleted: Retain
+
 ## The CouchDB image
 image:
   repository: couchdb
-  tag: 3.3.2
+  tag: 3.3.3
   pullPolicy: IfNotPresent
 
 ## Experimental integration with Lucene-powered fulltext search
@@ -123,6 +132,9 @@ topologySpreadConstraints: {}
   #     labelSelector:
   #       matchLabels:
   #         app: couchdb
+
+## Optional pod labels
+labels: {}
 
 ## Optional pod annotations
 annotations: {}

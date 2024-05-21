@@ -4,14 +4,14 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-readonly CT_VERSION=v3.7.1
-readonly KIND_VERSION=v0.17.0
+readonly CT_VERSION=v3.11.0
+readonly KIND_VERSION=v0.23.0
 readonly CLUSTER_NAME=chart-testing
 readonly K8S_VERSION=v1.25.3
 
 run_ct_container() {
     echo 'Running ct container...'
-    docker run --rm --interactive --detach --network host --name ct \
+    docker run --rm --interactive --detach --network host --name ct --userns=host \
         --volume "$(pwd)/test/ct.yaml:/etc/ct/ct.yaml" \
         --volume "$(pwd):/workdir" \
         --workdir /workdir \

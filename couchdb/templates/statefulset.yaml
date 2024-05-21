@@ -18,6 +18,9 @@ spec:
     metadata:
       labels:
 {{ include "couchdb.ss.selector" . | indent 8 }}
+{{- if .Values.labels }}
+{{ toYaml .Values.labels | indent 8 }}
+{{- end }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
@@ -28,6 +31,9 @@ spec:
       {{- if .Values.schedulerName }}
       schedulerName: "{{ .Values.schedulerName }}"
       {{- end }}
+      {{- if .Values.podSecurityContext }}
+      securityContext: {{ .Values.podSecurityContext | toYaml | nindent 8 }}
+      {{- end }}
       {{- if .Values.serviceAccount.enabled }}
       serviceAccountName: {{ template "couchdb.serviceAccount" . }}
       {{- end }}
@@ -35,7 +41,7 @@ spec:
         - name: init-copy
           image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
           imagePullPolicy: {{ .Values.initImage.pullPolicy }}
-          command: 
+          command:
             - 'sh'
             - '-c'
 {{- if .Values.prometheusPort.enabled }}
@@ -48,6 +54,11 @@ spec:
             mountPath: /tmp/
           - name: config-storage
             mountPath: /default.d
+          {{- if .Values.containerSecurityContext }}
+          securityContext: {{ .Values.containerSecurityContext | toYaml | nindent 12 }}
+          {{- end }}
+          resources:
+{{ toYaml .Values.initResources | indent 12 }}
 {{- if .Values.adminHash }}
         - name: admin-hash-copy
           image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
@@ -67,6 +78,9 @@ spec:
           volumeMounts:
             - name: local-config-storage
               mountPath: /local.d
+          {{- if .Values.containerSecurityContext }}
+          securityContext: {{ .Values.containerSecurityContext | toYaml | nindent 12 }}
+          {{- end }}
           resources:
 {{ toYaml .Values.initResources | indent 12 }}
 {{- end }}
@@ -169,6 +183,9 @@ spec:
 {{- end }}
           - name: database-storage
             mountPath: /opt/couchdb/data
+          {{- if .Values.containerSecurityContext }}
+          securityContext: {{ .Values.containerSecurityContext | toYaml | nindent 12 }}
+          {{- end }}
 {{- if .Values.enableSearch }}
         - name: clouseau
           image: "{{ .Values.searchImage.repository }}:{{ .Values.searchImage.tag }}"
@@ -176,6 +193,9 @@ spec:
           volumeMounts:
           - name: database-storage
             mountPath: /opt/couchdb-search/data
+          {{- if .Values.containerSecurityContext }}
+          securityContext: {{ .Values.containerSecurityContext | toYaml | nindent 12 }}
+          {{- end }}
 {{- end }}
 {{- if .Values.sidecars }}
 {{ toYaml .Values.sidecars | indent 8}}
@@ -208,7 +228,7 @@ spec:
               - key: seedlistinifile
                 path: seedlist.ini
 {{- if .Values.prometheusPort.enabled }}
-              - key: prometheusinifile 
+              - key: prometheusinifile
                 path: prometheus.ini
 {{- end }}
 
@@ -227,6 +247,11 @@ spec:
             claimName: {{ $claim.claimName }}
         {{- end }}
 {{- else }}
+{{- if .Values.persistentVolumeClaimRetentionPolicy.enabled }}
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: {{ .Values.persistentVolumeClaimRetentionPolicy.whenDeleted }}
+    whenScaled: {{ .Values.persistentVolumeClaimRetentionPolicy.whenScaled }}
+{{- end }}
   volumeClaimTemplates:
     - metadata:
         {{- include "persistentVolume.metadata" (dict "context" .) | nindent 8 }}

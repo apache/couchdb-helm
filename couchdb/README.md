@@ -57,10 +57,10 @@ kubectl get secret my-release-couchdb -o go-template='{{ .data.adminPassword }}'
 ```
 
 If you prefer to configure the admin credentials directly you can create a
-Secret containing `adminUsername`, `adminPassword` and `erlangCookie` keys:
+Secret containing `adminUsername`, `adminPassword`, `cookieAuthSecret` and `erlangCookie` keys:
 
 ```bash
-kubectl create secret generic my-release-couchdb --from-literal=adminUsername=foo --from-literal=adminPassword=bar --from-literal=erlangCookie=baz
+kubectl create secret generic my-release-couchdb --from-literal=adminUsername=foo --from-literal=adminPassword=bar --from-literal=erlangCookie=baz --from-literal=cookieAuthSecret=beep
 ```
 
 If you want to set the `adminHash` directly to achieve consistent salts between
@@ -70,6 +70,7 @@ different nodes you need to add it to the secret:
 kubectl create secret generic my-release-couchdb \
    --from-literal=adminUsername=foo \
    --from-literal=erlangCookie=baz \
+   --from-literal=cookieAuthSecret=beep \
    --from-literal=adminHash=-pbkdf2-d4b887da....
 ```
 
@@ -143,10 +144,10 @@ CouchDB chart and their default values:
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| allowAdminParty | bool | `false` | If allowAdminParty is enabled the cluster will start up without any database administrator account; i.e., all users will be granted administrative access. Otherwise, the system will look for a Secret called <ReleaseName>-couchdb containing `adminUsername`, `adminPassword` and `erlangCookie` keys. See the `createAdminSecret` flag. ref: https://kubernetes.io/docs/concepts/configuration/secret/ |
+| allowAdminParty | bool | `false` | If allowAdminParty is enabled the cluster will start up without any database administrator account; i.e., all users will be granted administrative access. Otherwise, the system will look for a Secret called <ReleaseName>-couchdb containing `adminUsername`, `adminPassword`, `cookieAuthSecret`, and `erlangCookie` keys. See the `createAdminSecret` flag. ref: https://kubernetes.io/docs/concepts/configuration/secret/ |
 | clusterSize | int | `3` | the initial number of nodes in the CouchDB cluster. |
 | couchdbConfig | object | `{"chttpd":{"bind_address":"any","require_valid_user":false}}` | couchdbConfig will override default CouchDB configuration settings. The contents of this map are reformatted into a .ini file laid down by a ConfigMap object. ref: http://docs.couchdb.org/en/latest/config/index.html |
-| createAdminSecret | bool | `true` | If createAdminSecret is enabled a Secret called <ReleaseName>-couchdb will be created containing auto-generated credentials. Users who prefer to set these values themselves have a couple of options: 1) The `adminUsername`, `adminPassword`, `adminHash`, and `erlangCookie`    can be defined directly in the chart's values. Note that all of a chart's    values are currently stored in plaintext in a ConfigMap in the tiller    namespace. 2) This flag can be disabled and a Secret with the required keys can be    created ahead of time. |
+| createAdminSecret | bool | `true` | If createAdminSecret is enabled a Secret called <ReleaseName>-couchdb will be created containing auto-generated credentials. Users who prefer to set these values themselves have a couple of options: 1) The `adminUsername`, `adminPassword`, `adminHash`, `cookieAuthSecret`, and `erlangCookie`    can be defined directly in the chart's values. Note that all of a chart's    values are currently stored in plaintext in a ConfigMap in the tiller    namespace. 2) This flag can be disabled and a Secret with the required keys can be    created ahead of time. |
 | enableSearch | bool | `false` | Flip this to flag to include the Search container in each Pod |
 | erlangFlags | object | `{"name":"couchdb"}` | erlangFlags is a map that is passed to the Erlang VM as flags using the ERL_FLAGS env. The `name` flag is required to establish connectivity between cluster nodes. ref: http://erlang.org/doc/man/erl.html#init_flags |
 | persistentVolume | object | `{"accessModes":["ReadWriteOnce"],"enabled":false,"size":"10Gi"}` | The storage volume used by each Pod in the StatefulSet. If a persistentVolume is not enabled, the Pods will use `emptyDir` ephemeral local storage. Setting the storageClass attribute to "-" disables dynamic provisioning of Persistent Volumes; leaving it unset will invoke the default provisioner. |
@@ -170,6 +171,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `adminUsername`                      | admin                                            |
 | `adminPassword`                      | auto-generated                                   |
 | `adminHash`                          |                                                  |
+| `cookieAuthSecret`                   | auto-generated                                  |
 | `erlangCookie`                       | auto-generated                                   |
 | `image.repository`                   | couchdb                                          |
 | `image.tag`                          | 3.3.3                                            |

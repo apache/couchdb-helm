@@ -1,5 +1,9 @@
 # NEWS
 
+## 4.5.3
+
+- Fix ability to define pull secrets using `imagePullSecrets`. 
+
 ## 4.5.2
 
 - Allow to specify a persistentVolumeClaimRetentionPolicy in both the primary and secondary StatefulSet.

@@ -20,6 +20,9 @@ spec:
     - port: {{ .Values.service.externalPort }}
       protocol: TCP
       targetPort: {{ .Values.service.targetPort }}
+    {{ with .Values.service.extraPorts }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   type: {{ .Values.service.type }}
   selector:
 {{ include "couchdb.ss.selector" . | indent 4 }}

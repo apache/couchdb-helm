@@ -1,8 +1,12 @@
 # NEWS
 
+## 4.5.4
+
+- Expose `extraPorts` and `service.extraPorts` to allow specifying arbitrary ports to be exposed from the CouchDB pods
+
 ## 4.5.3
 
-- Fix ability to define pull secrets using `imagePullSecrets`. 
+- Fix ability to define pull secrets using `imagePullSecrets`.
 
 ## 4.5.2
 

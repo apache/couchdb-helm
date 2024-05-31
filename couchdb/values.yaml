@@ -160,9 +160,9 @@ service:
   #   targetPort: 4984
   #   protocol: TCP
 
-## If you need to expose any additional ports on the CouchDB pods, for example
-## if you're running a sidecar container that needs to be accessible from outside
-## of the pod, you can define them here.
+## If you need to expose any additional ports on the CouchDB container, for example
+## if you're running CouchDB container with additional processes that need to
+## be accessible outside of the pod, you can define them here.
 extraPorts: []
   # - name: sqs
   #   containerPort: 4984

@@ -171,6 +171,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `adminPassword`                      | auto-generated                                   |
 | `adminHash`                          |                                                  |
 | `cookieAuthSecret`                   | auto-generated                                   |
+| `extraPorts`                         | [] (a list of ContainerPort objects)             |
 | `image.repository`                   | couchdb                                          |
 | `image.tag`                          | 3.3.3                                            |
 | `image.pullPolicy`                   | IfNotPresent                                     |
@@ -218,6 +219,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `service.type`                       | ClusterIP                                        |
 | `service.externalPort`               | 5984                                             |
 | `service.targetPort`                 | 5984                                             |
+| `service.extraPorts`                 | [] (a list of ServicePort objects)               |
 | `dns.clusterDomainSuffix`            | cluster.local                                    |
 | `networkPolicy.enabled`              | true                                             |
 | `serviceAccount.enabled`             | true                                             |

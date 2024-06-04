@@ -154,6 +154,18 @@ service:
   externalPort: 5984
   targetPort: 5984
   labels: {}
+  extraPorts: []
+  # - name: sqs
+  #   port: 4984
+  #   targetPort: 4984
+  #   protocol: TCP
+
+## If you need to expose any additional ports on the CouchDB container, for example
+## if you're running CouchDB container with additional processes that need to
+## be accessible outside of the pod, you can define them here.
+extraPorts: []
+  # - name: sqs
+  #   containerPort: 4984
 
 ## An Ingress resource can provide name-based virtual hosting and TLS
 ## termination among other things for CouchDB deployments which are accessed

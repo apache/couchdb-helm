@@ -101,6 +101,9 @@ spec:
             - name: metrics
               containerPort: {{ .Values.prometheusPort.port }}
 {{- end }}
+{{ with .Values.extraPorts }}
+{{ toYaml . | indent 12 }}
+{{ end }}
           env:
 {{- if not .Values.allowAdminParty }}
             - name: COUCHDB_USER

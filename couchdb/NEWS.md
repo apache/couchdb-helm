@@ -1,5 +1,9 @@
 # NEWS
 
+## 4.5.5
+
+- Give the default port on the CouchDB `Service` a name so that `service.extraPorts` can be used properly.
+
 ## 4.5.4
 
 - Expose `extraPorts` and `service.extraPorts` to allow specifying arbitrary ports to be exposed from the CouchDB pods

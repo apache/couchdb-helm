@@ -1,9 +1,36 @@
 {{- if .Values.autoSetup -}}
 {{- if and .Values.autoSetup.enabled .Values.service.enabled -}}
+{{- $adminUserPath := "/var/opt/couchdb/admin_user" -}}
+{{- $adminUserSecretKey := "adminUsername" -}}
+{{- $adminPassPath := "/var/opt/couchdb/admin_pass" -}}
+{{- $adminPassSecretKey := "adminPassword" -}}
+{{- $initScriptPath := "/var/opt/couchdb/init.sh" -}}
+{{- if .Values.enableSecretsAsFiles }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-init-scripts
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ template "couchdb.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/resource-policy": delete
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-delete-policy": "before-hook-creation"
+data:
+{{ (.Files.Glob "scripts/*").AsConfig | indent 2 }}
+{{- end }}
+---
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: "{{ .Release.Name }}-post-install"
+  namespace: "{{ .Release.Namespace }}"
   labels:
     app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
     app.kubernetes.io/instance: {{ .Release.Name | quote }}
@@ -11,6 +38,9 @@ metadata:
     helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
   annotations:
     "helm.sh/hook": post-install
+    "helm.sh/resource-policy": delete
+    "helm.sh/hook-weight": "2"
+    "helm.sh/hook-delete-policy": "before-hook-creation"
 spec:
   template:
     metadata:
@@ -24,6 +54,23 @@ spec:
       {{- if .Values.podSecurityContext }}
       securityContext: {{ .Values.podSecurityContext | toYaml | nindent 8 }}
       {{- end }}
+      {{- if .Values.enableSecretsAsFiles }}
+      volumes:
+        - name: couchdb-admin-credentials
+          secret:
+            secretName:  {{ template "couchdb.fullname" . }}
+        - name: tmp
+          emptyDir:
+            sizeLimit: 1Mi
+            medium: 'Memory'
+        - name: couchdb-init-scripts
+          configMap:
+            name: "{{ .Release.Name }}-init-scripts"
+            items:
+              - key: init.sh
+                path: init.sh
+                mode: 0755
+      {{- end }}
       containers:
         - name: cluster-setup
           image: {{ .Values.autoSetup.image.repository }}:{{ .Values.autoSetup.image.tag }}
@@ -31,26 +78,55 @@ spec:
           command:
             - 'sh'
             - '-c'
+            {{- if not .Values.enableSecretsAsFiles }}
             - 'curl -s http://$COUCHDB_ADDRESS/_cluster_setup -X POST -H "Content-Type: application/json" -d "{\"action\": \"finish_cluster\"}" -u $COUCHDB_ADMIN:$COUCHDB_PASS && export IFS=","; for db_name in $DEFAULT_DBS; do curl -X PUT http://$COUCHDB_ADDRESS/$db_name -u $COUCHDB_ADMIN:$COUCHDB_PASS; done'
+            {{- else }}
+            - '$COUCHDB_INIT_SCRIPT_PATH'
+            {{- end }}
+          {{- if .Values.enableSecretsAsFiles }}
+          volumeMounts:
+            - name: couchdb-admin-credentials
+              readOnly: true
+              mountPath: {{ $adminUserPath }}
+              subPath: {{ $adminUserSecretKey }}
+            - name: couchdb-admin-credentials
+              readOnly: true
+              mountPath: {{ $adminPassPath }}
+              subPath: {{ $adminPassSecretKey }}
+            - name: couchdb-init-scripts
+              mountPath: {{ $initScriptPath }}
+              subPath: init.sh
+            - name: tmp
+              mountPath: /tmp
+          {{- end }}
           env:
             - name: DEFAULT_DBS
               value: {{ join "," .Values.autoSetup.defaultDatabases }}
             - name: COUCHDB_ADDRESS
               value: "{{ template "couchdb.svcname" . }}.{{ .Release.Namespace }}.svc.{{ default "cluster.local" .Values.dns.clusterDomainSuffix }}:{{ .Values.service.externalPort}}"
+            {{- if not .Values.enableSecretsAsFiles }}
             - name: COUCHDB_ADMIN
               valueFrom:
                 secretKeyRef:
                   name: {{ template "couchdb.fullname" . }}
-                  key: adminUsername
+                  key: {{ $adminUserSecretKey}}
             - name: COUCHDB_PASS
               valueFrom:
                 secretKeyRef:
                   name: {{ template "couchdb.fullname" . }}
-                  key: adminPassword
+                  key: {{ $adminPassSecretKey}}
+            {{- else }}
+            - name: COUCHDB_ADMIN_PATH
+              value: {{ $adminUserPath }}
+            - name: COUCHDB_PASS_PATH
+              value: {{ $adminPassPath }}
+            - name: COUCHDB_INIT_SCRIPT_PATH
+              value: {{ $initScriptPath }}
+            {{- end }}
           {{- if .Values.containerSecurityContext }}
           securityContext: {{ .Values.containerSecurityContext | toYaml | nindent 12 }}
           {{- end }}
-  backoffLimit: 2
-  ttlSecondsAfterFinished: 600
+  backoffLimit: {{ .Values.autoSetup.backoffLimit }}
+  ttlSecondsAfterFinished: {{ .Values.autoSetup.ttlSecondsAfterFinished }}
 {{- end -}}
 {{- end -}}

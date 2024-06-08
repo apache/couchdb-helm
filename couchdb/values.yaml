@@ -16,7 +16,11 @@ allowAdminParty: false
 # a valid adminPassword in the secret. Also set the --wait flag when you install to
 # avoid first jobs failure (helm install --wait ...)
 autoSetup:
-  enabled: false
+  enabled: true
+  # -- how many attempts the job will make to complete successfully
+  backoffLimit: 2
+  # -- how many seconds the resource sticks around after completion
+  ttlSecondsAfterFinished: 600
   image:
     repository: curlimages/curl
     tag: latest
@@ -99,6 +103,9 @@ searchImage:
 
 # -- Flip this to flag to include the Search container in each Pod
 enableSearch: false
+
+# -- Flip this flag to project secrets as files instead of as environment variables
+enableSecretsAsFiles: true
 
 initImage:
   repository: busybox
@@ -222,8 +229,8 @@ erlangFlags:
 # by a ConfigMap object.
 # ref: http://docs.couchdb.org/en/latest/config/index.html
 couchdbConfig:
-  # couchdb:
-  #  uuid: decafbaddecafbaddecafbaddecafbad # Unique identifier for this CouchDB server instance
+  couchdb:
+    uuid: decafbaddecafbaddecafbaddecafbad # Unique identifier for this CouchDB server instance
   # cluster:
   #   q: 8 # Create 8 shards for each database
   chttpd:

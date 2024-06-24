@@ -1,0 +1,18 @@
+version: 2
+updates:
+- package-ecosystem: "github-actions"
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  commit-message:
+    prefix: " build(deps-dev): "
+    include: "scope"
+- package-ecosystem: "gitsubmodule"
+  schedule:
+    interval: daily
+  directory: "/"
+  open-pull-requests-limit: 10
+  commit-message:
+    prefix: " build(deps-dev): "
+    include: "scope"

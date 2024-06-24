@@ -18,8 +18,12 @@ metadata:
 spec:
   ports:
     - port: {{ .Values.service.externalPort }}
+      name: couchdb
       protocol: TCP
       targetPort: {{ .Values.service.targetPort }}
+    {{ with .Values.service.extraPorts }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   type: {{ .Values.service.type }}
   selector:
 {{ include "couchdb.ss.selector" . | indent 4 }}

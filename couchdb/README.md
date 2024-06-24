@@ -1,6 +1,6 @@
 # CouchDB
 
-![Version: 4.5.2](https://img.shields.io/badge/Version-4.5.2-informational?style=flat-square) ![AppVersion: 3.3.3](https://img.shields.io/badge/AppVersion-3.3.3-informational?style=flat-square)
+![Version: 4.5.3](https://img.shields.io/badge/Version-4.5.3-informational?style=flat-square) ![AppVersion: 3.3.3](https://img.shields.io/badge/AppVersion-3.3.3-informational?style=flat-square)
 
 Apache CouchDB is a database featuring seamless multi-master sync, that scales
 from big data to mobile, with an intuitive HTTP/JSON API and designed for
@@ -16,9 +16,9 @@ storage volumes to each Pod in the Deployment.
 ## TL;DR
 
 ```bash
-helm repo add couchdb https://apache.github.io/couchdb-helm
-helm install couchdb/couchdb \
-  --version=4.5.2 \
+$ helm repo add couchdb https://apache.github.io/couchdb-helm
+$ helm install couchdb/couchdb \
+  --version=4.5.3 \
   --set allowAdminParty=true \
   --set couchdbConfig.couchdb.uuid=$(curl https://www.uuidgenerator.net/api/version4 2>/dev/null | tr -d -)
 ```
@@ -44,7 +44,7 @@ Afterwards install the chart replacing the UUID
 ```bash
 helm install \
   --name my-release \
-  --version=4.5.2 \
+  --version=4.5.3 \
   --set couchdbConfig.couchdb.uuid=decafbaddecafbaddecafbaddecafbad \
   couchdb/couchdb
 ```
@@ -79,7 +79,7 @@ and then install the chart while overriding the `createAdminSecret` setting:
 ```bash
 helm install \
   --name my-release \
-  --version=4.5.2 \
+  --version=4.5.3 \
   --set createAdminSecret=false \
   --set couchdbConfig.couchdb.uuid=decafbaddecafbaddecafbaddecafbad \
   couchdb/couchdb
@@ -133,8 +133,8 @@ This chart replaces the `stable/couchdb` chart previously hosted by Helm and con
 version semantics. You can upgrade directly from `stable/couchdb` to this chart using:
 
 ```bash
-helm repo add couchdb https://apache.github.io/couchdb-helm
-helm upgrade my-release --version=4.5.2 couchdb/couchdb
+$ helm repo add couchdb https://apache.github.io/couchdb-helm
+$ helm upgrade my-release --version=4.5.3 couchdb/couchdb
 ```
 
 ## Configuration
@@ -173,6 +173,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `adminHash`                          |                                                  |
 | `cookieAuthSecret`                   | auto-generated                                  |
 | `erlangCookie`                       | auto-generated                                   |
+| `extraPorts`                         | [] (a list of ContainerPort objects)             |
 | `image.repository`                   | couchdb                                          |
 | `image.tag`                          | 3.3.3                                            |
 | `image.pullPolicy`                   | IfNotPresent                                     |
@@ -220,11 +221,12 @@ A variety of other parameters are also configurable. See the comments in the
 | `service.type`                       | ClusterIP                                        |
 | `service.externalPort`               | 5984                                             |
 | `service.targetPort`                 | 5984                                             |
+| `service.extraPorts`                 | [] (a list of ServicePort objects)               |
 | `dns.clusterDomainSuffix`            | cluster.local                                    |
 | `networkPolicy.enabled`              | true                                             |
 | `serviceAccount.enabled`             | true                                             |
 | `serviceAccount.create`              | true                                             |
-| `serviceAccount.imagePullSecrets`    |                                                  |
+| `imagePullSecrets`                   |                                                  |
 | `sidecars`                           | {}                                               |
 | `livenessProbe.enabled`              | true                                             |
 | `livenessProbe.failureThreshold`     | 3                                                |

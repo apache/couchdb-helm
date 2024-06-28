@@ -21,6 +21,9 @@ spec:
       name: couchdb
       protocol: TCP
       targetPort: {{ .Values.service.targetPort }}
+      {{- if and (eq .Values.service.type "NodePort") .Values.service.nodePort }}
+      nodePort: {{ .Values.service.nodePort }}
+      {{- end }}
     {{ with .Values.service.extraPorts }}
     {{- toYaml . | nindent 4 }}
     {{- end }}

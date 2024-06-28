@@ -153,6 +153,7 @@ service:
   type: ClusterIP
   externalPort: 5984
   targetPort: 5984
+  nodePort: 
   labels: {}
   extraPorts: []
   # - name: sqs

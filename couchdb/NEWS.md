@@ -1,5 +1,9 @@
 # NEWS
 
+## 4.5.7
+
+- Add 'service.nodePort' to allow specifying a specific node port for the service.
+
 ## 4.5.6
 
 - Add `extraPorts` to the network policy when the network policy is enabled.

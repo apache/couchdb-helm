@@ -167,6 +167,25 @@ extraPorts: []
   # - name: sqs
   #   containerPort: 4984
 
+## Additional environment variables to set in the CouchDB container
+extraEnvVars: []
+  # - name: MY_ENV_VAR
+  #   value: my-env-var-value
+
+## If you need to mount extra volumes on the CouchDB container
+extraVolumeMounts:
+  # - name: limits-config
+  #   mountPath: /etc/security/limits.d
+
+## Define extra volumes for the StatefulSet here
+extraVolumes:
+  # - name: limits-config
+  #   configMap:
+  #     name: limits-config
+  #     items:
+  #       - key: 100-couchdb
+  #         path: 100-couchdb.conf
+
 ## An Ingress resource can provide name-based virtual hosting and TLS
 ## termination among other things for CouchDB deployments which are accessed
 ## from outside the Kubernetes cluster.

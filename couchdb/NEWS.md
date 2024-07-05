@@ -1,5 +1,11 @@
 # NEWS
 
+## 4.5.7
+
+- Add `extraEnvVars` to the `couchdb` container in the StatefulSet.
+- Add `extraVolumeMounts` to the `couchdb` container in the StatefulSet
+- Add `extraVolumes` to the StatefulSet
+
 ## 4.5.6
 
 - Add `extraPorts` to the network policy when the network policy is enabled.

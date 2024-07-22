@@ -294,3 +294,6 @@ placementConfig:
   image:
     repository: caligrafix/couchdb-autoscaler-placement-manager
     tag: 0.1.0
+
+# Optional priority class to be used for CouchDB pods
+priorityClassName: ""

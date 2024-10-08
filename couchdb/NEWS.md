@@ -1,5 +1,8 @@
 # NEWS
 
+## 4.5.7
+- Update default CouchDB version to 3.4.1
+
 ## 4.5.6
 
 - Add `extraPorts` to the network policy when the network policy is enabled.

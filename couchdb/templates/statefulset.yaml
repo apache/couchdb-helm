@@ -87,6 +87,9 @@ spec:
           resources:
 {{ toYaml .Values.initResources | indent 12 }}
 {{- end }}
+        {{- if .Values.extraInitContainers }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.extraInitContainers "context" $) | nindent 8 }}
+        {{- end }}
       containers:
         - name: couchdb
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -129,6 +132,9 @@ spec:
                   key: erlangCookie
             - name: ERL_FLAGS
               value: "{{ range $k, $v := .Values.erlangFlags }} -{{ $k }} {{ $v }} {{ end }}"
+{{- if .Values.extraEnvVars }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+{{- end }}
 {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
 {{- if .Values.couchdbConfig.chttpd.require_valid_user }}
@@ -178,6 +184,9 @@ spec:
 {{- end }}
           - name: database-storage
             mountPath: /opt/couchdb/data
+{{- if .Values.extraVolumeMounts }}
+          {{- include "common.tplvalues.render" (dict "value" .Values.extraVolumeMounts "context" $) | nindent 10 }}
+{{- end }}
           {{- if .Values.containerSecurityContext }}
           securityContext: {{ .Values.containerSecurityContext | toYaml | nindent 12 }}
           {{- end }}
@@ -225,6 +234,9 @@ spec:
 {{- if .Values.prometheusPort.enabled }}
               - key: prometheusinifile
                 path: prometheus.ini
+{{- end }}
+{{- if .Values.extraVolumes }}
+        {{- include "common.tplvalues.render" ( dict "value" .Values.extraVolumes "context" $ ) | nindent 8 }}
 {{- end }}
 
 {{- if .Values.adminHash }}

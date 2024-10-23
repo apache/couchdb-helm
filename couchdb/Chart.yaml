@@ -1,6 +1,6 @@
 apiVersion: v1
 name: couchdb
-version: 4.5.6
+version: 4.5.7
 appVersion: 3.3.3
 description: A database featuring seamless multi-master sync, that scales from
   big data to mobile, with an intuitive HTTP/JSON API and designed for
@@ -19,9 +19,3 @@ maintainers:
   - name: willholley
     email: willholley@apache.org
 icon: http://couchdb.apache.org/CouchDB-visual-identity/logo/CouchDB-couch-symbol.svg
-dependencies:
-- name: common
-  repository: oci://registry-1.docker.io/bitnamicharts
-  tags:
-  - bitnami-common
-  version: 2.x.x

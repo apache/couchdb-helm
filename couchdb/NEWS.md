@@ -5,6 +5,7 @@
 - Add `extraEnvVars` to the `couchdb` container in the StatefulSet.
 - Add `extraVolumeMounts` to the `couchdb` container in the StatefulSet
 - Add `extraVolumes` to the StatefulSet
+- Add `extraInitContainers` to the StatefulSet
 
 ## 4.5.6
 

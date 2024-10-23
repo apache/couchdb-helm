@@ -87,6 +87,9 @@ spec:
           resources:
 {{ toYaml .Values.initResources | indent 12 }}
 {{- end }}
+        {{- if .Values.extraInitContainers }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.extraInitContainers "context" $) | nindent 8 }}
+        {{- end }}
       containers:
         - name: couchdb
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

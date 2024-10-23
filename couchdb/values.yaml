@@ -105,6 +105,9 @@ initImage:
   tag: latest
   pullPolicy: Always
 
+## Define extra init containers here. E.g. for copying custom configuration files
+extraInitContainers: []
+
 ## CouchDB is happy to spin up cluster nodes in parallel, but if you encounter
 ## problems you can try setting podManagementPolicy to the StatefulSet default
 ## `OrderedReady`

@@ -12,16 +12,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
           ref: 'gh-pages'
           fetch-depth: 0
 
+      - name: Build Setup Helm
+        run: cd ./.github/actions/setup-helm && npm run-script build
+
       - name: Set up Helm
         uses: ./.github/actions/setup-helm
         with:
-          version: v3.10.0
+          version: v3.14.4
+        id: install
 
       - name: Rebuild index.yaml
         env:

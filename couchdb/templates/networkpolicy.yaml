@@ -21,6 +21,10 @@ spec:
         - protocol: TCP
           port: {{ .Values.prometheusPort.port }}
 {{- end }}
+{{ range .Values.extraPorts }}
+        - protocol: TCP
+          port: {{ .containerPort }} 
+{{ end }}
     - ports:
         - protocol: TCP
           port: 9100

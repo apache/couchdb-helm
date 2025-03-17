@@ -171,6 +171,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `adminPassword`                      | auto-generated                                   |
 | `adminHash`                          |                                                  |
 | `cookieAuthSecret`                   | auto-generated                                   |
+| `extraPorts`                         | [] (a list of ContainerPort objects)             |
 | `image.repository`                   | couchdb                                          |
 | `image.tag`                          | 3.3.3                                            |
 | `image.pullPolicy`                   | IfNotPresent                                     |
@@ -218,11 +219,12 @@ A variety of other parameters are also configurable. See the comments in the
 | `service.type`                       | ClusterIP                                        |
 | `service.externalPort`               | 5984                                             |
 | `service.targetPort`                 | 5984                                             |
+| `service.extraPorts`                 | [] (a list of ServicePort objects)               |
 | `dns.clusterDomainSuffix`            | cluster.local                                    |
 | `networkPolicy.enabled`              | true                                             |
 | `serviceAccount.enabled`             | true                                             |
 | `serviceAccount.create`              | true                                             |
-| `serviceAccount.imagePullSecrets`    |                                                  |
+| `imagePullSecrets`                   |                                                  |
 | `sidecars`                           | {}                                               |
 | `livenessProbe.enabled`              | true                                             |
 | `livenessProbe.failureThreshold`     | 3                                                |
@@ -274,6 +276,7 @@ use GitHub Issues, do not report anything on Docker's website.
 - [@kevinwlau](https://github.com/kevinwlau)
 - [@jeyenzo](https://github.com/jeyenzo)
 - [@Pinpin31.](https://github.com/Pinpin31)
+- [@yekibud](https://github.com/yekibud)
 
 [1]: http://mail-archives.apache.org/mod_mbox/couchdb-user/
 [2]: http://mail-archives.apache.org/mod_mbox/couchdb-dev/

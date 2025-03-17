@@ -37,6 +37,9 @@ spec:
       {{- if .Values.serviceAccount.enabled }}
       serviceAccountName: {{ template "couchdb.serviceAccount" . }}
       {{- end }}
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets: {{ .Values.imagePullSecrets | toYaml | nindent 8 }}
+      {{- end }}
       initContainers:
         - name: init-copy
           image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
@@ -98,6 +101,9 @@ spec:
             - name: metrics
               containerPort: {{ .Values.prometheusPort.port }}
 {{- end }}
+{{ with .Values.extraPorts }}
+{{ toYaml . | indent 12 }}
+{{ end }}
 {{- if .Values.lifecycle }}
           lifecycle: {{ toYaml .Values.lifecycle | nindent 12 }}
 {{- else if .Values.lifecycleTemplate }}

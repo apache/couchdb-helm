@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -25,10 +25,14 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
+      - name: Build Setup Helm
+        run: cd ./.github/actions/setup-helm && npm run-script build
+
       - name: Install Helm
         uses: ./.github/actions/setup-helm
         with:
-          version: v3.10.0
+          version: v3.14.4
+        id: install
 
       - name: Run chart-releaser
         uses: ./.github/actions/chart-releaser-action

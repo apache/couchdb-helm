@@ -20,16 +20,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           persist-credentials: false
           submodules: recursive
 
+      - name: Build Setup Helm
+        run: cd ./.github/actions/setup-helm && npm run-script build
+
       - name: Set up Helm
         uses: ./.github/actions/setup-helm
         with:
-          version: v3.10.0
+          version: v3.14.4
 
       - name: Set up chart-testing
         uses: ./.github/actions/chart-testing-action
@@ -41,16 +44,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           persist-credentials: false
           submodules: recursive
 
+      - name: Build Setup Helm
+        run: cd ./.github/actions/setup-helm && npm run-script build
+
       - name: Set up Helm
         uses: ./.github/actions/setup-helm
         with:
-          version: v3.10.0
+          version: v3.14.4
+        id: install
 
       - name: Set up chart-testing
         uses: ./.github/actions/chart-testing-action

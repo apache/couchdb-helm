@@ -12,3 +12,5 @@ github:
     gh-pages: {}
   ghp_branch: gh-pages
   ghp_path: ~
+  dependabot_alerts:  false
+  dependabot_updates: true

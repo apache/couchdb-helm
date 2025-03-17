@@ -1,5 +1,9 @@
 # NEWS
 
+## 4.5.7
+
+- Add support for extra secrets not created by the chart, such as Hashicorp Vault or OpenBao.
+
 ## 4.5.6
 
 - Add `extraPorts` to the network policy when the network policy is enabled.

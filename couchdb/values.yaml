@@ -36,6 +36,10 @@ autoSetup:
 # 2) This flag can be disabled and a Secret with the required keys can be
 #    created ahead of time.
 createAdminSecret: true
+# default to chart name
+extraSecretName: ""
+adminUsernameKey: ""
+adminPasswordKey: ""
 
 adminUsername: admin
 # adminPassword: this_is_not_secure

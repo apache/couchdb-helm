@@ -275,6 +275,17 @@ prometheusPort:
   bind_address: "0.0.0.0"
   port: 17986
 
+# Optional lifecycle hooks defined by a lifecyle value map or parent template
+# (for e.g. more complex use cases requiring variable interpolation by parent
+# charts)
+lifecycle: {}
+lifecycleTemplate: false
+
+# Optional environment variables defined by a values array or parent template
+# (for e.g. passing secrets as environment variables or for use in the statefulset)
+extraEnv: []
+extraEnvTemplate: false
+
 # Configure arbitrary sidecar containers for CouchDB pods created by the
 # StatefulSet
 sidecars: {}
@@ -298,3 +309,6 @@ placementConfig:
   image:
     repository: caligrafix/couchdb-autoscaler-placement-manager
     tag: 0.1.0
+
+# Optional priority class to be used for CouchDB pods
+priorityClassName: ""

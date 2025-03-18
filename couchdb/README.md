@@ -1,6 +1,6 @@
 # CouchDB
 
-![Version: 4.5.7](https://img.shields.io/badge/Version-4.5.7-informational?style=flat-square) ![AppVersion: 3.3.3](https://img.shields.io/badge/AppVersion-3.3.3-informational?style=flat-square)
+![Version: 4.6.0](https://img.shields.io/badge/Version-4.6.0-informational?style=flat-square) ![AppVersion: 3.3.3](https://img.shields.io/badge/AppVersion-3.3.3-informational?style=flat-square)
 
 Apache CouchDB is a database featuring seamless multi-master sync, that scales
 from big data to mobile, with an intuitive HTTP/JSON API and designed for
@@ -18,7 +18,7 @@ storage volumes to each Pod in the Deployment.
 ```bash
 $ helm repo add couchdb https://apache.github.io/couchdb-helm
 $ helm install couchdb/couchdb \
-  --version=4.5.7 \
+  --version=4.6.0 \
   --set allowAdminParty=true \
   --set couchdbConfig.couchdb.uuid=$(curl https://www.uuidgenerator.net/api/version4 2>/dev/null | tr -d -)
 ```
@@ -44,7 +44,7 @@ Afterwards install the chart replacing the UUID
 ```bash
 $ helm install \
   --name my-release \
-  --version=4.5.7 \
+  --version=4.6.0 \
   --set couchdbConfig.couchdb.uuid=decafbaddecafbaddecafbaddecafbad \
   couchdb/couchdb
 ```
@@ -78,7 +78,7 @@ and then install the chart while overriding the `createAdminSecret` setting:
 ```bash
 $ helm install \
   --name my-release \
-  --version=4.5.7 \
+  --version=4.6.0 \
   --set createAdminSecret=false \
   --set couchdbConfig.couchdb.uuid=decafbaddecafbaddecafbaddecafbad \
   couchdb/couchdb
@@ -133,7 +133,7 @@ version semantics. You can upgrade directly from `stable/couchdb` to this chart 
 
 ```bash
 $ helm repo add couchdb https://apache.github.io/couchdb-helm
-$ helm upgrade my-release --version=4.5.7 couchdb/couchdb
+$ helm upgrade my-release --version=4.6.0 couchdb/couchdb
 ```
 
 ## Configuration
@@ -244,6 +244,10 @@ A variety of other parameters are also configurable. See the comments in the
 | `prometheusPort.enabled`             | false                                            |
 | `prometheusPort.port`                | 17896                                            |
 | `prometheusPort.bind_address`        | 0.0.0.0                                          |
+| `lifecycle`                          | {}                                               |
+| `lifecycleTemplate`                  | false (set `true` and add a named `lifecycleTemplate` if using couchdb as a subchart) |
+| `extraEnv`                           | []                                               |
+| `extraEnvTemplate`                   | false (set `true` and add a named `extraEnvTemplate` if using couchdb as a subchart) |
 | `placementConfig.enabled`            | false                                            |
 | `placementConfig.image.repository`   | caligrafix/couchdb-autoscaler-placement-manager  |
 | `placementConfig.image.tag`          | 0.1.0                                            |
@@ -275,6 +279,7 @@ use GitHub Issues, do not report anything on Docker's website.
 - [@kevinwlau](https://github.com/kevinwlau)
 - [@jeyenzo](https://github.com/jeyenzo)
 - [@Pinpin31.](https://github.com/Pinpin31)
+- [@yekibud](https://github.com/yekibud)
 
 [1]: http://mail-archives.apache.org/mod_mbox/couchdb-user/
 [2]: http://mail-archives.apache.org/mod_mbox/couchdb-dev/

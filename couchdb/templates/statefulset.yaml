@@ -115,13 +115,13 @@ spec:
             - name: COUCHDB_USER
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "couchdb.fullname" . }}
-                  key: adminUsername
+                  name: {{ .Values.extraSecretName | default (include "couchdb.fullname" .) }}
+                  key: {{ .Values.adminUsernameKey | default "adminUsername" }}
             - name: COUCHDB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "couchdb.fullname" . }}
-                  key: adminPassword
+                  name: {{ .Values.extraSecretName | default (include "couchdb.fullname" .) }}
+                  key: {{ .Values.adminPasswordKey | default "adminPassword" }}
             - name: COUCHDB_SECRET
               valueFrom:
                 secretKeyRef:

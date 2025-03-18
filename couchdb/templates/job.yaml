@@ -40,13 +40,13 @@ spec:
             - name: COUCHDB_ADMIN
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "couchdb.fullname" . }}
-                  key: adminUsername
+                  name: {{ .Values.extraSecretName | default (include "couchdb.fullname" .) }}
+                  key: {{ .Values.adminUsernameKey | default "adminUsername" }}
             - name: COUCHDB_PASS
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "couchdb.fullname" . }}
-                  key: adminPassword
+                  name: {{ .Values.extraSecretName | default (include "couchdb.fullname" .) }}
+                  key: {{ .Values.adminPasswordKey | default "adminPassword" }}
           {{- if .Values.containerSecurityContext }}
           securityContext: {{ .Values.containerSecurityContext | toYaml | nindent 12 }}
           {{- end }}

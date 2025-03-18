@@ -170,6 +170,9 @@ A variety of other parameters are also configurable. See the comments in the
 | `adminUsername`                      | admin                                            |
 | `adminPassword`                      | auto-generated                                   |
 | `adminHash`                          |                                                  |
+| `extraSecretName`                    | "" (the name of a secret resource to provide e.g. admin credentials from an ExternalSecret/vault/etc.)     |
+| `adminUsernameKey`                   | "" (the string/key to access the admin username secret from an extra secret if different from "adminUsername"  |
+| `adminPasswordKey`                   | "" (the string/key to access the admin password secret from an extra secret if different from "adminPassword"  |
 | `cookieAuthSecret`                   | auto-generated                                   |
 | `extraPorts`                         | [] (a list of ContainerPort objects)             |
 | `image.repository`                   | couchdb                                          |

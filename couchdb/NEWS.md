@@ -1,5 +1,9 @@
 # NEWS
 
+## 4.6.1
+
+- Added options to specify `erlangCookie` and `cookieAuthSecret` within the extra secret
+
 ## 4.5.7
 
 - Add support for extra secrets not created by the chart, such as Hashicorp Vault or OpenBao.

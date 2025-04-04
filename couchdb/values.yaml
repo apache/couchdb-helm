@@ -40,6 +40,8 @@ createAdminSecret: true
 extraSecretName: ""
 adminUsernameKey: ""
 adminPasswordKey: ""
+cookieAuthSecretKey: ""
+erlangCookieKey: ""
 
 adminUsername: admin
 # adminPassword: this_is_not_secure

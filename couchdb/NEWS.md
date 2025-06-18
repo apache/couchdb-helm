@@ -1,5 +1,8 @@
 # NEWS
 
+## 4.6.1
+- Update default CouchDB version to 3.5.0
+
 ## 4.5.7
 
 - Add support for extra secrets not created by the chart, such as Hashicorp Vault or OpenBao.

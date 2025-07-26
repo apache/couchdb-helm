@@ -125,14 +125,14 @@ spec:
             - name: COUCHDB_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "couchdb.fullname" . }}
-                  key: cookieAuthSecret
+                  name: {{ .Values.extraSecretName | default (include "couchdb.fullname" .) }}
+                  key: {{ .Values.cookieAuthSecretKey | default "cookieAuthSecret" }}
 {{- end }}
             - name: COUCHDB_ERLANG_COOKIE
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "couchdb.fullname" . }}
-                  key: erlangCookie
+                  name: {{ .Values.extraSecretName | default (include "couchdb.fullname" .) }}
+                  key: {{ .Values.erlangCookieKey | default "erlangCookie" }}
             - name: ERL_FLAGS
               value: "{{ range $k, $v := .Values.erlangFlags }} -{{ $k }} {{ $v }} {{ end }}"
 {{- if .Values.extraEnv }}

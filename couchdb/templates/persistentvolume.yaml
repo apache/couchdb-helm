@@ -1,4 +1,4 @@
-{{- if and .Values.persistentVolume.enabled .Values.persistentVolume.existingClaims -}}
+{{- if and (and .Values.persistentVolume.enabled .Values.persistentVolume.existingClaims) (not .Values.persistentVolume.selfManaged) -}}
 {{- range $claim := .Values.persistentVolume.existingClaims }}
 apiVersion: v1
 kind: PersistentVolume

@@ -20,7 +20,7 @@ $ helm repo add couchdb https://apache.github.io/couchdb-helm
 $ helm install couchdb/couchdb \
   --version=4.6.2 \
   --set allowAdminParty=true \
-  --set couchdbConfig.couchdb.uuid=$(curl https://www.uuidgenerator.net/api/version4 2>/dev/null | tr -d -)
+  --set couchdbConfig.couchdb.uuid=$(( uuidgen 2>/dev/null || cat /proc/sys/kernel/random/uuid ) | tr "[A-Z]" "[a-z]")
 ```
 
 ## Prerequisites

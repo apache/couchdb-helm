@@ -1,5 +1,8 @@
 # NEWS
 
+## 4.6.3
+- Update default CouchDB version to 3.5.1
+
 ## 4.6.2
 - Added options to specify `erlangCookie` and `cookieAuthSecret` within the extra secret
 

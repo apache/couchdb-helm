@@ -1,6 +1,6 @@
 # CouchDB
 
-![Version: 4.6.2](https://img.shields.io/badge/Version-4.6.2-informational?style=flat-square) ![AppVersion: 3.5.0](https://img.shields.io/badge/AppVersion-3.5.0-informational?style=flat-square)
+![Version: 4.6.3](https://img.shields.io/badge/Version-4.6.3-informational?style=flat-square) ![AppVersion: 3.5.1](https://img.shields.io/badge/AppVersion-3.5.1-informational?style=flat-square)
 
 Apache CouchDB is a database featuring seamless multi-master sync, that scales
 from big data to mobile, with an intuitive HTTP/JSON API and designed for
@@ -18,7 +18,7 @@ storage volumes to each Pod in the Deployment.
 ```bash
 $ helm repo add couchdb https://apache.github.io/couchdb-helm
 $ helm install couchdb/couchdb \
-  --version=4.6.2 \
+  --version=4.6.3 \
   --set allowAdminParty=true \
   --set couchdbConfig.couchdb.uuid=$(curl https://www.uuidgenerator.net/api/version4 2>/dev/null | tr -d -)
 ```
@@ -44,7 +44,7 @@ Afterwards install the chart replacing the UUID
 ```bash
 $ helm install \
   --name my-release \
-  --version=4.6.2 \
+  --version=4.6.3 \
   --set couchdbConfig.couchdb.uuid=decafbaddecafbaddecafbaddecafbad \
   couchdb/couchdb
 ```
@@ -78,7 +78,7 @@ and then install the chart while overriding the `createAdminSecret` setting:
 ```bash
 $ helm install \
   --name my-release \
-  --version=4.6.2 \
+  --version=4.6.3 \
   --set createAdminSecret=false \
   --set couchdbConfig.couchdb.uuid=decafbaddecafbaddecafbaddecafbad \
   couchdb/couchdb
@@ -133,7 +133,7 @@ version semantics. You can upgrade directly from `stable/couchdb` to this chart 
 
 ```bash
 $ helm repo add couchdb https://apache.github.io/couchdb-helm
-$ helm upgrade my-release --version=4.6.2 couchdb/couchdb
+$ helm upgrade my-release --version=4.6.3 couchdb/couchdb
 ```
 
 ## Configuration
@@ -178,7 +178,7 @@ A variety of other parameters are also configurable. See the comments in the
 | `cookieAuthSecret`                   | auto-generated                                   |
 | `extraPorts`                         | [] (a list of ContainerPort objects)             |
 | `image.repository`                   | couchdb                                          |
-| `image.tag`                          | 3.5.0                                            |
+| `image.tag`                          | 3.5.1                                            |
 | `image.pullPolicy`                   | IfNotPresent                                     |
 | `searchImage.repository`             | kocolosk/couchdb-search                          |
 | `searchImage.tag`                    | 0.1.0                                            |

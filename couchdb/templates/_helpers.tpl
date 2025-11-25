@@ -95,10 +95,28 @@ If serviceAccount.name is specified, use that, else use the couchdb instance nam
 {{- end -}}
 
 {{/*
-Fail if couchdbConfig.couchdb.uuid is undefined
+    If couchdb UUID value is undefined:
+      - if the configmap already exists, look it up
+      - if not found or "dangerRegenerateAutomatedValues" is set, generate it
+        - otherwise use the previous value
+    Otherwise use what is defined in the chart
+
+    Also warn in NOTES.txt if this value is not persistent
 */}}
 {{- define "couchdb.uuid" -}}
-{{- required "A value for couchdbConfig.couchdb.uuid must be set" (.Values.couchdbConfig.couchdb | default dict).uuid -}}
+
+{{- $uuidVar := index (.Values.couchdbConfig.couchdb | default dict) "uuid" -}}
+{{- if (empty $uuidVar) }}
+  {{- $secretName := print (include "couchdb.fullname" .) "-internal" }}
+  {{- $currentSecret := lookup "v1" "Secret" $.Release.Namespace $secretName}}
+  {{- if and $currentSecret (not .Values.dangerRegenerateAutomatedValues ) }}
+    {{- $uuidVar = get $currentSecret.data "uuid" | b64dec }}
+  {{- else }}
+    {{- $uuidVar = uuidv4 -}}
+  {{- end }}
+{{- end }}
+{{- print $uuidVar -}}
+
 {{- end -}}
 
 {{/*

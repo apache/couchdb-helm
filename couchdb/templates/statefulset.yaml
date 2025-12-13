@@ -91,6 +91,16 @@ spec:
         - name: couchdb
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - sh
+            - -c
+            - |
+              echo "$COUCHDB_ERLANG_COOKIE" > /opt/couchdb/.erlang.cookie
+              chmod 400 /opt/couchdb/.erlang.cookie
+              {{- if not (hasKey .Values.erlangFlags "setcookie") }}
+              export ERL_FLAGS="$ERL_FLAGS -setcookie $COUCHDB_ERLANG_COOKIE"
+              {{- end }}
+              exec /docker-entrypoint.sh /opt/couchdb/bin/couchdb
           ports:
             - name: couchdb
               containerPort: 5984
@@ -196,6 +206,19 @@ spec:
         - name: clouseau
           image: "{{ .Values.searchImage.repository }}:{{ .Values.searchImage.tag }}"
           imagePullPolicy: {{ .Values.searchImage.pullPolicy }}
+          command:
+            - sh
+            - -c
+            - |
+              echo "$ERLANG_COOKIE" > /opt/couchdb-search/.erlang.cookie
+              chmod 400 /opt/couchdb-search/.erlang.cookie
+              exec tini -- java -server -Dsun.net.inetaddr.ttl=30 -Dsun.net.inetaddr.negative.ttl=30 -classpath /opt/couchdb-search/lib/* com.cloudant.ziose.clouseau.Main /opt/couchdb-search/etc/app.conf
+          env:
+            - name: ERLANG_COOKIE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.extraSecretName | default (include "couchdb.fullname" .) }}
+                  key: {{ .Values.erlangCookieKey | default "erlangCookie" }}
           volumeMounts:
           - name: database-storage
             mountPath: /opt/couchdb-search/data

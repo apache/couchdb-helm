@@ -18,6 +18,9 @@ history. This will make it easier to identify new changes. The PR will be squash
 anyways when it is merged. Thanks.
 
 Please make sure you test your changes before you push them.
+
+If you modified values.yaml or README.md.gotmpl, regenerate the README.md:
+  helm-docs -c couchdb -t ../_templates.gotmpl -t README.md.gotmpl
 -->
 
 #### What this PR does / why we need it:

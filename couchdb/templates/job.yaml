@@ -50,7 +50,7 @@ spec:
           {{- if .Values.containerSecurityContext }}
           securityContext: {{ .Values.containerSecurityContext | toYaml | nindent 12 }}
           {{- end }}
-  backoffLimit: 2
+  backoffLimit: {{ .Values.autoSetup.backoffLimit | default 2 }}
   ttlSecondsAfterFinished: 600
 {{- end -}}
 {{- end -}}

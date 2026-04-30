@@ -109,7 +109,7 @@ incompatible breaking change needing manual actions.
 ### Upgrade to 3.0.0
 
 Since version 3.0.0 setting the CouchDB server instance UUID is mandatory.
-Therefore you need to generate a UUID and supply it as a value during the
+Therefore, you need to generate a UUID and supply it as a value during the
 upgrade as follows:
 
 ```bash
@@ -156,22 +156,30 @@ required options to set:
 A variety of other parameters are also configurable. See the comments in the
 `values.yaml` file for further details:
 
+
 | Parameter                            | Default                                                                                                                                                      |
-|--------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|--------------------------------------| -------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `adminUsername`                      | admin                                                                                                                                                        |
 | `adminPassword`                      | auto-generated                                                                                                                                               |
 | `adminHash`                          |                                                                                                                                                              |
+| `extraSecretName`                    | "" (the name of a secret resource to provide e.g. admin credentials from an ExternalSecret/vault/etc.)                                                       |
+| `adminUsernameKey`                   | "" (the string/key to access the admin username secret from an extra secret if different from "adminUsername"                                                 |
+| `adminPasswordKey`                   | "" (the string/key to access the admin password secret from an extra secret if different from "adminPassword"                                                 |
+| `cookieAuthSecretKey`                | "" (the string/key to access the cookie auth secret from an extra secret if different from "cookieAuthSecret"                                                 |
+| `erlangCookieKey`                    | "" (the string/key to access the erlang cookie secret from an extra secret if different from "erlangCookie"                                                   |
 | `cookieAuthSecret`                   | auto-generated                                                                                                                                               |
+| `extraPorts`                         | [] (a list of ContainerPort objects)                                                                                                                         |
 | `image.repository`                   | couchdb                                                                                                                                                      |
 | `image.tag`                          | 3.5.1                                                                                                                                                        |
 | `image.pullPolicy`                   | IfNotPresent                                                                                                                                                 |
 | `searchImage.repository`             | kocolosk/couchdb-search                                                                                                                                      |
-| `searchImage.tag`                    | 0.1.0                                                                                                                                                        |
+| `searchImage.tag`                    | 0.2.0                                                                                                                                                        |
 | `searchImage.pullPolicy`             | IfNotPresent                                                                                                                                                 |
 | `initImage.repository`               | busybox                                                                                                                                                      |
 | `initImage.tag`                      | latest                                                                                                                                                       |
 | `initImage.pullPolicy`               | Always                                                                                                                                                       |
 | `ingress.enabled`                    | false                                                                                                                                                        |
+| `ingress.className`                  |                                                                                                                                                              |
 | `ingress.hosts`                      | chart-example.local                                                                                                                                          |
 | `ingress.annotations`                |                                                                                                                                                              |
 | `ingress.path`                       | /                                                                                                                                                            |
@@ -179,6 +187,13 @@ A variety of other parameters are also configurable. See the comments in the
 | `persistentVolume.accessModes`       | ReadWriteOnce                                                                                                                                                |
 | `persistentVolume.storageClass`      | Default for the Kube cluster                                                                                                                                 |
 | `persistentVolume.annotations`       | {}                                                                                                                                                           |
+| `persistentVolume.existingClaims`    | [] (a list of existing PV/PVC volume value objects with `volumeName`, `claimName`, `persistentVolumeName` and `volumeSource` defined)                         |
+| `persistentVolume.volumeName`        |                                                                                                                                                              |
+| `persistentVolume.claimName`         |                                                                                                                                                              |
+| `persistentVolume.volumeSource`      |                                                                                                                                                              |
+| `persistentVolumeClaimRetentionPolicy.enabled`     | Field controls if and how PVCs are deleted during the lifecycle                                                                                |
+| `persistentVolumeClaimRetentionPolicy.whenScaled`  | Configures the volume retention behavior that applies when the replica count of the StatefulSet is reduced |
+| `persistentVolumeClaimRetentionPolicy.whenDeleted` | Configures the volume retention behavior that applies when the StatefulSet is deleted                      |
 | `podDisruptionBudget.enabled`        | false                                                                                                                                                        |
 | `podDisruptionBudget.minAvailable`   | nil                                                                                                                                                          |
 | `podDisruptionBudget.maxUnavailable` | 1                                                                                                                                                            |
@@ -189,21 +204,24 @@ A variety of other parameters are also configurable. See the comments in the
 | `annotations`                        |                                                                                                                                                              |
 | `tolerations`                        |                                                                                                                                                              |
 | `resources`                          |                                                                                                                                                              |
+| `initResources`                      |                                                                                                                                                              |
 | `autoSetup.enabled`                  | false (if set to true, must have `service.enabled` set to true and a correct `adminPassword` - deploy it with the `--wait` flag to avoid first jobs failure) |
-| `autoSetup.image.repository`         | alpine/curl                                                                                                                                                  |
+| `autoSetup.image.repository`         | curlimages/curl                                                                                                                                              |
 | `autoSetup.image.tag`                | latest                                                                                                                                                       |
 | `autoSetup.image.pullPolicy`         | Always                                                                                                                                                       |
 | `autoSetup.defaultDatabases`         | [`_global_changes`]                                                                                                                                          |
+| `autoSetup.backoffLimit`             | 2                                                                                                                                                            |
 | `service.annotations`                |                                                                                                                                                              |
 | `service.enabled`                    | true                                                                                                                                                         |
 | `service.type`                       | ClusterIP                                                                                                                                                    |
 | `service.externalPort`               | 5984                                                                                                                                                         |
 | `service.targetPort`                 | 5984                                                                                                                                                         |
+| `service.extraPorts`                 | [] (a list of ServicePort objects)                                                                                                                           |
 | `dns.clusterDomainSuffix`            | cluster.local                                                                                                                                                |
 | `networkPolicy.enabled`              | true                                                                                                                                                         |
 | `serviceAccount.enabled`             | true                                                                                                                                                         |
 | `serviceAccount.create`              | true                                                                                                                                                         |
-| `serviceAccount.imagePullSecrets`    |                                                                                                                                                              |
+| `imagePullSecrets`                   |                                                                                                                                                              |
 | `sidecars`                           | {}                                                                                                                                                           |
 | `livenessProbe.enabled`              | true                                                                                                                                                         |
 | `livenessProbe.failureThreshold`     | 3                                                                                                                                                            |
@@ -218,13 +236,17 @@ A variety of other parameters are also configurable. See the comments in the
 | `readinessProbe.successThreshold`    | 1                                                                                                                                                            |
 | `readinessProbe.timeoutSeconds`      | 1                                                                                                                                                            |
 | `prometheusPort.enabled`             | false                                                                                                                                                        |
-| `prometheusPort.port`                | 17896                                                                                                                                                        |
+| `prometheusPort.port`                | 17986                                                                                                                                                        |
 | `prometheusPort.bind_address`        | 0.0.0.0                                                                                                                                                      |
+| `lifecycle`                          | {}                                                                                                                                                           |
+| `lifecycleTemplate`                  | false (set `true` and add a named `lifecycleTemplate` if using couchdb as a subchart)                                                                        |
+| `extraEnv`                           | []                                                                                                                                                           |
+| `extraEnvTemplate`                   | false (set `true` and add a named `extraEnvTemplate` if using couchdb as a subchart)                                                                         |
 | `placementConfig.enabled`            | false                                                                                                                                                        |
 | `placementConfig.image.repository`   | caligrafix/couchdb-autoscaler-placement-manager                                                                                                              |
 | `placementConfig.image.tag`          | 0.1.0                                                                                                                                                        |
 | `podSecurityContext`                 |                                                                                                                                                              |
-| `containerSecurityContext            |                                                                                                                                                              |
+| `containerSecurityContext`           |                                                                                                                                                              |
 
 ## Feedback, Issues, Contributing
 
@@ -251,6 +273,7 @@ use GitHub Issues, do not report anything on Docker's website.
 - [@kevinwlau](https://github.com/kevinwlau)
 - [@jeyenzo](https://github.com/jeyenzo)
 - [@Pinpin31.](https://github.com/Pinpin31)
+- [@yekibud](https://github.com/yekibud)
 
 [1]: http://mail-archives.apache.org/mod_mbox/couchdb-user/
 [2]: http://mail-archives.apache.org/mod_mbox/couchdb-dev/

@@ -1,12 +1,22 @@
 # NEWS
 
+## 4.6.4
+
+- Added configurable backoffLimit for autoSetup job
+- Update chart-testing version to v3.14.0
+- Update KinD version to v0.31.0
+- Update Kubernetes version for testing to v1.35.1
+
 ## 4.6.3
+
 - Update default CouchDB version to 3.5.1
 
 ## 4.6.2
+
 - Added options to specify `erlangCookie` and `cookieAuthSecret` within the extra secret
 
 ## 4.6.1
+
 - Update default CouchDB version to 3.5.0
 
 ## 4.5.7
@@ -57,7 +67,7 @@
 
 - Simplified the `adminHash` in the secret
 
-# 3.6.4
+## 3.6.4
 
 - Add `service.labels` value to pass along labels to the client-facing service
 - Update `ingress` to use the service created by `service.enabled=true`,
@@ -65,7 +75,7 @@
   ([#94](https://github.com/apache/couchdb-helm/issues/94))
   - This allows setting `service.annotations`, `service.labels`, etc. in a way that will be picked up by the ingress
 
-# 3.6.3
+## 3.6.3
 
 - Add PersistentVolume annotations
 

@@ -4,10 +4,10 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-readonly CT_VERSION=v3.11.0
-readonly KIND_VERSION=v0.23.0
+readonly CT_VERSION=v3.14.0
+readonly KIND_VERSION=v0.31.0
 readonly CLUSTER_NAME=chart-testing
-readonly K8S_VERSION=v1.25.3
+readonly K8S_VERSION=v1.35.1
 
 run_ct_container() {
     echo 'Running ct container...'
@@ -61,6 +61,7 @@ create_kind_cluster() {
 }
 
 install_charts() {
+    docker_exec git config --global --add safe.directory /workdir
     docker_exec ct lint-and-install --charts couchdb --upgrade --chart-dirs .
     echo
 }

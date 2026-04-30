@@ -23,6 +23,7 @@ autoSetup:
     pullPolicy: Always
   defaultDatabases:
     - _global_changes
+  backoffLimit: 2
 
 # -- If createAdminSecret is enabled a Secret called <ReleaseName>-couchdb will
 # be created containing auto-generated credentials. Users who prefer to set
